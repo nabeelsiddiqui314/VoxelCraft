@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <GLFW/glfw3.h>
+#include <GL/glew.h>
 
 struct Mesh {
 	std::vector<GLfloat> vertices;

@@ -1,4 +1,6 @@
 #pragma once
+#include "Shader.h"
+#include "Model.h"
 #include <GLFW/glfw3.h>
 
 class Application
@@ -10,5 +12,7 @@ public:
 	void run();
 private:
 	GLFWwindow* m_window;
+	Shader shader;
+	Model model;
 };
 

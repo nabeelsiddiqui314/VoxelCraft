@@ -16,6 +16,7 @@ Application::Application() {
 	glViewport(0, 0, 800, 600);
 
 	shader.loadShader("shader.vert", "shader.frag");
+
 	Mesh mesh;
 	mesh.vertices = std::vector<GLfloat> {
 		0, 0, 0,
@@ -25,10 +26,10 @@ Application::Application() {
 	};
 
 	mesh.textureCoords = std::vector<GLfloat>{
-		0, 0, 0,
-		0, 1, 0,
-		1, 0, 0,
-		1, 1, 0
+		0, 0,
+		0, 1,
+		1, 0,
+		1, 1,
 	};
 
 	mesh.indices = std::vector<GLuint> {
@@ -36,6 +37,10 @@ Application::Application() {
 		2, 1, 3
 	};
 	model.addMesh(mesh);
+	tex.load("res/grass.png");
+	tex.bind();
+	shader.useProgram();
+	shader.setUniform1i("u_texture", 0);
 }
 
 void Application::run() {

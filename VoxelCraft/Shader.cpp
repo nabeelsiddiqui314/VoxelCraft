@@ -60,6 +60,14 @@ void Shader::useProgram() {
 	glUseProgram(m_program);
 }
 
-void Shader::loadMVP(const glm::mat4& mat4) const {
-	glUniformMatrix4fv(glGetUniformLocation(m_program, "mvp"), 1, GL_FALSE, &mat4[0][0]);
+void Shader::setUniform1i(const std::string& name, int val) const {
+	glUniform1i(getUniformLocation(name), val);
+}
+
+int Shader::getUniformLocation(const std::string& name) const {
+	return glGetUniformLocation(m_program, name.c_str());
+}
+
+void Shader::setUniformMat4(const std::string& name, const glm::mat4& val) const {
+	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &val[0][0]);
 }

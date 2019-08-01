@@ -12,9 +12,8 @@ void Model::addMesh(const Mesh& mesh) {
 	bindVao();
 
 	addVBO(3, mesh.vertices);
-	addVBO(3, mesh.textureCoords);
+	addVBO(2, mesh.textureCoords);
 	addIBO(mesh.indices);
-	//glBindVertexArray(0);
 }
 
 void Model::generateVAO() {

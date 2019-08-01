@@ -13,7 +13,9 @@ public:
 public:
 	void loadShader(const char* vertexPath, const char* fragmentPath);
 	void useProgram();
-	void loadMVP(const glm::mat4& mat4) const;
+	void setUniformMat4(const std::string& name, const glm::mat4& val) const;
+	void setUniform1i(const std::string& name, int val) const;
+	int getUniformLocation(const std::string& name) const;
 private:
 	GLuint m_program;
 	std::string m_vertexCode, m_fragmentCode;

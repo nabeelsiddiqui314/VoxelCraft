@@ -7,36 +7,64 @@ Model::Model(const Mesh& mesh) {
 	addMesh(mesh);
 }
 
+void Model::addMesh(const Mesh& mesh) {
+	generateVAO();
+	bindVao();
 
-Model::~Model() {
-
+	addVBO(3, mesh.vertices);
+	addVBO(3, mesh.textureCoords);
+	addIBO(mesh.indices);
+	//glBindVertexArray(0);
 }
 
-void Model::addMesh(const Mesh& mesh) {
-	m_renderData.indicesCount = mesh.indices.size();
-
+void Model::generateVAO() {
+	if (m_renderData.VAO != 0) {
+		this->cleanUp();
+	}
 	glGenVertexArrays(1, &m_renderData.VAO);
-	glGenBuffers(1, &m_vbo);
-	glGenBuffers(1, &m_ebo);
+}
 
-	glBindVertexArray(m_renderData.VAO);
+void Model::addVBO(GLuint size, const std::vector<GLfloat>& buffer) {
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, (mesh.vertices.size()) * sizeof(GLfloat), &mesh.vertices.front(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, buffer.size() * sizeof(GLfloat), &buffer.front(), GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(GLfloat), &mesh.indices.front(), GL_STATIC_DRAW);
+	glEnableVertexAttribArray(static_cast<GLuint>(m_vboCount));
+	glVertexAttribPointer(static_cast<GLuint>(m_vboCount), size, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
+	m_vboCount++;
+	m_vBuffer.push_back(vbo);
+}
 
-	glBindVertexArray(0);
+void Model::addIBO(const std::vector<GLuint>& iBuffer) {
+	m_renderData.indicesCount = iBuffer.size();
+	glGenBuffers(1, &m_ibo);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, iBuffer.size() * sizeof(GLfloat), &iBuffer.front(), GL_STATIC_DRAW);
 }
 
 void Model::bindVao() {
 	glBindVertexArray(m_renderData.VAO);
 }
 
+void Model::cleanUp() {
+	if (m_renderData.VAO)
+		glDeleteVertexArrays(1, &m_renderData.VAO);
+	if (m_vBuffer.size() > 0)
+		glDeleteBuffers(static_cast<GLsizei>(m_vBuffer.size()), &m_vBuffer.front());
+	m_vBuffer.clear();
+	m_vBuffer.shrink_to_fit();
+	m_vboCount = 0;
+	m_ibo = 0;
+}
+
 const RenderData& Model::getRenderData() const {
 	return m_renderData;
+}
+
+Model::~Model() {
+	cleanUp();
 }

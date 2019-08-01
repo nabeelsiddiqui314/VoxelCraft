@@ -23,6 +23,14 @@ Application::Application() {
 		1, 0, 0,
 		1, 1, 0
 	};
+
+	mesh.textureCoords = std::vector<GLfloat>{
+		0, 0, 0,
+		0, 1, 0,
+		1, 0, 0,
+		1, 1, 0
+	};
+
 	mesh.indices = std::vector<GLuint> {
 		0, 1, 2,
 		2, 1, 3

@@ -2,7 +2,9 @@
 #include "Shader.h"
 #include "Model.h"
 #include "Texture.h"
+#include "Camera.h"
 #include <GLFW/glfw3.h>
+#include <SFML/Graphics.hpp>
 
 class Application
 {
@@ -16,5 +18,10 @@ private:
 	Shader shader;
 	Model model;
 	Texture tex;
+	Camera cam;
+	float xLast, yLast;
+	sf::Clock c;
+	sf::Clock clock;
+	Camera::Direction dir;
 };
 

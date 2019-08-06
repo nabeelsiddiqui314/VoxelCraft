@@ -5,10 +5,10 @@ Chunk::Chunk() {
 	m_blocks.fill(0);
 }
 
-void Chunk::setBlock(int x, int y, int z, Block_id id) {
-	m_blocks[x + CHUNK_AREA * (y + CHUNK_AREA * z)] = id;
+void Chunk::setBlock(std::int16_t x, std::int16_t y, std::int16_t z, Block_id id) {
+	m_blocks[x + CHUNK_WIDTH * (y + CHUNK_WIDTH * z)] = id;
 }
 
-Block_id Chunk::getBlock(int x, int y, int z) const {
-	return m_blocks[x + CHUNK_AREA * (y + CHUNK_AREA * z)];
+Block_id Chunk::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const {
+	return m_blocks[x + CHUNK_WIDTH * (y + CHUNK_WIDTH * z)];
 }

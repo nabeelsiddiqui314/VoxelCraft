@@ -60,16 +60,17 @@ void Shader::useProgram() {
 	glUseProgram(m_program);
 }
 
-void Shader::setUniform1i(const std::string& name, int val) const {
+void Shader::setUniform1i(const std::string& name, int val) {
 	glUniform1i(getUniformLocation(name), val);
 }
 
-GLint Shader::getUniformLocation(const std::string& name) const {
+GLint Shader::getUniformLocation(const std::string& name) {
 	if (m_uniformHashMap.find(name) != m_uniformHashMap.end())
 		return m_uniformHashMap.at(name);
-	return glGetUniformLocation(m_program, name.c_str());
+	m_uniformHashMap.insert(std::make_pair(name, glGetUniformLocation(m_program, name.c_str())));
+	return m_uniformHashMap.at(name);
 }
 
-void Shader::setUniformMat4(const std::string& name, const glm::mat4& val) const {
+void Shader::setUniformMat4(const std::string& name, const glm::mat4& val) {
 	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &val[0][0]);
 }

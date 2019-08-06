@@ -154,9 +154,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BlockCodex.h" />
+    <ClInclude Include="BlockData.h" />
+    <ClInclude Include="BlockTypes.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="MasterRenderer.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="OpaqueRenderer.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stbi.h" />
@@ -166,8 +171,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BlockCodex.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="MasterRenderer.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="OpaqueRenderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stbi.cpp" />
     <ClCompile Include="stdafx.cpp">

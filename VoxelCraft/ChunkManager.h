@@ -13,8 +13,8 @@ public:
 public:
 	void loadChunk(const VecXZ& pos, const Chunk& chunk);
 	void unloadChunk(const VecXZ& pos);
-	void setBlock(std::int16_t x, std::int16_t y, std::int16_t z, Block_id id);
-	Block_id getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const;
+	void setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
+	BlockType getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const;
 private:
 	std::unordered_map<VecXZ, Chunk> m_chunks;
 };

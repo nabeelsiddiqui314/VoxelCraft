@@ -8,6 +8,6 @@ BlockCodex::BlockCodex() {
 	s_blocks[static_cast<std::size_t>(BlockType::GRASS)] = BlockData({ 0,0 }, { 1,0 }, {2,0}, true);
 }
 
-const BlockData& BlockCodex::getBlockData(Block_id id) {
+const BlockData& BlockCodex::getBlockData(BlockType id) {
 	return s_blocks[static_cast<std::size_t>(id)];
 }

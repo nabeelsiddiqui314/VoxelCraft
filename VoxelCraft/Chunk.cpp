@@ -2,13 +2,13 @@
 #include "Chunk.h"
 
 Chunk::Chunk() {
-	m_blocks.fill(0);
+	m_blocks.fill(BlockType::VOID);
 }
 
-void Chunk::setBlock(std::int16_t x, std::int16_t y, std::int16_t z, Block_id id) {
+void Chunk::setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id) {
 	m_blocks[x + CHUNK_WIDTH * (y + CHUNK_WIDTH * z)] = id;
 }
 
-Block_id Chunk::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const {
+BlockType Chunk::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const {
 	return m_blocks[x + CHUNK_WIDTH * (y + CHUNK_WIDTH * z)];
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Chunk.h"
+#include "vecXZ.h"
 
 class MapGenerator
 {
@@ -7,6 +8,6 @@ public:
 	MapGenerator();
 	virtual ~MapGenerator() {}
 public:
-	virtual Chunk& generateChunk(std::int16_t x, std::int16_t y) = 0;
+	virtual Chunk generateChunk(const VecXZ& pos) = 0;
 };
 

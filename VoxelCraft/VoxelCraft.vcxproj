@@ -160,6 +160,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="ChunkManager.h" />
+    <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="MasterRenderer.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="vecXZ.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -178,6 +180,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="ChunkManager.cpp" />
+    <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="MasterRenderer.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="OpaqueRenderer.cpp" />
@@ -190,7 +193,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="vecXZ.cpp" />
     <ClCompile Include="VoxelCraft.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

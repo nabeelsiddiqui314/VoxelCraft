@@ -6,9 +6,7 @@ struct VecXZ {
 	std::int16_t x, z;
 };
 
-bool operator==(const VecXZ& lhs, const VecXZ& rhs) {
-	return lhs.x == rhs.x && lhs.z == rhs.z;
-}
+bool operator==(const VecXZ& lhs, const VecXZ& rhs);
 
 namespace std {
 	template<>

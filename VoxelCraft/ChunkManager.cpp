@@ -5,8 +5,8 @@ ChunkManager::~ChunkManager() {
 	m_chunks.clear();
 }
 
-void ChunkManager::loadChunk(const VecXZ& pos) {
-	m_chunks.insert(std::make_pair(pos, Chunk()));
+void ChunkManager::loadChunk(const VecXZ& pos, const Chunk& chunk) {
+	m_chunks.emplace(std::make_pair(pos, chunk));
 }
 
 void ChunkManager::unloadChunk(const VecXZ& pos) {

@@ -2,8 +2,8 @@
 #include <array>
 #include "BlockTypes.h"
 
-const int CHUNK_WIDTH = 16;
-const int CHUNK_HEIGHT = 16;
+const int CHUNK_WIDTH = 2;
+const int CHUNK_HEIGHT = 2;
 const int CHUNK_VOLUME = CHUNK_WIDTH * CHUNK_WIDTH * CHUNK_HEIGHT;
 
 class Chunk {

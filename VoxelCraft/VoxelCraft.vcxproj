@@ -164,6 +164,7 @@
     <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="MasterRenderer.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshGenerator.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="OpaqueRenderer.h" />
     <ClInclude Include="RenderData.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="FlatGenerator.cpp" />
     <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="MasterRenderer.cpp" />
+    <ClCompile Include="MeshGenerator.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="OpaqueRenderer.cpp" />
     <ClCompile Include="Shader.cpp" />

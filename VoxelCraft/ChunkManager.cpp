@@ -13,10 +13,14 @@ void ChunkManager::unloadChunk(const VecXZ& pos) {
 	m_chunks.erase(pos);
 }
 
-void ChunkManager::setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id) {
-	m_chunks[{x / CHUNK_WIDTH, z / CHUNK_WIDTH}].setBlock(x % CHUNK_WIDTH, y,  z % CHUNK_WIDTH, id);
+bool ChunkManager::doesChunkExist(const VecXZ& pos) const {
+	return m_chunks.find(pos) != m_chunks.end();
 }
 
-BlockType ChunkManager::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const {
-	return m_chunks.at({x / CHUNK_WIDTH, z / CHUNK_WIDTH}).getBlock(x % CHUNK_WIDTH, y, z % CHUNK_WIDTH);
+void ChunkManager::setBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, BlockType id) {
+	m_chunks[pos].setBlock(x, y, z, id);
+}
+
+BlockType ChunkManager::getBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const {
+	return m_chunks.at(pos).getBlock(x, y, z);
 }

@@ -3,42 +3,42 @@
 
 // indices in 0, 1, 2, 0, 2, 3
 
-const std::vector<GLfloat> MeshGenerator::s_front = {
+const std::array<GLfloat, 12> MeshGenerator::s_front = {
 	0, 0, 0,
 	1, 0, 0,
 	1, 1, 0,
 	0, 1, 0
 };
 
-const std::vector<GLfloat> MeshGenerator::s_back = {
+const std::array<GLfloat, 12> MeshGenerator::s_back = {
 	0, 1, -1,
 	1, 1, -1,
 	1, 0, -1,
 	0, 0, -1
 };
 
-const std::vector<GLfloat> MeshGenerator::s_left = {
+const std::array<GLfloat, 12> MeshGenerator::s_left = {
 	0, 0, -1,
 	0, 0,  0,
 	0, 1,  0,
 	0, 1, -1
 };
 
-const std::vector<GLfloat> MeshGenerator::s_right = {
+const std::array<GLfloat, 12> MeshGenerator::s_right = {
 	1, 0, -1,
 	1, 0,  0,
 	1, 1,  0,
 	1, 1, -1
 };
 
-const std::vector<GLfloat> MeshGenerator::s_top = {
+const std::array<GLfloat, 12> MeshGenerator::s_top = {
 	0, 1,  0,
 	1, 1,  0,
 	1, 1, -1,
 	0, 1, -1
 };
 
-const std::vector<GLfloat> MeshGenerator::s_bottom = {
+const std::array<GLfloat, 12> MeshGenerator::s_bottom = {
 	0, 0, -1,
 	1, 0, -1,
 	1, 0,  0,
@@ -118,7 +118,7 @@ Model MeshGenerator::generateMesh(const VecXZ& pos) {
 	return model;
 }
 
-void MeshGenerator::addFace(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, const std::vector<GLfloat>& face) {
+void MeshGenerator::addFace(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, const std::array<GLfloat, 12>& face) {
 	m_mesh.textureCoords.insert(m_mesh.textureCoords.end(),  {
 			0, 0,
 			1, 0,

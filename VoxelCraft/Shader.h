@@ -18,6 +18,8 @@ public:
 	void setUniform1i(const std::string& name, int val);
 	GLint getUniformLocation(const std::string& name);
 private:
+	void CheckCompileErrors(GLuint shader, std::string type);
+private:
 	GLuint m_program;
 	std::string m_vertexCode, m_fragmentCode;
 	std::unordered_map<std::string, GLint> m_uniformHashMap;

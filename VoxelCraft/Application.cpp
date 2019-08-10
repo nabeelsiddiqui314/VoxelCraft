@@ -36,11 +36,11 @@ void Application::run() {
 		}
 
 		if (clock.getElapsedTime().asSeconds() > 1 / 60.0f) {
-			cam->updateRotation(sf::Mouse::getPosition().x - xLast, -sf::Mouse::getPosition().y + yLast);
 			xLast = sf::Mouse::getPosition().x;
 			yLast = sf::Mouse::getPosition().y;
 			clock.restart();
 		}
+		cam->updateRotation(sf::Mouse::getPosition().x - xLast, -sf::Mouse::getPosition().y + yLast);
 
 		m_renderer->render(m_window, *cam);
 		glfwSwapBuffers(m_window);

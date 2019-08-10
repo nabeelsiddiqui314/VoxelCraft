@@ -7,7 +7,7 @@ class MeshGenerator
 public:
 	MeshGenerator(const ChunkManager* chunks);
 public:
-	Model generateMesh(const VecXZ& pos);
+	const Mesh& generateMesh(const VecXZ& pos);
 private:
 	void addFace(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, const std::array<GLfloat, 12>& face);
 private:

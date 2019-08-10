@@ -11,10 +11,10 @@ const std::array<GLfloat, 12> MeshGenerator::s_front = {
 };
 
 const std::array<GLfloat, 12> MeshGenerator::s_back = {
-	0, 1, -1,
-	1, 1, -1,
 	1, 0, -1,
-	0, 0, -1
+	0, 0, -1,
+	0, 1, -1,
+	1, 1, -1
 };
 
 const std::array<GLfloat, 12> MeshGenerator::s_left = {
@@ -25,10 +25,10 @@ const std::array<GLfloat, 12> MeshGenerator::s_left = {
 };
 
 const std::array<GLfloat, 12> MeshGenerator::s_right = {
-	1, 0, -1,
 	1, 0,  0,
-	1, 1,  0,
-	1, 1, -1
+	1, 0, -1,
+	1, 1, -1,
+	1, 1,  0
 };
 
 const std::array<GLfloat, 12> MeshGenerator::s_top = {
@@ -48,7 +48,7 @@ const std::array<GLfloat, 12> MeshGenerator::s_bottom = {
 MeshGenerator::MeshGenerator(const ChunkManager* chunks)
 : p_chunks(chunks) {}
 
-Model MeshGenerator::generateMesh(const VecXZ& pos) {
+const Mesh& MeshGenerator::generateMesh(const VecXZ& pos) {
 	BlockType top
 	, bottom
 	, left
@@ -113,9 +113,7 @@ Model MeshGenerator::generateMesh(const VecXZ& pos) {
 			}
 		}
 	}
-	Model model;
-	model.addMesh(m_mesh);
-	return model;
+	return m_mesh;
 }
 
 void MeshGenerator::addFace(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, const std::array<GLfloat, 12>& face) {

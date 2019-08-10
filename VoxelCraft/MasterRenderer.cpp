@@ -23,7 +23,7 @@ void MasterRenderer::render(GLFWwindow* window, const Camera& camera) {
 	m_shader.setUniformMat4("u_view", view);
 	m_shader.setUniformMat4("u_projection", projection);
 
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	m_chunks[0].bindVao();
 	glDrawElements(GL_TRIANGLES, m_chunks[0].getRenderData().indicesCount, GL_UNSIGNED_INT, nullptr);
 }

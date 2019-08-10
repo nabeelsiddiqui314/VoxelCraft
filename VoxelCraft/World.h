@@ -9,10 +9,11 @@ class World
 public:
 	World();
 public:
-	Model get();
+	Model& get();
 	void update();
 private:
 	ChunkManager m_chunks;
 	std::unique_ptr<MapGenerator> m_mapGenerator;
 	MeshGenerator m_meshGenerator;
+	std::vector<Model> m_chunkModels;
 };

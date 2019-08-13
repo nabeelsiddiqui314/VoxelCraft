@@ -19,7 +19,7 @@ void MasterRenderer::render(GLFWwindow* window, const Camera& camera) {
 
 	m_shader.useProgram();
 	glm::mat4 view = camera.getViewMatrix();
-	glm::mat4 projection = glm::perspective(glm::radians(70.0f), (float)1000 / (float)600, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(70.0f), (float)1000 / (float)600, 0.1f, 1000.0f);
 	m_shader.setUniformMat4("u_view", view);
 	m_shader.setUniformMat4("u_projection", projection);
 

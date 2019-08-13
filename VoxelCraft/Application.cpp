@@ -35,12 +35,9 @@ void Application::run() {
 			cam->updateMovement(Camera::RIGHT, c.getElapsedTime().asSeconds());
 		}
 
-		if (clock.getElapsedTime().asSeconds() > 1 / 60.0f) {
-			xLast = sf::Mouse::getPosition().x;
-			yLast = sf::Mouse::getPosition().y;
-			clock.restart();
-		}
 		cam->updateRotation(sf::Mouse::getPosition().x - xLast, -sf::Mouse::getPosition().y + yLast);
+		xLast = sf::Mouse::getPosition().x;
+		yLast = sf::Mouse::getPosition().y;
 
 		m_renderer->render(m_window, *cam);
 		glfwSwapBuffers(m_window);

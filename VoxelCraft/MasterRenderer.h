@@ -11,10 +11,10 @@ class MasterRenderer
 public:
 	MasterRenderer();
 public:
-	void addChunk(const Model& model);
+	void addChunk(const Model* model);
 	void render(GLFWwindow* window, const Camera& camera);
 private:
-	std::vector<Model> m_chunks;
+	std::vector<const Model*> m_chunks;
 	OpaqueRenderer m_blockRenderer;
 	//temp
 	Shader m_shader;

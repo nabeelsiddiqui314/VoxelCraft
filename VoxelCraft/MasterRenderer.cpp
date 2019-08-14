@@ -9,8 +9,8 @@ MasterRenderer::MasterRenderer() {
 	m_shader.setUniform1i("u_texture", 0);
 }
 
-void MasterRenderer::addChunk(const Model& model) {
-	m_chunks.push_back(model);
+void MasterRenderer::addChunk(const Model* model) {
+	m_chunks.emplace_back(model);
 }
 
 void MasterRenderer::render(GLFWwindow* window, const Camera& camera) {
@@ -24,6 +24,8 @@ void MasterRenderer::render(GLFWwindow* window, const Camera& camera) {
 	m_shader.setUniformMat4("u_projection", projection);
 
 	glEnable(GL_CULL_FACE);
-	m_chunks[0].bindVao();
-	glDrawElements(GL_TRIANGLES, m_chunks[0].getRenderData().indicesCount, GL_UNSIGNED_INT, nullptr);
+	m_chunks[0]->bindVao();
+	glDrawElements(GL_TRIANGLES, m_chunks[0]->getRenderData().indicesCount, GL_UNSIGNED_INT, nullptr);
+	m_chunks.clear();
+	m_chunks.shrink_to_fit();
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "ChunkManager.h"
 #include "FlatGenerator.h"
-#include "MeshGenerator.h"
+#include "MasterRenderer.h"
 #include <memory>
 
 class World
@@ -9,11 +9,9 @@ class World
 public:
 	World();
 public:
-	Model& get();
-	void update();
+	void update(MasterRenderer& renderer);
 private:
 	ChunkManager m_chunks;
 	std::unique_ptr<MapGenerator> m_mapGenerator;
-	MeshGenerator m_meshGenerator;
 	std::vector<Model> m_chunkModels;
 };

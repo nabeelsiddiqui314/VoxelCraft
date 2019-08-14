@@ -1,6 +1,7 @@
 #pragma once
 #include "Mesh.h"
 #include "RenderData.h"
+#include <iostream>
 
 class Model
 {
@@ -13,7 +14,7 @@ public:
 	void generateVAO();
 	void addVBO(GLuint size, const std::vector<GLfloat>& buffer);
 	void addIBO(const std::vector<GLuint>& iBuffer);
-	void bindVao();
+	void bindVao() const;
 	void cleanUp();
 	const RenderData& getRenderData() const;
 private:

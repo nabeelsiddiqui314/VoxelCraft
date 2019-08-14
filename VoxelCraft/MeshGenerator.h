@@ -1,17 +1,17 @@
 #pragma once
-#include "ChunkManager.h"
-#include "Model.h"
+#include "Mesh.h"
+#include "ChunkBlocks.h"
 
 class MeshGenerator
 {
 public:
-	MeshGenerator(const ChunkManager* chunks);
-public:
-	const Mesh& generateMesh(const VecXZ& pos);
+	const Mesh& generateMesh(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk, 
+		const ChunkBlocks& cFront, const ChunkBlocks& cBack, const ChunkBlocks& cLeft, 
+		const ChunkBlocks& cRight);
+	void cleanUp();
 private:
-	void addFace(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, const std::array<GLfloat, 12>& face);
+	void addFace(std::int16_t x, std::int16_t y, std::int16_t z, const std::array<GLfloat, 12>& face);
 private:
-	const ChunkManager* p_chunks;
 	Mesh m_mesh;
 	GLuint m_index = 0;
 

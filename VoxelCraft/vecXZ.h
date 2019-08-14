@@ -16,7 +16,7 @@ namespace std {
 			auto hashx = hasher(vec.x);
 			auto hashz = hasher(vec.z);
 
-			return std::hash<std::int16_t>{}((hashx ^ hashz) >> 2);
+			return std::hash<std::size_t>{}((hashx ^ hashz) >> 2);
 		}
 	};
 }

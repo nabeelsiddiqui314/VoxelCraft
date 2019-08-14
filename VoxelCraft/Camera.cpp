@@ -10,7 +10,7 @@ Camera::Camera()
   m_yaw(-90.0f),
   m_pitch(0.0f),
   m_speed(15000.5f),
-  m_sensitivity(1.0f) {
+  m_sensitivity(0.2f) {
 	m_worldUp = m_up;
 	calculateVectors();
 }
@@ -25,6 +25,10 @@ void Camera::updateMovement(const Direction& dir, float dt) {
 		m_position -= m_right * speed;
 	if (dir == RIGHT)
 		m_position += m_right * speed;
+	if (dir == UP)
+		m_position += m_worldUp * speed;
+	if (dir == DOWN)
+		m_position -= m_worldUp * speed;
 }
 
 void Camera::updateRotation(float xOffset, float yOffset) {

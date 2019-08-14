@@ -4,6 +4,6 @@
 class FlatGenerator : public MapGenerator
 {
 public:
-	virtual Chunk generateChunk(const VecXZ& pos) override;
+	virtual ChunkBlocks generateChunk(const VecXZ& pos) override;
 };
 

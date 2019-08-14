@@ -45,7 +45,7 @@ void Model::addIBO(const std::vector<GLuint>& iBuffer) {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, iBuffer.size() * sizeof(GLfloat), &iBuffer.front(), GL_STATIC_DRAW);
 }
 
-void Model::bindVao() {
+void Model::bindVao() const {
 	glBindVertexArray(m_renderData.VAO);
 }
 

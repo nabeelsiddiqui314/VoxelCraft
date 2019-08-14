@@ -17,32 +17,38 @@ Application::Application() {
 	m_renderer = std::make_unique<MasterRenderer>();
 	m_world = std::make_unique<World>();
 	cam = std::make_unique<Camera>();
-	m_renderer->addChunk(m_world->get());
 }
 
 void Application::run() {
 	while (!glfwWindowShouldClose(m_window)) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			cam->updateMovement(Camera::FORWARD, c.getElapsedTime().asSeconds());
+			cam->updateMovement(Camera::FORWARD, frameClock.getElapsedTime().asSeconds());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			cam->updateMovement(Camera::LEFT, c.getElapsedTime().asSeconds());
+			cam->updateMovement(Camera::LEFT, frameClock.getElapsedTime().asSeconds());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			cam->updateMovement(Camera::BACKWARD, c.getElapsedTime().asSeconds());
+			cam->updateMovement(Camera::BACKWARD, frameClock.getElapsedTime().asSeconds());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			cam->updateMovement(Camera::RIGHT, c.getElapsedTime().asSeconds());
+			cam->updateMovement(Camera::RIGHT, frameClock.getElapsedTime().asSeconds());
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+			cam->updateMovement(Camera::DOWN, frameClock.getElapsedTime().asSeconds());
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+			cam->updateMovement(Camera::UP, frameClock.getElapsedTime().asSeconds());
 		}
 
 		cam->updateRotation(sf::Mouse::getPosition().x - xLast, -sf::Mouse::getPosition().y + yLast);
 		xLast = sf::Mouse::getPosition().x;
 		yLast = sf::Mouse::getPosition().y;
 
+		m_world->update(*m_renderer);
 		m_renderer->render(m_window, *cam);
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
-		c.restart();
+		frameClock.restart();
 	}
 }
 

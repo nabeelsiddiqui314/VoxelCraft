@@ -159,7 +159,9 @@
     <ClInclude Include="BlockTypes.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Chunk.h" />
+    <ClInclude Include="ChunkBlocks.h" />
     <ClInclude Include="ChunkManager.h" />
+    <ClInclude Include="ChunkModels.h" />
     <ClInclude Include="FlatGenerator.h" />
     <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="MasterRenderer.h" />
@@ -180,8 +182,9 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="BlockCodex.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="ChunkBlocks.cpp" />
     <ClCompile Include="ChunkManager.cpp" />
+    <ClCompile Include="ChunkModels.cpp" />
     <ClCompile Include="FlatGenerator.cpp" />
     <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="MasterRenderer.cpp" />

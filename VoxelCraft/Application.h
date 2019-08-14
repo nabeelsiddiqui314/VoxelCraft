@@ -15,7 +15,7 @@ private:
 	std::unique_ptr<MasterRenderer> m_renderer;
 	std::unique_ptr<World> m_world;
 	std::unique_ptr<Camera> cam;
-	sf::Clock c, clock;
+	sf::Clock frameClock;
 	float xLast, yLast;
 };
 

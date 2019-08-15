@@ -24,8 +24,10 @@ void MasterRenderer::render(GLFWwindow* window, const Camera& camera) {
 	m_shader.setUniformMat4("u_projection", projection);
 
 	glEnable(GL_CULL_FACE);
-	m_chunks[0]->bindVao();
-	glDrawElements(GL_TRIANGLES, m_chunks[0]->getRenderData().indicesCount, GL_UNSIGNED_INT, nullptr);
+	for (std::int16_t i = 0; i < m_chunks.size(); i++) {
+		m_chunks[i]->bindVao();
+		glDrawElements(GL_TRIANGLES, m_chunks[i]->getRenderData().indicesCount, GL_UNSIGNED_INT, nullptr);
+	}
 	m_chunks.clear();
 	m_chunks.shrink_to_fit();
 }

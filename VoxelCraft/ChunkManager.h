@@ -16,6 +16,7 @@ public:
 	BlockType getBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const;
 	void createMesh(const VecXZ& pos);
 	const Model& getChunkModels(const VecXZ& pos) const;
+	bool hasMesh(const VecXZ& pos) const;
 private:
 	std::unordered_map<VecXZ, Chunk> m_chunks;
 };

@@ -3,15 +3,27 @@
 
 World::World() {
 	m_mapGenerator = std::make_unique<FlatGenerator>();
-	m_chunks.loadChunk({ 0 , 0 }, m_mapGenerator->generateChunk({0,0}));
-	m_chunks.loadChunk({ -1, 0 }, ChunkBlocks());
-	m_chunks.loadChunk({ 1 , 0 }, ChunkBlocks());
-	m_chunks.loadChunk({ 0 , 1 }, ChunkBlocks());
-	m_chunks.loadChunk({ 0 ,-1 }, ChunkBlocks());
-	m_chunks.createMesh({ 0,0 });
-	m_chunkModels.emplace_back(m_chunks.getChunkModels({0,0}));
+	for (std::int16_t x = 0; x < 3; x++) {
+		for (std::int16_t z = 0; z < 3; z++) {
+			m_chunkBatch.push_back({x,z});
+		}
+	}
 }
 
 void World::update(MasterRenderer& renderer) {
-	renderer.addChunk(&m_chunks.getChunkModels({ 0,0 }));
+	if (m_batchIndex < m_chunkBatch.size()) {
+		m_chunks.loadChunk(m_chunkBatch[m_batchIndex], m_mapGenerator->generateChunk(m_chunkBatch[m_batchIndex]));
+		m_batchIndex++;
+	}
+	else {
+		for (std::int16_t i = 0; i < m_chunkBatch.size(); i++) {
+			if (!m_chunks.hasMesh(m_chunkBatch[i])) {
+				m_chunks.createMesh(m_chunkBatch[i]);
+				m_models.emplace_back(m_chunks.getChunkModels(m_chunkBatch[i]));
+			}
+		}
+	}
+	for (std::int16_t i = 0; i < m_models.size(); i++) {
+		renderer.addChunk(&m_models[i]);
+	}
 }

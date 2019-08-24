@@ -5,9 +5,10 @@
 class MeshGenerator
 {
 public:
-	const Mesh& generateMesh(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk, 
+	void generateMesh(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk, 
 		const ChunkBlocks& cFront, const ChunkBlocks& cBack, const ChunkBlocks& cLeft, 
 		const ChunkBlocks& cRight);
+	const Mesh& getMesh() const;
 	void cleanUp();
 private:
 	void addFace(std::int16_t x, std::int16_t y, std::int16_t z, const std::array<GLfloat, 12>& face);

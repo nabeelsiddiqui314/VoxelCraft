@@ -45,7 +45,7 @@ const std::array<GLfloat, 12> MeshGenerator::s_bottom = {
 	0, 0,  0
 };
 
-const Mesh& MeshGenerator::generateMesh(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk, const ChunkBlocks& cFront, const ChunkBlocks& cBack, const ChunkBlocks& cLeft, const ChunkBlocks& cRight) {
+void MeshGenerator::generateMesh(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk, const ChunkBlocks& cFront, const ChunkBlocks& cBack, const ChunkBlocks& cLeft, const ChunkBlocks& cRight) {
 	BlockType top
 	, bottom
 	, left
@@ -113,6 +113,9 @@ const Mesh& MeshGenerator::generateMesh(std::int16_t originX, std::int16_t origi
 			}
 		}
 	}
+}
+
+const Mesh& MeshGenerator::getMesh() const {
 	return m_mesh;
 }
 

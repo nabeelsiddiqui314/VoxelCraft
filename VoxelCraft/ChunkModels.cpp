@@ -3,7 +3,9 @@
 
 void ChunkModels::createMesh(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk, const ChunkBlocks& cFront,
 	const ChunkBlocks& cBack, const ChunkBlocks& cLeft, const ChunkBlocks& cRight) {
-	m_model.addMesh(m_meshGenerator.generateMesh(originX, originZ, chunk, cFront, cBack, cLeft, cRight));
+	m_meshGenerator.generateMesh(originX, originZ, chunk, cFront, cBack, cLeft, cRight);
+	if(!m_meshGenerator.getMesh().vertices.empty())
+		m_model.addMesh(m_meshGenerator.getMesh());
 }
 
 void ChunkModels::cleanUp() {

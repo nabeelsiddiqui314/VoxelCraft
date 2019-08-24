@@ -6,8 +6,7 @@
 class Model
 {
 public:
-	Model() = default;
-	Model(const Mesh& mesh);
+	Model();
 	~Model();
 public:
 	void addMesh(const Mesh& mesh);

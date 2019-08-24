@@ -3,9 +3,9 @@
 #include <GL/glew.h>
 
 
-Model::Model(const Mesh& mesh) {
-	addMesh(mesh);
-}
+Model::Model()
+	: m_vboCount(0),
+	  m_ibo(0) {}
 
 void Model::addMesh(const Mesh& mesh) {
 	generateVAO();
@@ -17,9 +17,6 @@ void Model::addMesh(const Mesh& mesh) {
 }
 
 void Model::generateVAO() {
-	if (m_renderData.VAO != 0) {
-		this->cleanUp();
-	}
 	glGenVertexArrays(1, &m_renderData.VAO);
 }
 
@@ -50,8 +47,6 @@ void Model::bindVao() const {
 }
 
 void Model::cleanUp() {
-	if (m_renderData.VAO)
-		glDeleteVertexArrays(1, &m_renderData.VAO);
 	if (m_vBuffer.size() > 0)
 		glDeleteBuffers(static_cast<GLsizei>(m_vBuffer.size()), &m_vBuffer.front());
 	m_vBuffer.clear();

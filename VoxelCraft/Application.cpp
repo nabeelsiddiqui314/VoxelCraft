@@ -39,6 +39,7 @@ void Application::run() {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			cam->updateMovement(Camera::UP, frameClock.getElapsedTime().asSeconds());
 		}
+		frameClock.restart();
 
 		cam->updateRotation(sf::Mouse::getPosition().x - xLast, -sf::Mouse::getPosition().y + yLast);
 		xLast = sf::Mouse::getPosition().x;
@@ -48,7 +49,6 @@ void Application::run() {
 		m_renderer->render(m_window, *cam);
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
-		frameClock.restart();
 	}
 }
 

@@ -1,8 +1,8 @@
 #pragma once
-#include "ChunkModels.h"
+#include "MeshGenerator.h"
 
 struct Chunk {
 	ChunkBlocks chunk;
-	ChunkModels models;
+	MeshGenerator models;
 	bool hasMeshGenerated = false;
 };

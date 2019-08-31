@@ -113,31 +113,37 @@ void MeshGenerator::generateMesh(std::int16_t originX, std::int16_t originZ, con
 			}
 		}
 	}
+	if (!m_blockModelType.mesh.vertices.empty()) {
+		m_blockModelType.model.emplace();
+		m_blockModelType.model.value().addMesh(m_blockModelType.mesh);
+	}
+	else
+		m_blockModelType.model = std::nullopt;
 }
 
-const Mesh& MeshGenerator::getMesh() const {
-	return m_mesh;
+const std::optional<Model>& MeshGenerator::getBlockModel() const {
+	return m_blockModelType.model;
 }
 
 void MeshGenerator::cleanUp() {
-	m_mesh.vertices.clear();
-	m_mesh.textureCoords.clear();
-	m_mesh.indices.clear();
+	m_blockModelType.mesh.vertices.clear();
+	m_blockModelType.mesh.textureCoords.clear();
+	m_blockModelType.mesh.indices.clear();
 
-	m_mesh.vertices.shrink_to_fit();
-	m_mesh.textureCoords.shrink_to_fit();
-	m_mesh.indices.shrink_to_fit();
+	m_blockModelType.mesh.vertices.shrink_to_fit();
+	m_blockModelType.mesh.textureCoords.shrink_to_fit();
+	m_blockModelType.mesh.indices.shrink_to_fit();
 }
 
 void MeshGenerator::addFace(std::int16_t x, std::int16_t y, std::int16_t z, const std::array<GLfloat, 12>& face) {
-	m_mesh.textureCoords.insert(m_mesh.textureCoords.end(),  {
+	m_blockModelType.mesh.textureCoords.insert(m_blockModelType.mesh.textureCoords.end(),  {
 			0, 0,
 			1, 0,
 			1, 1,
 			0, 1
 		} );
 
-	m_mesh.indices.insert(m_mesh.indices.end(), {
+	m_blockModelType.mesh.indices.insert(m_blockModelType.mesh.indices.end(), {
 			m_index,
 			m_index + 1,
 			m_index + 2,
@@ -149,8 +155,8 @@ void MeshGenerator::addFace(std::int16_t x, std::int16_t y, std::int16_t z, cons
 
 	int faceIndex = 0;
 	for (int i = 0; i < 4; i++) {
-		m_mesh.vertices.push_back(x + face[faceIndex++]);
-		m_mesh.vertices.push_back(y + face[faceIndex++]);
-		m_mesh.vertices.push_back(z + face[faceIndex++]);
+		m_blockModelType.mesh.vertices.push_back(x + face[faceIndex++]);
+		m_blockModelType.mesh.vertices.push_back(y + face[faceIndex++]);
+		m_blockModelType.mesh.vertices.push_back(z + face[faceIndex++]);
 	}
 }

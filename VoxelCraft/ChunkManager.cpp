@@ -33,12 +33,14 @@ bool ChunkManager::createMesh(const VecXZ& pos) {
 		doesChunkExist({ pos.x, pos.z - 1 }) &&
 		doesChunkExist({ pos.x - 1, pos.z }) &&
 		doesChunkExist({ pos.x + 1, pos.z })) {
-		m_chunks[pos].models.createMesh(pos.x * CHUNK_WIDTH, pos.z * CHUNK_WIDTH,
+		m_chunks[pos].models.generateMesh(pos.x * CHUNK_WIDTH, pos.z * CHUNK_WIDTH,
 			m_chunks[pos].chunk,
 			m_chunks[{ pos.x, pos.z + 1 }].chunk,
 			m_chunks[{ pos.x, pos.z - 1 }].chunk,
 			m_chunks[{ pos.x - 1, pos.z }].chunk,
 			m_chunks[{ pos.x + 1, pos.z }].chunk);
+		if (!m_chunks[pos].models.getBlockModel().has_value())
+			return false;
 		m_chunks[pos].hasMeshGenerated = true;
 		m_chunks[pos].models.cleanUp();
 		return true;
@@ -47,7 +49,7 @@ bool ChunkManager::createMesh(const VecXZ& pos) {
 }
 
 const Model& ChunkManager::getChunkModels(const VecXZ& pos) const {
-	return m_chunks.at(pos).models.getModel();
+	return m_chunks.at(pos).models.getBlockModel().value();
 }
 
 bool ChunkManager::hasMesh(const VecXZ& pos) const {

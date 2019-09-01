@@ -6,7 +6,7 @@ ChunkBlocks FlatGenerator::generateChunk(const VecXZ& pos) {
 	for (std::int16_t x = 0; x < CHUNK_WIDTH; x++) {
 		for (std::int16_t y = 0; y < CHUNK_HEIGHT; y++) {
 			for (std::int16_t z = 0; z < CHUNK_WIDTH; z++) {
-				if (pos.x == 0 || pos.z == 0 || pos.x ==9 || pos.z==9)
+				if (pos.x == 0 || pos.z == 0 || pos.x ==3 || pos.z==3)
 					chunk.setBlock(x, y, z, BlockType::VOID);
 				else
 					chunk.setBlock(x, y, z, BlockType::GRASS);

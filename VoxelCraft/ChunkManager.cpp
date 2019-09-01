@@ -27,31 +27,33 @@ BlockType ChunkManager::getBlock(const VecXZ& pos, std::int16_t x, std::int16_t 
 	return m_chunks.at(pos).chunk.getBlock(x, y, z);
 }
 
-bool ChunkManager::createMesh(const VecXZ& pos) {
+void ChunkManager::createMesh(const VecXZ& pos) {
 	if (!m_chunks[pos].hasMeshGenerated && 
 		doesChunkExist({ pos.x, pos.z + 1 }) &&
 		doesChunkExist({ pos.x, pos.z - 1 }) &&
 		doesChunkExist({ pos.x - 1, pos.z }) &&
 		doesChunkExist({ pos.x + 1, pos.z })) {
-		m_chunks[pos].models.generateMesh(pos.x * CHUNK_WIDTH, pos.z * CHUNK_WIDTH,
+		m_chunks[pos].models.generateModels(pos.x * CHUNK_WIDTH, pos.z * CHUNK_WIDTH,
 			m_chunks[pos].chunk,
 			m_chunks[{ pos.x, pos.z + 1 }].chunk,
 			m_chunks[{ pos.x, pos.z - 1 }].chunk,
 			m_chunks[{ pos.x - 1, pos.z }].chunk,
 			m_chunks[{ pos.x + 1, pos.z }].chunk);
-		if (!m_chunks[pos].models.getBlockModel().has_value())
-			return false;
-		m_chunks[pos].hasMeshGenerated = true;
+
 		m_chunks[pos].models.cleanUp();
-		return true;
 	}
-	return false;
 }
 
-const Model& ChunkManager::getChunkModels(const VecXZ& pos) const {
-	return m_chunks.at(pos).models.getBlockModel().value();
+const ChunkModels& ChunkManager::getChunkModels(const VecXZ& pos) const {
+	return m_chunks.at(pos).models.getModels();
 }
 
 bool ChunkManager::hasMesh(const VecXZ& pos) const {
 	return m_chunks.at(pos).hasMeshGenerated;
+}
+
+void ChunkManager::updateMeshStatus(const VecXZ& pos) {
+	if (m_chunks[pos].models.getModels().solid.model.has_value()) {
+		m_chunks[pos].hasMeshGenerated = true;
+	}
 }

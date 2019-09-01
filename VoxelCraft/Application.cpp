@@ -17,6 +17,7 @@ Application::Application() {
 	m_renderer = std::make_unique<MasterRenderer>();
 	m_world = std::make_unique<World>();
 	cam = std::make_unique<Camera>();
+	BlockCodex::init();
 }
 
 void Application::run() {

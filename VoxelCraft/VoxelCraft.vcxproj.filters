@@ -84,7 +84,10 @@
     <ClInclude Include="Chunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModelType.h">
+    <ClInclude Include="ChunkModelsMaker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockCategory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -141,6 +144,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ChunkBlocks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChunkModelsMaker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

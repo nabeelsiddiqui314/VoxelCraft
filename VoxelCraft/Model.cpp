@@ -39,26 +39,13 @@ void Model::addIBO(const std::vector<GLuint>& iBuffer) {
 	glGenBuffers(1, &m_ibo);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, iBuffer.size() * sizeof(GLfloat), &iBuffer.front(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, iBuffer.size() * sizeof(GLuint), &iBuffer.front(), GL_STATIC_DRAW);
 }
 
 void Model::bindVao() const {
 	glBindVertexArray(m_renderData.VAO);
 }
 
-void Model::cleanUp() {
-	if (m_vBuffer.size() > 0)
-		glDeleteBuffers(static_cast<GLsizei>(m_vBuffer.size()), &m_vBuffer.front());
-	m_vBuffer.clear();
-	m_vBuffer.shrink_to_fit();
-	m_vboCount = 0;
-	m_ibo = 0;
-}
-
 const RenderData& Model::getRenderData() const {
 	return m_renderData;
-}
-
-Model::~Model() {
-	cleanUp();
 }

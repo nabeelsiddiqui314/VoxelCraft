@@ -3,8 +3,8 @@
 
 World::World() {
 	m_mapGenerator = std::make_unique<FlatGenerator>();
-	for (std::int16_t x = 0; x < 4; x++) {
-		for (std::int16_t z = 0; z < 4; z++) {
+	for (std::int16_t x = 0; x < 10; x++) {
+		for (std::int16_t z = 0; z < 10; z++) {
 			m_chunkBatch.push_back({x,z});
 		}
 	}

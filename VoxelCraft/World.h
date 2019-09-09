@@ -14,6 +14,6 @@ private:
 	ChunkManager m_chunks;
 	std::unique_ptr<MapGenerator> m_mapGenerator;
 	std::vector<VecXZ> m_chunkBatch;
-	std::vector<Model> m_models;
 	std::int16_t m_batchIndex = 0;
+	int modelCount = 0;
 };

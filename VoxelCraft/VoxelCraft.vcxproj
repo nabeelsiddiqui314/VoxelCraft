@@ -173,7 +173,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshGenerator.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="OpaqueRenderer.h" />
+    <ClInclude Include="SolidRenderer.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stbi.h" />
@@ -195,7 +195,7 @@
     <ClCompile Include="MasterRenderer.cpp" />
     <ClCompile Include="MeshGenerator.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="OpaqueRenderer.cpp" />
+    <ClCompile Include="SolidRenderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stbi.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -211,8 +211,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="shader.frag" />
-    <None Include="shader.vert" />
+    <None Include="solid.frag" />
+    <None Include="solid.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

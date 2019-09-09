@@ -1,9 +1,6 @@
 #pragma once
-#include "Camera.h"
-#include "OpaqueRenderer.h"
-#include "Model.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "SolidRenderer.h"
+#include "ChunkModelsMaker.h"
 #include <GLFW/glfw3.h>
 
 class MasterRenderer
@@ -11,13 +8,10 @@ class MasterRenderer
 public:
 	MasterRenderer();
 public:
-	void addChunk(const Model* model);
+	void addChunk(const ChunkModels& models);
 	void render(GLFWwindow* window, const Camera& camera);
 private:
-	std::vector<const Model*> m_chunks;
-	OpaqueRenderer m_blockRenderer;
-	//temp
-	Shader m_shader;
-	Texture m_tex;
+	SolidRenderer m_solidRenderer;
+	
 };
 

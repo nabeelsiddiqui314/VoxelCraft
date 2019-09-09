@@ -2,32 +2,16 @@
 #include "MasterRenderer.h"
 
 MasterRenderer::MasterRenderer() {
-	m_shader.loadShader("shader.vert", "shader.frag");
-	m_tex.load("res/grass.png");
-	m_tex.bind();
-	m_shader.useProgram();
-	m_shader.setUniform1i("u_texture", 0);
 }
 
-void MasterRenderer::addChunk(const Model* model) {
-	m_chunks.emplace_back(model);
+void MasterRenderer::addChunk(const ChunkModels& models) {
+	if (models.solid.model.has_value())
+		m_solidRenderer.addSolidChunk(&models.solid.model.value());
 }
 
 void MasterRenderer::render(GLFWwindow* window, const Camera& camera) {
 	glClearColor(0, 0.2, 1, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	m_shader.useProgram();
-	glm::mat4 view = camera.getViewMatrix();
-	glm::mat4 projection = glm::perspective(glm::radians(70.0f), (float)1000 / (float)600, 0.1f, 1000.0f);
-	m_shader.setUniformMat4("u_view", view);
-	m_shader.setUniformMat4("u_projection", projection);
-
-	glEnable(GL_CULL_FACE);
-	for (std::int16_t i = 0; i < m_chunks.size(); i++) {
-		m_chunks[i]->bindVao();
-		glDrawElements(GL_TRIANGLES, m_chunks[i]->getRenderData().indicesCount, GL_UNSIGNED_INT, nullptr);
-	}
-	m_chunks.clear();
-	m_chunks.shrink_to_fit();
+	m_solidRenderer.render(camera);
 }

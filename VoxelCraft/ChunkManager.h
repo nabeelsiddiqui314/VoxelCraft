@@ -17,7 +17,6 @@ public:
 	void createMesh(const VecXZ& pos);
 	const ChunkModels& getChunkModels(const VecXZ& pos) const;
 	bool hasMesh(const VecXZ& pos) const;
-	void updateMeshStatus(const VecXZ& pos);
 private:
 	std::unordered_map<VecXZ, Chunk> m_chunks;
 };

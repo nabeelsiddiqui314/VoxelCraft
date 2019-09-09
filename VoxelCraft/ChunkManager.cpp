@@ -40,6 +40,7 @@ void ChunkManager::createMesh(const VecXZ& pos) {
 			m_chunks[{ pos.x - 1, pos.z }].chunk,
 			m_chunks[{ pos.x + 1, pos.z }].chunk);
 
+		m_chunks[pos].hasMeshGenerated = true;
 		m_chunks[pos].models.cleanUp();
 	}
 }
@@ -49,11 +50,5 @@ const ChunkModels& ChunkManager::getChunkModels(const VecXZ& pos) const {
 }
 
 bool ChunkManager::hasMesh(const VecXZ& pos) const {
-	return m_chunks.at(pos).hasMeshGenerated;
-}
-
-void ChunkManager::updateMeshStatus(const VecXZ& pos) {
-	if (m_chunks[pos].models.getModels().solid.model.has_value()) {
-		m_chunks[pos].hasMeshGenerated = true;
-	}
+	return m_chunks.at(pos).models.getModels().solid.model.has_value();
 }

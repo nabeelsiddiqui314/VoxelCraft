@@ -4,8 +4,6 @@
 
 SolidRenderer::SolidRenderer() {
 	m_shader.loadShader("solid.vert", "solid.frag");
-	m_texture.load("res/grass.png");
-	m_texture.bind();
 	m_shader.useProgram();
 	m_shader.setUniform1i("u_texture", 0);
 }

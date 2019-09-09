@@ -2,7 +2,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "Shader.h"
-#include "Texture.h"
+#include "TextureAtlas.h"
 
 class SolidRenderer
 {
@@ -15,6 +15,5 @@ public:
 private:
 	std::vector<const Model*> m_solidChunks;
 	Shader m_shader;
-	Texture m_texture;
 };
 

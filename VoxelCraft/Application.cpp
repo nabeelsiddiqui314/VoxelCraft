@@ -18,6 +18,7 @@ Application::Application() {
 	m_world = std::make_unique<World>();
 	cam = std::make_unique<Camera>();
 	BlockCodex::init();
+	TextureAtlas::init(8);
 }
 
 void Application::run() {

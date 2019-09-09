@@ -102,22 +102,22 @@ void ChunkModelsMaker::generateModels(std::int16_t originX, std::int16_t originZ
 				switch (BlockCodex::getBlockData(chunk.getBlock(x, y, z)).category) {
 				case BlockCategory::SOLID:
 					if (!BlockCodex::getBlockData(top).opaque)
-						m_models.solid.meshMaker.addFace(oX, y, oZ, s_top);
+						m_models.solid.meshMaker.addFace(oX, y, oZ, BlockCodex::getBlockData(chunk.getBlock(x, y, z)).texCoordTop, s_top);
 
 					if (!BlockCodex::getBlockData(bottom).opaque)
-						m_models.solid.meshMaker.addFace(oX, y, oZ, s_bottom);
+						m_models.solid.meshMaker.addFace(oX, y, oZ, BlockCodex::getBlockData(chunk.getBlock(x, y, z)).texCoordBottom, s_bottom);
 
 					if (!BlockCodex::getBlockData(left).opaque)
-						m_models.solid.meshMaker.addFace(oX, y, oZ, s_left);
+						m_models.solid.meshMaker.addFace(oX, y, oZ, BlockCodex::getBlockData(chunk.getBlock(x, y, z)).texCoordSide, s_left);
 
 					if (!BlockCodex::getBlockData(right).opaque)
-						m_models.solid.meshMaker.addFace(oX, y, oZ, s_right);
+						m_models.solid.meshMaker.addFace(oX, y, oZ, BlockCodex::getBlockData(chunk.getBlock(x, y, z)).texCoordSide, s_right);
 
 					if (!BlockCodex::getBlockData(front).opaque)
-						m_models.solid.meshMaker.addFace(oX, y, oZ, s_front);
+						m_models.solid.meshMaker.addFace(oX, y, oZ, BlockCodex::getBlockData(chunk.getBlock(x, y, z)).texCoordSide, s_front);
 
 					if (!BlockCodex::getBlockData(back).opaque)
-						m_models.solid.meshMaker.addFace(oX, y, oZ, s_back);
+						m_models.solid.meshMaker.addFace(oX, y, oZ, BlockCodex::getBlockData(chunk.getBlock(x, y, z)).texCoordSide, s_back);
 					break;
 				}
 			}

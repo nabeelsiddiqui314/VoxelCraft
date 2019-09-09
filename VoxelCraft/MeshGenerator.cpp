@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "MeshGenerator.h"
 
-void MeshGenerator::addFace(std::int16_t x, std::int16_t y, std::int16_t z, const std::array<GLfloat, 12>& face) {
+void MeshGenerator::addFace(std::int16_t x, std::int16_t y, std::int16_t z, int textureIndex, const std::array<GLfloat, 12>& face) {
+	sf::Vector2f texCoord = TextureAtlas::getTexCoords(textureIndex);
 	m_mesh.textureCoords.insert(m_mesh.textureCoords.end(),  {
-			0, 0,
-			1, 0,
-			1, 1,
-			0, 1
+			texCoord.x                                , texCoord.y,
+			texCoord.x + TextureAtlas::getUnitLength(), texCoord.y,
+			texCoord.x + TextureAtlas::getUnitLength(), texCoord.y + TextureAtlas::getUnitLength(),
+			texCoord.x                                , texCoord.y + TextureAtlas::getUnitLength()
 		} );
 
 	m_mesh.indices.insert(m_mesh.indices.end(), {

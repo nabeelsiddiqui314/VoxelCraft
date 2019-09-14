@@ -173,6 +173,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshGenerator.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="OverworldGenerator.h" />
     <ClInclude Include="SolidRenderer.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="Shader.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="MasterRenderer.cpp" />
     <ClCompile Include="MeshGenerator.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="OverworldGenerator.cpp" />
     <ClCompile Include="SolidRenderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stbi.cpp" />

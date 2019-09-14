@@ -46,8 +46,12 @@ void Camera::updateRotation(float xOffset, float yOffset) {
 	calculateVectors();
 }
 
-const glm::mat4& Camera::getViewMatrix() const {
+const glm::mat4 Camera::getViewMatrix() const {
 	return glm::lookAt(m_position, m_position + m_front, m_up);
+}
+
+const glm::vec3& Camera::getPosition() const {
+	return m_position;
 }
 
 void Camera::calculateVectors() {

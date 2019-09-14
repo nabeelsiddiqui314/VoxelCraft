@@ -5,7 +5,6 @@
 class MapGenerator
 {
 public:
-	MapGenerator();
 	virtual ~MapGenerator() {}
 public:
 	virtual ChunkBlocks generateChunk(const VecXZ& pos) = 0;

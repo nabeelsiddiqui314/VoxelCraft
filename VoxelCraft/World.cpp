@@ -2,7 +2,7 @@
 #include "World.h"
 
 World::World() {
-	m_mapGenerator = std::make_unique<FlatGenerator>();
+	m_mapGenerator = std::make_unique<OverworldGenerator>();
 	for (std::int16_t x = 0; x < 11; x++) {
 		for (std::int16_t z = 0; z < 11; z++) {
 			m_chunkBatch.push_back({x,z});

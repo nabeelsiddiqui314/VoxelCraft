@@ -19,7 +19,8 @@ public:
 public:
 	void updateMovement(const Direction& dir, float dt);
 	void updateRotation(float xOffest, float yOffset);
-	const glm::mat4& getViewMatrix() const;
+	const glm::mat4 getViewMatrix() const;
+	const glm::vec3& getPosition() const;
 private:
 	void calculateVectors();
 private:

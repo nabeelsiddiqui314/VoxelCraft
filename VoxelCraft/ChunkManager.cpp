@@ -27,7 +27,7 @@ BlockType ChunkManager::getBlock(const VecXZ& pos, std::int16_t x, std::int16_t 
 	return m_chunks.at(pos).chunk.getBlock(x, y, z);
 }
 
-void ChunkManager::createMesh(const VecXZ& pos) {
+bool ChunkManager::createMesh(const VecXZ& pos) {
 	if (!m_chunks[pos].hasMeshGenerated && 
 		doesChunkExist({ pos.x, pos.z + 1 }) &&
 		doesChunkExist({ pos.x, pos.z - 1 }) &&
@@ -42,7 +42,9 @@ void ChunkManager::createMesh(const VecXZ& pos) {
 
 		m_chunks[pos].hasMeshGenerated = true;
 		m_chunks[pos].models.cleanUp();
+		return true;
 	}
+	return false;
 }
 
 const ChunkModels& ChunkManager::getChunkModels(const VecXZ& pos) const {

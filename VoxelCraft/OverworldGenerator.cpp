@@ -11,9 +11,6 @@ OverworldGenerator::OverworldGenerator()
 ChunkBlocks OverworldGenerator::generateChunk(const VecXZ& pos) {
 	ChunkBlocks chunk;
 
-	if (pos.x == 0 || pos.z == 0 || pos.x == 10 || pos.z == 10)
-		return chunk;
-
 	std::int16_t height;
 
 	for (std::int16_t x = 0; x < CHUNK_WIDTH; x++) {

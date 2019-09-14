@@ -3,28 +3,29 @@
 
 World::World() {
 	m_mapGenerator = std::make_unique<OverworldGenerator>();
-	for (std::int16_t x = 0; x < 11; x++) {
-		for (std::int16_t z = 0; z < 11; z++) {
-			m_chunkBatch.push_back({x,z});
-		}
-	}
 }
 
-void World::update(MasterRenderer& renderer) {
-	if (m_batchIndex < m_chunkBatch.size()) {
-		m_chunks.loadChunk(m_chunkBatch[m_batchIndex], m_mapGenerator->generateChunk(m_chunkBatch[m_batchIndex]));
-		m_batchIndex++;
-	}
-	else {
-		if (modelCount != 81) {
-			for (std::int16_t i = 0; i < m_chunkBatch.size(); i++) {
-				m_chunks.createMesh(m_chunkBatch[i]);
+void World::update(const Camera& camera, MasterRenderer& renderer) {
+	m_camPosition = { (int)(camera.getPosition().x / CHUNK_WIDTH), (int)(camera.getPosition().z / CHUNK_WIDTH)};
+	if (m_camPosition != m_lastCamPosition) {
+		readyChunk(m_camPosition.x, m_camPosition.y);
+		readyChunk(m_camPosition.x+1, m_camPosition.y);
+		readyChunk(m_camPosition.x-1, m_camPosition.y);
+		readyChunk(m_camPosition.x, m_camPosition.y+1);
+		readyChunk(m_camPosition.x, m_camPosition.y-1);
 
-				if (m_chunks.hasMesh(m_chunkBatch[i])) {
-					renderer.addChunk(m_chunks.getChunkModels(m_chunkBatch[i]));
-					modelCount++;
-				}
+		for (std::int16_t i = 0; i < m_chunkBatch.size(); i++) {
+			if (m_chunks.createMesh(m_chunkBatch[i]) && m_chunks.hasMesh(m_chunkBatch[i])) {
+				renderer.addChunk(m_chunks.getChunkModels(m_chunkBatch[i]));
 			}
 		}
+	}
+	m_lastCamPosition = m_camPosition;
+}
+
+void World::readyChunk(std::int16_t x, std::int16_t z) {
+	if (!m_chunks.doesChunkExist({ x, z })) {
+		m_chunks.loadChunk({ x, z }, m_mapGenerator->generateChunk({ x, z }));
+		m_chunkBatch.push_back({ x, z });
 	}
 }

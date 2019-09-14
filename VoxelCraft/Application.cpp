@@ -47,7 +47,7 @@ void Application::run() {
 		xLast = sf::Mouse::getPosition().x;
 		yLast = sf::Mouse::getPosition().y;
 
-		m_world->update(*m_renderer);
+		m_world->update(*cam, *m_renderer);
 		m_renderer->render(m_window, *cam);
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();

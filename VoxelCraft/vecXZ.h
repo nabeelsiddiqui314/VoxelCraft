@@ -7,6 +7,7 @@ struct VecXZ {
 };
 
 bool operator==(const VecXZ& lhs, const VecXZ& rhs);
+bool operator!=(const VecXZ& lhs, const VecXZ& rhs);
 
 namespace std {
 	template<>

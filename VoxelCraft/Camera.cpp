@@ -9,7 +9,7 @@ Camera::Camera()
   m_right(1.0f, 0.0f, 0.0f),
   m_yaw(-90.0f),
   m_pitch(0.0f),
-  m_speed(70.5f),
+  m_speed(20.5f),
   m_sensitivity(0.2f) {
 	m_worldUp = m_up;
 	calculateVectors();

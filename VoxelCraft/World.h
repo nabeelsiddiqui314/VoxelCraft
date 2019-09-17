@@ -14,8 +14,8 @@ public:
 	void renderChunks(MasterRenderer& renderer);
 private:
 	ChunkManager m_chunks;
-	glm::vec2 m_camPosition;
-	glm::vec2 m_lastCamPosition;
+	VecXZ m_camPosition;
+	VecXZ m_lastCamPosition;
 	std::unique_ptr<MapGenerator> m_mapGenerator;
 	std::vector<VecXZ> m_chunkBatch;
 	std::int16_t m_batchIndex = 0;

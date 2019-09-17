@@ -2,6 +2,6 @@
 #include <GLFW/glfw3.h>
 
 struct RenderData {
-	GLuint VAO;
+	GLuint VAO = 0;
 	GLuint indicesCount;
 };

@@ -2,9 +2,9 @@
 #include <array>
 #include "BlockTypes.h"
 
-const std::int16_t CHUNK_WIDTH = 16;
-const std::int16_t CHUNK_HEIGHT = 50;
-const std::int16_t CHUNK_VOLUME = CHUNK_WIDTH * CHUNK_WIDTH * CHUNK_HEIGHT;
+const std::int32_t CHUNK_WIDTH = 16;
+const std::int32_t CHUNK_HEIGHT = 50;
+const std::int32_t CHUNK_VOLUME = CHUNK_WIDTH * CHUNK_WIDTH * CHUNK_HEIGHT;
 
 class ChunkBlocks {
 public:

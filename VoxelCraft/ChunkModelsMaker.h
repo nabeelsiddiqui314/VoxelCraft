@@ -17,13 +17,16 @@ struct ChunkModels {
 class ChunkModelsMaker
 {
 public:
-	void generateModels(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk,
+	ChunkModelsMaker();
+public:
+	void generateMeshes(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk,
 		const ChunkBlocks& cFront, const ChunkBlocks& cBack, const ChunkBlocks& cLeft,
 		const ChunkBlocks& cRight);
+	void addMeshesToModels();
 	const ChunkModels& getModels() const;
-	void cleanUp();
 private:
 	void prepareModel(PartialModel& pModel);
+	void cleanUp();
 private:
 	static const std::array<GLfloat, 12> s_front;
 	static const std::array<GLfloat, 12> s_back;

@@ -45,7 +45,11 @@ const std::array<GLfloat, 12> ChunkModelsMaker::s_bottom = {
 	0, 0,  0
 };
 
-void ChunkModelsMaker::generateModels(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk, const ChunkBlocks& cFront, const ChunkBlocks& cBack, const ChunkBlocks& cLeft, const ChunkBlocks& cRight) {
+ChunkModelsMaker::ChunkModelsMaker() {
+	m_models.solid.model = std::nullopt;
+}
+
+void ChunkModelsMaker::generateMeshes(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk, const ChunkBlocks& cFront, const ChunkBlocks& cBack, const ChunkBlocks& cLeft, const ChunkBlocks& cRight) {
 	BlockType top
 		, bottom
 		, left
@@ -123,7 +127,11 @@ void ChunkModelsMaker::generateModels(std::int16_t originX, std::int16_t originZ
 			}
 		}
 	}
+}
+
+void ChunkModelsMaker::addMeshesToModels() {
 	prepareModel(m_models.solid);
+	cleanUp();
 }
 
 const ChunkModels& ChunkModelsMaker::getModels() const {
@@ -139,6 +147,4 @@ void ChunkModelsMaker::prepareModel(PartialModel& pModel) {
 		pModel.model.emplace();
 		pModel.model.value().addMesh(pModel.meshMaker.getMesh());
 	}
-	else
-		pModel.model = std::nullopt;
 }

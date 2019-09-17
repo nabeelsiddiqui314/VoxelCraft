@@ -16,7 +16,7 @@ Application::Application() {
 	glEnable(GL_DEPTH_TEST);
 	m_renderer = std::make_unique<MasterRenderer>();
 	m_world = std::make_unique<World>();
-	cam = std::make_unique<Camera>();
+	m_camera = std::make_unique<Camera>();
 	BlockCodex::init();
 	TextureAtlas::init(8);
 }
@@ -24,31 +24,32 @@ Application::Application() {
 void Application::run() {
 	while (!glfwWindowShouldClose(m_window)) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			cam->updateMovement(Camera::FORWARD, frameClock.getElapsedTime().asSeconds());
+			m_camera->updateMovement(Camera::FORWARD, frameClock.getElapsedTime().asSeconds());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			cam->updateMovement(Camera::LEFT, frameClock.getElapsedTime().asSeconds());
+			m_camera->updateMovement(Camera::LEFT, frameClock.getElapsedTime().asSeconds());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			cam->updateMovement(Camera::BACKWARD, frameClock.getElapsedTime().asSeconds());
+			m_camera->updateMovement(Camera::BACKWARD, frameClock.getElapsedTime().asSeconds());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			cam->updateMovement(Camera::RIGHT, frameClock.getElapsedTime().asSeconds());
+			m_camera->updateMovement(Camera::RIGHT, frameClock.getElapsedTime().asSeconds());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-			cam->updateMovement(Camera::DOWN, frameClock.getElapsedTime().asSeconds());
+			m_camera->updateMovement(Camera::DOWN, frameClock.getElapsedTime().asSeconds());
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			cam->updateMovement(Camera::UP, frameClock.getElapsedTime().asSeconds());
+			m_camera->updateMovement(Camera::UP, frameClock.getElapsedTime().asSeconds());
 		}
 		frameClock.restart();
 
-		cam->updateRotation(sf::Mouse::getPosition().x - xLast, -sf::Mouse::getPosition().y + yLast);
+		m_camera->updateRotation(sf::Mouse::getPosition().x - xLast, -sf::Mouse::getPosition().y + yLast);
 		xLast = sf::Mouse::getPosition().x;
 		yLast = sf::Mouse::getPosition().y;
 
-		m_world->update(*cam, *m_renderer);
-		m_renderer->render(m_window, *cam);
+		m_world->update(*m_camera);
+		m_world->renderChunks(*m_renderer);
+		m_renderer->render(m_window, *m_camera);
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
 	}

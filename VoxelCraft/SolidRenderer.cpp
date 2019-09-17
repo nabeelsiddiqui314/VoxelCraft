@@ -24,6 +24,8 @@ void SolidRenderer::render(const Camera& camera) {
 		m_solidChunks[i]->bindVao();
 		glDrawElements(GL_TRIANGLES, m_solidChunks[i]->getRenderData().indicesCount, GL_UNSIGNED_INT, nullptr);
 	}
+	m_solidChunks.clear();
+	m_solidChunks.shrink_to_fit();
 }
 
 SolidRenderer::~SolidRenderer()

@@ -13,7 +13,7 @@ public:
 	void setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
 	BlockType getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
-	void createMesh(std::int16_t originX, std::int16_t originZ,
+	void createMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
 		            const Segment* top, const Segment* bottom,
 		            const Segment* left, const Segment* right,
 		            const Segment* front, const Segment* back);

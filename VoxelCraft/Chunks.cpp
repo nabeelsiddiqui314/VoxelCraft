@@ -14,7 +14,7 @@ bool Chunks::createMesh(std::int16_t originX, std::int16_t originZ,
 	const Chunks* front, const Chunks* back) {
 	for (int i = 0; i < m_segments.size(); i++) {
 		if (!m_segments[i].hasMeshGenerated()) {
-			m_segments[i].createMesh(originX, originZ, ((i != HEIGHT - 1) ? &m_segments[i + 1] : nullptr),
+			m_segments[i].createMesh(originX, i * Chunks::HEIGHT, originZ, ((i != HEIGHT - 1) ? &m_segments[i + 1] : nullptr),
 				((i != 0) ? &m_segments[i - 1] : nullptr), 
 				&left->getSegment(i), &right->getSegment(i),
 				&front->getSegment(i), &back->getSegment(i));

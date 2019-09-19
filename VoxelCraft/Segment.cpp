@@ -17,11 +17,11 @@ BlockType Segment::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) cons
 	return m_blocks[x + WIDTH * (y + WIDTH * z)];
 }
 
-void Segment::createMesh(std::int16_t originX, std::int16_t originZ,
+void Segment::createMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
 	const Segment* top, const Segment* bottom,
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
-	m_models.generateMeshes(originX, originZ, this, top, bottom, left, right, front, back);
+	m_models.generateMeshes(originX, originY, originZ, this, top, bottom, left, right, front, back);
 	m_models.addMeshesToModels();
 	m_hasMeshGenerated = true;
 }

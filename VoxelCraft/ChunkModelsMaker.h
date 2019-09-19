@@ -20,7 +20,7 @@ class ChunkModelsMaker
 public:
 	ChunkModelsMaker();
 public:
-	void generateMeshes(std::int16_t originX, std::int16_t originZ, 
+	void generateMeshes(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
 		const Segment* chunk,
 		const Segment* top, const Segment* bottom,
 		const Segment* left, const Segment* right,

@@ -55,6 +55,14 @@ void ChunkModelsMaker::generateMeshes(std::int16_t originX, std::int16_t originY
 	const Segment* top, const Segment* bottom,
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
+	if (top && bottom) {
+		if (chunk->isAllOpaque() && top->isAllOpaque() && bottom->isAllOpaque() &&
+			left->isAllOpaque() && right->isAllOpaque() && front->isAllOpaque() &&
+			back->isAllOpaque()) {
+			return;
+		}
+	}
+
 	BlockType topB
 		, bottomB
 		, leftB

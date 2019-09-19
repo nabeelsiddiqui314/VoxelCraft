@@ -2,7 +2,7 @@
 #include "World.h"
 
 World::World() : m_renderDistance(4) {
-	m_mapGenerator = std::make_unique<FlatGenerator>(256);
+	m_mapGenerator = std::make_unique<OverworldGenerator>();
 }
 
 void World::update(const Camera& camera) {

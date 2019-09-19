@@ -5,10 +5,8 @@ ChunkManager::~ChunkManager() {
 	m_chunks.clear();
 }
 
-void ChunkManager::loadChunk(const VecXZ& pos, const ChunkBlocks& chunkblocks) {
-	Chunk chunk;
-	chunk.chunk = chunkblocks;
-	m_chunks.emplace(std::make_pair(pos, chunk));
+void ChunkManager::loadChunk(const VecXZ& pos, const Chunks& chunks) {
+	m_chunks.emplace(std::make_pair(pos, chunks));
 }
 
 void ChunkManager::unloadChunk(const VecXZ& pos) {
@@ -20,40 +18,27 @@ bool ChunkManager::doesChunkExist(const VecXZ& pos) const {
 }
 
 void ChunkManager::setBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, BlockType id) {
-	m_chunks[pos].chunk.setBlock(x, y, z, id);
+	m_chunks[pos].setBlock(x, y, z, id);
 }
 
 BlockType ChunkManager::getBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const {
-	return m_chunks.at(pos).chunk.getBlock(x, y, z);
+	return m_chunks.at(pos).getBlock(x, y, z);
 }
 
-void ChunkManager::createMesh(const VecXZ& pos) {
+bool ChunkManager::createMesh(const VecXZ& pos) {
 	if ( doesChunkExist({ pos.x, pos.z + 1 }) &&
 		 doesChunkExist({ pos.x, pos.z - 1 }) &&
 		 doesChunkExist({ pos.x - 1, pos.z }) &&
 		 doesChunkExist({ pos.x + 1, pos.z })) {
-		m_chunks[pos].models.generateMeshes(pos.x * CHUNK_WIDTH, pos.z * CHUNK_WIDTH,
-			m_chunks[pos].chunk,
-			m_chunks[{ pos.x, pos.z + 1 }].chunk,
-			m_chunks[{ pos.x, pos.z - 1 }].chunk,
-			m_chunks[{ pos.x - 1, pos.z }].chunk,
-			m_chunks[{ pos.x + 1, pos.z }].chunk);
-		m_chunks[pos].hasMeshGenerated = true;
+		return m_chunks[pos].createMesh(pos.x * Segment::WIDTH, pos.z * Segment::WIDTH,
+			&m_chunks[{ pos.x - 1, pos.z }],
+			&m_chunks[{ pos.x + 1, pos.z }],
+			&m_chunks[{ pos.x, pos.z + 1 }],
+			&m_chunks[{ pos.x, pos.z - 1}]);
 	}
+	return false;
 }
 
-void ChunkManager::addMeshesToModel(const VecXZ& pos) {
-	m_chunks[pos].models.addMeshesToModels();
-}
-
-const ChunkModels& ChunkManager::getChunkModels(const VecXZ& pos) const {
-	return m_chunks.at(pos).models.getModels();
-}
-
-bool ChunkManager::hasMadeMesh(const VecXZ& pos) const {
-	return m_chunks.at(pos).hasMeshGenerated;
-}
-
-bool ChunkManager::hasMesh(const VecXZ& pos) {
-	return m_chunks.at(pos).models.getModels().solid.model.has_value();
+void ChunkManager::render(const VecXZ & pos, MasterRenderer & renderer) {
+	m_chunks[pos].render(renderer);
 }

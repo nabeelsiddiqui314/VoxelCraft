@@ -7,7 +7,7 @@ class OverworldGenerator : public MapGenerator
 public:
 	OverworldGenerator();
 public:
-	virtual ChunkBlocks generateChunk(const VecXZ& pos) override;
+	virtual Chunks generateChunk(const VecXZ& pos) override;
 private:
 	float getNoise(int cx, int cz, float x, float z);
 private:

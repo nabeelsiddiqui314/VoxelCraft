@@ -1,5 +1,5 @@
 #pragma once
-#include "ChunkBlocks.h"
+#include "Chunks.h"
 #include "vecXZ.h"
 
 class MapGenerator
@@ -7,6 +7,6 @@ class MapGenerator
 public:
 	virtual ~MapGenerator() {}
 public:
-	virtual ChunkBlocks generateChunk(const VecXZ& pos) = 0;
+	virtual Chunks generateChunk(const VecXZ& pos) = 0;
 };
 

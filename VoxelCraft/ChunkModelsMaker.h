@@ -1,9 +1,10 @@
 #pragma once
+#include <optional>
 #include "Model.h"
 #include "MeshGenerator.h"
-#include "ChunkBlocks.h"
 #include "BlockCodex.h"
-#include <optional>
+
+class Segment;
 
 struct PartialModel {
 	std::optional<Model> model;
@@ -19,9 +20,11 @@ class ChunkModelsMaker
 public:
 	ChunkModelsMaker();
 public:
-	void generateMeshes(std::int16_t originX, std::int16_t originZ, const ChunkBlocks& chunk,
-		const ChunkBlocks& cFront, const ChunkBlocks& cBack, const ChunkBlocks& cLeft,
-		const ChunkBlocks& cRight);
+	void generateMeshes(std::int16_t originX, std::int16_t originZ, 
+		const Segment* chunk,
+		const Segment* top, const Segment* bottom,
+		const Segment* left, const Segment* right,
+		const Segment* front, const Segment* back);
 	void addMeshesToModels();
 	const ChunkModels& getModels() const;
 private:

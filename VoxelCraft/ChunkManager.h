@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include "vecXZ.h"
-#include "Chunk.h"
+#include "Chunks.h"
 
 class ChunkManager
 {
@@ -9,7 +9,7 @@ public:
 	ChunkManager() = default;
 	~ChunkManager();
 public:
-	void loadChunk(const VecXZ& pos, const ChunkBlocks& chunkblocks);
+	void loadChunk(const VecXZ& pos, const Chunks& chunks);
 	void unloadChunk(const VecXZ& pos);
 
 	bool doesChunkExist(const VecXZ& pos) const;
@@ -17,14 +17,9 @@ public:
 	void setBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
 	BlockType getBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const;
 
-	void createMesh(const VecXZ& pos);
-	void addMeshesToModel(const VecXZ& pos);
-	const ChunkModels& getChunkModels(const VecXZ& pos) const;
-
-
-	bool hasMadeMesh(const VecXZ& pos) const;
-	bool hasMesh(const VecXZ& pos);
+	bool createMesh(const VecXZ& pos);
+	void render(const VecXZ& pos, MasterRenderer& renderer);
 private:
-	std::unordered_map<VecXZ, Chunk> m_chunks;
+	std::unordered_map<VecXZ, Chunks> m_chunks;
 };
 

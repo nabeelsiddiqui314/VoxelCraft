@@ -21,6 +21,7 @@ public:
 	void render(MasterRenderer& renderer);
 
 	bool isAllOpaque() const;
+	bool isEmpty() const;
 	bool hasMeshGenerated() const;
 
 	const ChunkModels& getModels() const;
@@ -29,6 +30,7 @@ public:
 private: 
 	std::array<BlockType, WIDTH * WIDTH * WIDTH> m_blocks;
 	std::int16_t m_opaqueCount;
+	std::int16_t m_voidCount;
 
 	ChunkModelsMaker m_models;
 	bool m_hasMeshGenerated = false;

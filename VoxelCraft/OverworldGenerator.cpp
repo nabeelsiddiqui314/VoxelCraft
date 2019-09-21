@@ -15,7 +15,7 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 
 	for (std::int16_t x = 0; x < Segment::WIDTH; x++) {
 		for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
-			height = 100 + 150 * (getNoise(pos.x, pos.z, x, z));
+			height = 256 * (getNoise(pos.x, pos.z, x, z));
 			for (std::int16_t y = 0; y < height; y++) {
 				if (y <= height - 5)
 					chunk.setBlock(x, y, z, BlockType::STONE);

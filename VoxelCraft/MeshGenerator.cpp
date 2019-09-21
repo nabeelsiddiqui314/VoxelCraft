@@ -22,9 +22,9 @@ void MeshGenerator::addFace(std::int16_t x, std::int16_t y, std::int16_t z, int 
 
 	int faceIndex = 0;
 	for (int i = 0; i < 4; i++) {
-		m_mesh.vertices.push_back(x + face[faceIndex++]);
-		m_mesh.vertices.push_back(y + face[faceIndex++]);
-		m_mesh.vertices.push_back(z + face[faceIndex++]);
+		m_mesh.vertices.emplace_back(x + face[faceIndex++]);
+		m_mesh.vertices.emplace_back(y + face[faceIndex++]);
+		m_mesh.vertices.emplace_back(z + face[faceIndex++]);
 	}
 }
 

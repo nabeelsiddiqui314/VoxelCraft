@@ -17,7 +17,9 @@ public:
 	void setBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
 	BlockType getBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const;
 
-	bool createMesh(const VecXZ& pos);
+	void setMesh(Mesh& mesh, const VecXZ& pos, std::int16_t y);
+	const Chunks& getChunkAt(const VecXZ& pos) const;
+
 	void render(const VecXZ& pos, MasterRenderer& renderer);
 private:
 	std::unordered_map<VecXZ, Chunks> m_chunks;

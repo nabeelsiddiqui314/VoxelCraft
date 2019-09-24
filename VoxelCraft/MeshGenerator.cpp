@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "MeshGenerator.h"
 
+MeshGenerator::MeshGenerator(Mesh& mesh) : m_mesh(mesh) {}
+
 void MeshGenerator::addFace(std::int16_t x, std::int16_t y, std::int16_t z, int textureIndex, const std::array<GLfloat, 12>& face) {
 	sf::Vector2f texCoord = TextureAtlas::getTexCoords(textureIndex);
 	m_mesh.textureCoords.insert(m_mesh.textureCoords.end(),  {
@@ -26,18 +28,4 @@ void MeshGenerator::addFace(std::int16_t x, std::int16_t y, std::int16_t z, int 
 		m_mesh.vertices.emplace_back(y + face[faceIndex++]);
 		m_mesh.vertices.emplace_back(z + face[faceIndex++]);
 	}
-}
-
-void MeshGenerator::cleanUp() {
-	m_mesh.vertices.clear();
-	m_mesh.textureCoords.clear();
-	m_mesh.indices.clear();
-
-	m_mesh.vertices.shrink_to_fit();
-	m_mesh.textureCoords.shrink_to_fit();
-	m_mesh.indices.shrink_to_fit();
-}
-
-const Mesh& MeshGenerator::getMesh() const {
-	return m_mesh;
 }

@@ -4,9 +4,9 @@
 MasterRenderer::MasterRenderer() {
 }
 
-void MasterRenderer::addChunk(const ChunkModels& models) {
-	if (models.solid.model.has_value())
-		m_solidRenderer.addSolidChunk(&models.solid.model.value());
+void MasterRenderer::addChunk(const Model& models) {
+	//if (models.solid.model.has_value())
+	m_solidRenderer.addSolidChunk(&models);
 }
 
 void MasterRenderer::render(GLFWwindow* window, const Camera& camera) {

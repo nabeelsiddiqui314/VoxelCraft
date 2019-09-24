@@ -8,7 +8,7 @@ class MasterRenderer
 public:
 	MasterRenderer();
 public:
-	void addChunk(const ChunkModels& models);
+	void addChunk(const Model& models);
 	void render(GLFWwindow* window, const Camera& camera);
 private:
 	SolidRenderer m_solidRenderer;

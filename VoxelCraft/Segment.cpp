@@ -23,18 +23,27 @@ BlockType Segment::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) cons
 	return m_blocks[x + WIDTH * (y + WIDTH * z)];
 }
 
-void Segment::createMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
-	const Segment* top, const Segment* bottom,
-	const Segment* left, const Segment* right,
-	const Segment* front, const Segment* back) {
-	m_models.generateMeshes(originX, originY, originZ, this, top, bottom, left, right, front, back);
-	m_models.addMeshesToModels();
+void Segment::setMesh(const Mesh& mesh) {
+	m_mesh = mesh;
 	m_hasMeshGenerated = true;
 }
 
+void Segment::loadModel() {
+	if (!m_mesh.vertices.empty()) {
+		m_model.addMesh(m_mesh);
+
+		m_mesh.vertices.clear();
+		m_mesh.indices.clear();
+		m_mesh.textureCoords.clear();
+
+		m_mesh.vertices.shrink_to_fit();
+		m_mesh.indices.shrink_to_fit();
+		m_mesh.textureCoords.shrink_to_fit();
+	}
+}
+
 void Segment::render(MasterRenderer& renderer) {
-	if(m_models.getModels().solid.model.has_value())
-		renderer.addChunk(m_models.getModels());
+	renderer.addChunk(m_model);
 }
 
 bool Segment::isAllOpaque() const {
@@ -47,8 +56,4 @@ bool Segment::isEmpty() const {
 
 bool Segment::hasMeshGenerated() const {
 	return m_hasMeshGenerated;
-}
-
-const ChunkModels& Segment::getModels() const {
-	return m_models.getModels();
 }

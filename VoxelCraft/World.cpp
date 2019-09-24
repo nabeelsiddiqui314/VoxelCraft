@@ -1,85 +1,117 @@
 #include "stdafx.h"
 #include "World.h"
 
-World::World() : m_renderDistance(2) {
-	m_mapGenerator = std::make_unique<OverworldGenerator>();
+World::World() : m_renderDistance(5) {
+	m_mapGenerator = std::make_unique<FlatGenerator>(256);
+	m_threads.emplace_back([&]() {
+		loadChunks();
+	});
+	m_threads.emplace_back([&]() {
+		makeMeshes();
+	});
+}
+
+World::~World() {
+	m_running = false;
+	for (auto& thread : m_threads) {
+		thread.join();
+	}
 }
 
 void World::update(const Camera& camera) {
 	m_camPosition = { (std::int16_t)(camera.getPosition().x / Segment::WIDTH), (std::int16_t)(camera.getPosition().z / Segment::WIDTH)};
-	if (m_camPosition != m_lastCamPosition) {
-		//for (std::int16_t i = 0; i < m_chunkBatch.size(); i++) {
-		//	if (m_chunkBatch[i].x > m_camPosition.x + m_renderDistance || m_chunkBatch[i].z > m_camPosition.z + m_renderDistance
-		//		|| m_chunkBatch[i].x < m_camPosition.x - m_renderDistance || m_chunkBatch[i].z < m_camPosition.z - m_renderDistance) {
-		//		m_chunks.unloadChunk(m_chunkBatch[i]);
-		//	}
-		//}
-		//m_chunkBatch.clear();
-		//m_batchIndex = 0;
-		//for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
-		//	for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
-		//		m_chunkBatch.push_back({x,z});
-		//	}
-		//}
-	}
-	m_lastCamPosition = m_camPosition;
-
-	for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
-		for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
-			if (x > m_camPosition.x + m_renderDistance || z > m_camPosition.z + m_renderDistance
-				|| x < m_camPosition.x - m_renderDistance || z < m_camPosition.z - m_renderDistance) {
-				m_chunks.unloadChunk({x,z});
-			}
-		}
-	}
-
-	for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
-		for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
-			if (!m_chunks.doesChunkExist({x,z})) {
-				m_chunks.loadChunk({ x,z }, m_mapGenerator->generateChunk({x,z}));
-				break;
-			}
-		}		
-	}
-
-	for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
-		for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
-			if (!m_chunks.doesChunkExist({x,z}))
-				continue;
 	
-			if (m_chunks.createMesh({x,z}))
-				break;
-		}
-	}
-	
-
-	//if (m_loadTick.getElapsedTime().asMilliseconds() > 10) {
-		//for (std::int16_t i = 0; i < m_chunkBatch.size(); i++) {
-		//	if (!m_chunks.doesChunkExist(m_chunkBatch[i])) {
-		//		m_chunks.loadChunk(m_chunkBatch[i], m_mapGenerator->generateChunk(m_chunkBatch[i]));
-		//		break;
-		//	}
-		//}
-
-		//for (std::int16_t i = 0; i < m_chunkBatch.size(); i++) {
-		//	if (!m_chunks.doesChunkExist(m_chunkBatch[i]))
-		//		continue;
-		//
-		//	if (m_chunks.createMesh(m_chunkBatch[i]))
-		//		break;
-		//}
-		//m_loadTick.restart();
-	//}
 }
 
 void World::renderChunks(MasterRenderer& renderer) {
-
+	std::lock_guard<std::mutex> lock(m_mutex);
 	for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
 		for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
 			if (!m_chunks.doesChunkExist({x,z}))
 				continue;
 
 			m_chunks.render({x,z}, renderer);
+		}
+	}
+}
+
+void World::loadChunks() {
+	while (m_running) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
+			for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
+				if (x > m_camPosition.x + m_renderDistance || z > m_camPosition.z + m_renderDistance
+					|| x < m_camPosition.x - m_renderDistance || z < m_camPosition.z - m_renderDistance) {
+					if (m_chunks.doesChunkExist({ x,z })) {
+						std::lock_guard<std::mutex> lock(m_mutex);
+						m_chunks.unloadChunk({ x,z });
+					}
+				}
+			}
+		}
+
+		for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
+			for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
+				if (!m_chunks.doesChunkExist({ x,z })) {
+					Chunks chunk;
+					chunk = m_mapGenerator->generateChunk({ x,z });
+
+					std::unique_lock<std::mutex> lock(m_mutex);
+					m_chunks.loadChunk({x,z}, chunk);
+					lock.unlock();
+					break;
+				}
+			}
+		}
+	}
+}
+
+void World::makeMeshes() {
+	while (m_running) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
+			for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
+				if (!m_chunks.doesChunkExist({ x,z }) || !m_chunks.doesChunkExist({ x + 1,z }) ||
+					!m_chunks.doesChunkExist({ x - 1, z }) || !m_chunks.doesChunkExist({ x,z + 1}) ||
+					!m_chunks.doesChunkExist({ x,z - 1}))
+					continue;
+
+				for (std::size_t y = 0; y < Chunks::HEIGHT; y++) {
+					if (!m_chunks.getChunkAt({ x,z }).hasMesh(y)) {
+						const Segment chunk = m_chunks.getChunkAt({ x,z }).getSegment(y);
+						const Segment front = m_chunks.getChunkAt({ x,z + 1}).getSegment(y);
+						const Segment back = m_chunks.getChunkAt({ x,z - 1}).getSegment(y);
+						const Segment left = m_chunks.getChunkAt({ x - 1 ,z }).getSegment(y);
+						const Segment right = m_chunks.getChunkAt({ x + 1,z }).getSegment(y);
+						Segment top;
+						Segment bottom;
+						if (y > 0)
+							bottom = m_chunks.getChunkAt({ x,z }).getSegment(y - 1);
+						if (y < Chunks::HEIGHT - 1)
+							top = m_chunks.getChunkAt({ x,z }).getSegment(y + 1);
+						//lock.unlock();
+						
+						Mesh mesh;
+						if (y > 0 && y < Chunks::HEIGHT - 1) {
+							ChunkModelsMaker(mesh, x * Segment::WIDTH, y * Segment::WIDTH, z * Segment::WIDTH,
+								&chunk, &top, &bottom, &left, &right, &front, &back);
+						}
+						else if (y > 0) {
+							ChunkModelsMaker(mesh, x * Segment::WIDTH, y * Segment::WIDTH, z * Segment::WIDTH,
+								&chunk, nullptr, &bottom, &left, &right, &front, &back);
+						}
+						else {
+							ChunkModelsMaker(mesh, x * Segment::WIDTH, y * Segment::WIDTH, z * Segment::WIDTH,
+								&chunk, &top, nullptr, &left, &right, &front, &back);
+						}
+
+						std::unique_lock<std::mutex> lock(m_mutex);
+						m_chunks.setMesh(mesh, {x, z}, y);
+						lock.unlock();
+						break;
+					}
+				}
+			}
 		}
 	}
 }

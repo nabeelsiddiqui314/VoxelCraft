@@ -8,9 +8,8 @@ public:
 	void setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
 	BlockType getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
-	bool createMesh(std::int16_t originX, std::int16_t originZ, 
-		            const Chunks* left, const Chunks* right,
-		            const Chunks* front, const Chunks* back);
+	void setMesh(const Mesh& mesh, std::int16_t y);
+	bool hasMesh(std::int16_t y) const;
 
 	const Segment& getSegment(std::uint8_t index) const;
 	void render(MasterRenderer& renderer);

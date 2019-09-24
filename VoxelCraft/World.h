@@ -4,21 +4,25 @@
 #include "OverworldGenerator.h"
 #include "MasterRenderer.h"
 #include <memory>
+#include <thread>
+#include <mutex>
 
 class World
 {
 public:
 	World();
+	~World();
 public:
 	void update(const Camera& camera);
 	void renderChunks(MasterRenderer& renderer);
+	void loadChunks();
+	void makeMeshes();
 private:
 	ChunkManager m_chunks;
 	VecXZ m_camPosition;
-	VecXZ m_lastCamPosition;
 	std::unique_ptr<MapGenerator> m_mapGenerator;
-	std::vector<VecXZ> m_chunkBatch;
-	std::int16_t m_batchIndex = 0;
-	sf::Clock m_loadTick;
 	const int m_renderDistance;
+	std::vector<std::thread> m_threads;
+	std::mutex m_mutex;
+	bool m_running = true;
 };

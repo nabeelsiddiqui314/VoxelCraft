@@ -46,15 +46,13 @@ const std::array<GLfloat, 12> ChunkModelsMaker::s_bottom = {
 	0, 0,  0
 };
 
-ChunkModelsMaker::ChunkModelsMaker() {
-	m_models.solid.model = std::nullopt;
-}
-
-void ChunkModelsMaker::generateMeshes(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
+ChunkModelsMaker::ChunkModelsMaker(Mesh& mesh, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
 	const Segment* chunk,
 	const Segment* top, const Segment* bottom,
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
+	MeshGenerator meshGen(mesh);
+
 	if (chunk->isEmpty())
 		return;
 	if (top && bottom) {
@@ -130,45 +128,25 @@ void ChunkModelsMaker::generateMeshes(std::int16_t originX, std::int16_t originY
 				switch (BlockCodex::getBlockData(chunk->getBlock(x, y, z)).category) {
 				case BlockCategory::SOLID:
 					if (!BlockCodex::getBlockData(topB).opaque)
-						m_models.solid.meshMaker.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top);
+						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top);
 
 					if (!BlockCodex::getBlockData(bottomB).opaque)
-						m_models.solid.meshMaker.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordBottom, s_bottom);
+						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordBottom, s_bottom);
 
 					if (!BlockCodex::getBlockData(leftB).opaque)
-						m_models.solid.meshMaker.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_left);
+						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_left);
 
 					if (!BlockCodex::getBlockData(rightB).opaque)
-						m_models.solid.meshMaker.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_right);
+						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_right);
 
 					if (!BlockCodex::getBlockData(frontB).opaque)
-						m_models.solid.meshMaker.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_front);
+						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_front);
 
 					if (!BlockCodex::getBlockData(backB).opaque)
-						m_models.solid.meshMaker.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_back);
+						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_back);
 					break;
 				}
 			}
 		}
-	}
-}
-
-void ChunkModelsMaker::addMeshesToModels() {
-	prepareModel(m_models.solid);
-	cleanUp();
-}
-
-const ChunkModels& ChunkModelsMaker::getModels() const {
-	return m_models;
-}
-
-void ChunkModelsMaker::cleanUp() {
-	m_models.solid.meshMaker.cleanUp();
-}
-
-void ChunkModelsMaker::prepareModel(PartialModel& pModel) {
-	if (!pModel.meshMaker.getMesh().vertices.empty()) {
-		pModel.model.emplace();
-		pModel.model.value().addMesh(pModel.meshMaker.getMesh());
 	}
 }

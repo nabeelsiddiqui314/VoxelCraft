@@ -9,21 +9,13 @@ BlockType Chunks::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const
 	return m_segments[y / Chunks::HEIGHT].getBlock(x, y % Chunks::HEIGHT, z);
 }
 
-bool Chunks::createMesh(std::int16_t originX, std::int16_t originZ,
-	const Chunks* left, const Chunks* right,
-	const Chunks* front, const Chunks* back) {
-	for (int i = 0; i < m_segments.size(); i++) {
-		if (!m_segments[i].hasMeshGenerated()) {
-			m_segments[i].createMesh(originX, i * Chunks::HEIGHT, originZ, ((i != HEIGHT - 1) ? &m_segments[i + 1] : nullptr),
-				((i != 0) ? &m_segments[i - 1] : nullptr), 
-				&left->getSegment(i), &right->getSegment(i),
-				&front->getSegment(i), &back->getSegment(i));
-			if (m_segments[i].getModels().solid.model.has_value()) {
-				return true;
-			}
-		}
-	}
-	return false;
+void Chunks::setMesh(const Mesh& mesh, std::int16_t y) {
+	if (!hasMesh(y))
+		m_segments[y].setMesh(mesh);
+}
+
+bool Chunks::hasMesh(std::int16_t y) const {
+	return m_segments[y].hasMeshGenerated();
 }
 
 const Segment& Chunks::getSegment(std::uint8_t index) const {
@@ -32,6 +24,9 @@ const Segment& Chunks::getSegment(std::uint8_t index) const {
 
 void Chunks::render(MasterRenderer& renderer) {
 	for (auto& segment : m_segments) {
-		segment.render(renderer);
+		if (segment.hasMeshGenerated()) {
+			segment.loadModel();
+			segment.render(renderer);
+		}
 	}
 }

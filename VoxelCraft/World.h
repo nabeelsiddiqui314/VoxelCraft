@@ -16,7 +16,6 @@ public:
 	void update(const Camera& camera);
 	void renderChunks(MasterRenderer& renderer);
 	void loadChunks();
-	void makeMeshes();
 private:
 	ChunkManager m_chunks;
 	VecXZ m_camPosition;

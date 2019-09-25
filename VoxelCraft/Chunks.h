@@ -1,5 +1,5 @@
 #pragma once
-#include "ChunkModelsMaker.h"
+#include "SegmentMeshMaker.h"
 #include "Segment.h"
 
 class Chunks

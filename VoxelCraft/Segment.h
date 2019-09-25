@@ -2,8 +2,9 @@
 #include <array>
 #include "BlockTypes.h"
 #include "BlockCodex.h"
-#include "ChunkModelsMaker.h"
+#include "SegmentMeshMaker.h"
 #include "MasterRenderer.h"
+#include "SegmentModel.h"
 
 class Segment
 {
@@ -32,8 +33,7 @@ private:
 	std::int16_t m_opaqueCount;
 	std::int16_t m_voidCount;
 
-	Model m_model;
-	Mesh m_mesh;
+	MeshTypes m_meshTypes;
 	bool m_hasMeshGenerated = false;
 };
 

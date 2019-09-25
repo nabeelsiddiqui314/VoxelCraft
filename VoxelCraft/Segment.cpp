@@ -28,26 +28,16 @@ void Segment::makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t 
 	const Segment* top, const Segment* bottom,
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
-	ChunkModelsMaker(m_mesh, originX, originY, originZ, chunk, top, bottom, left, right, front, back);
+	SegmentMeshMaker(m_meshTypes, originX, originY, originZ, chunk, top, bottom, left, right, front, back);
 	m_hasMeshGenerated = true;
 }
 
 void Segment::loadModel() {
-	if (!m_mesh.vertices.empty()) {
-		m_model.addMesh(m_mesh);
-
-		m_mesh.vertices.clear();
-		m_mesh.indices.clear();
-		m_mesh.textureCoords.clear();
-
-		m_mesh.vertices.shrink_to_fit();
-		m_mesh.indices.shrink_to_fit();
-		m_mesh.textureCoords.shrink_to_fit();
-	}
+	m_meshTypes.solid.loadMeshToModel();
 }
 
 void Segment::render(MasterRenderer& renderer) {
-	renderer.addChunk(m_model);
+	renderer.addChunk(m_meshTypes);
 }
 
 bool Segment::isAllOpaque() const {

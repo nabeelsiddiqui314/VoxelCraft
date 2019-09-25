@@ -26,8 +26,7 @@ BlockType ChunkManager::getBlock(const VecXZ& pos, std::int16_t x, std::int16_t 
 }
 
 bool ChunkManager::makeMesh(const VecXZ& pos) {
-	if (doesChunkExist(pos) &&
-		!m_chunks.at(pos).hasMesh() &&
+	if (!m_chunks.at(pos).hasMesh() &&
 		doesChunkExist({ pos.x - 1, pos.z }) && 
 		doesChunkExist({ pos.x + 1, pos.z }) && 
 		doesChunkExist({ pos.x,     pos.z + 1}) &&

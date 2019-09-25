@@ -62,8 +62,10 @@ void World::loadChunks() {
 
 		for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
 			for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
-				if(m_chunks.makeMesh({x,z}))
-					break;
+				if (m_chunks.doesChunkExist({ x,z })) {
+					if (m_chunks.makeMesh({ x,z }))
+						break;
+				}
 			}
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));

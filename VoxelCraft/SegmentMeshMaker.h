@@ -1,24 +1,14 @@
 #pragma once
-#include <optional>
-#include "Model.h"
 #include "MeshGenerator.h"
 #include "BlockCodex.h"
+#include "SegmentModel.h"
 
 class Segment;
 
-struct PartialModel {
-	std::optional<Model> model;
-	MeshGenerator meshMaker;
-};
-
-struct ChunkModels {
-	PartialModel solid;
-};
-
-class ChunkModelsMaker
+class SegmentMeshMaker
 {
 public:
-	ChunkModelsMaker(Mesh& mesh, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
+	SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
 		const Segment* chunk,
 		const Segment* top, const Segment* bottom,
 		const Segment* left, const Segment* right,

@@ -1,57 +1,57 @@
 #include "stdafx.h"
-#include "ChunkModelsMaker.h"
+#include "SegmentMeshMaker.h"
 #include "Segment.h"
 
 // indices in 0, 1, 2, 0, 2, 3
 
-const std::array<GLfloat, 12> ChunkModelsMaker::s_front = {
+const std::array<GLfloat, 12> SegmentMeshMaker::s_front = {
 	0, 0, 0,
 	1, 0, 0,
 	1, 1, 0,
 	0, 1, 0
 };
 
-const std::array<GLfloat, 12> ChunkModelsMaker::s_back = {
+const std::array<GLfloat, 12> SegmentMeshMaker::s_back = {
 	1, 0, -1,
 	0, 0, -1,
 	0, 1, -1,
 	1, 1, -1
 };
 
-const std::array<GLfloat, 12> ChunkModelsMaker::s_left = {
+const std::array<GLfloat, 12> SegmentMeshMaker::s_left = {
 	0, 0, -1,
 	0, 0,  0,
 	0, 1,  0,
 	0, 1, -1
 };
 
-const std::array<GLfloat, 12> ChunkModelsMaker::s_right = {
+const std::array<GLfloat, 12> SegmentMeshMaker::s_right = {
 	1, 0,  0,
 	1, 0, -1,
 	1, 1, -1,
 	1, 1,  0
 };
 
-const std::array<GLfloat, 12> ChunkModelsMaker::s_top = {
+const std::array<GLfloat, 12> SegmentMeshMaker::s_top = {
 	0, 1,  0,
 	1, 1,  0,
 	1, 1, -1,
 	0, 1, -1
 };
 
-const std::array<GLfloat, 12> ChunkModelsMaker::s_bottom = {
+const std::array<GLfloat, 12> SegmentMeshMaker::s_bottom = {
 	0, 0, -1,
 	1, 0, -1,
 	1, 0,  0,
 	0, 0,  0
 };
 
-ChunkModelsMaker::ChunkModelsMaker(Mesh& mesh, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
+SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
 	const Segment* chunk,
 	const Segment* top, const Segment* bottom,
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
-	MeshGenerator meshGen(mesh);
+	MeshGenerator solidMesh(meshes.solid.mesh);
 
 	if (chunk->isEmpty())
 		return;
@@ -128,22 +128,22 @@ ChunkModelsMaker::ChunkModelsMaker(Mesh& mesh, std::int16_t originX, std::int16_
 				switch (BlockCodex::getBlockData(chunk->getBlock(x, y, z)).category) {
 				case BlockCategory::SOLID:
 					if (!BlockCodex::getBlockData(topB).opaque)
-						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top);
 
 					if (!BlockCodex::getBlockData(bottomB).opaque)
-						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordBottom, s_bottom);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordBottom, s_bottom);
 
 					if (!BlockCodex::getBlockData(leftB).opaque)
-						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_left);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_left);
 
 					if (!BlockCodex::getBlockData(rightB).opaque)
-						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_right);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_right);
 
 					if (!BlockCodex::getBlockData(frontB).opaque)
-						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_front);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_front);
 
 					if (!BlockCodex::getBlockData(backB).opaque)
-						meshGen.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_back);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_back);
 					break;
 				}
 			}

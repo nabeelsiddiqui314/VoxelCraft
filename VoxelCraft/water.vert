@@ -10,6 +10,6 @@ uniform mat4 u_projection;
 uniform float u_time;
 
 void main() {
-	gl_Position = u_projection * u_view * vec4(position.x, position.y + sin(position.x), position.z, 1.0);
+	gl_Position = u_projection * u_view * vec4(position.x, position.y + 0.5 * sin(0.05 * (u_time + position.x + position.x)), position.z, 1.0);
 	v_texCoords = texCoords;
 }

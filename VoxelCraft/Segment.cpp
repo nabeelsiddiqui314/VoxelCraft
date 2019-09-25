@@ -34,6 +34,7 @@ void Segment::makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t 
 
 void Segment::loadModel() {
 	m_meshTypes.solid.loadMeshToModel();
+	m_meshTypes.water.loadMeshToModel();
 }
 
 void Segment::render(MasterRenderer& renderer) {

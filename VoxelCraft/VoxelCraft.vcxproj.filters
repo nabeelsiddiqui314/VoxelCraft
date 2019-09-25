@@ -99,6 +99,12 @@
     <ClInclude Include="SegmentMeshMaker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WaterRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -170,6 +176,12 @@
     <ClCompile Include="SegmentMeshMaker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WaterRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -177,6 +189,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="solid.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="water.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="water.frag">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

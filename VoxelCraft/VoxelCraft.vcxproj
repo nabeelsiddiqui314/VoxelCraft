@@ -183,7 +183,9 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureAtlas.h" />
+    <ClInclude Include="TypeRenderer.h" />
     <ClInclude Include="vecXZ.h" />
+    <ClInclude Include="WaterRenderer.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
@@ -212,14 +214,18 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureAtlas.cpp" />
+    <ClCompile Include="TypeRenderer.cpp" />
     <ClCompile Include="vecXZ.cpp" />
     <ClCompile Include="VoxelCraft.cpp" />
+    <ClCompile Include="WaterRenderer.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="solid.frag" />
     <None Include="solid.vert" />
+    <None Include="water.frag" />
+    <None Include="water.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

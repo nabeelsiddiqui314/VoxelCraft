@@ -1,10 +1,10 @@
 #pragma once
 #include "TypeRenderer.h"
 
-class SolidRenderer : public TypeRenderer
+class WaterRenderer : public TypeRenderer
 {
 public:
-	SolidRenderer();
+	WaterRenderer();
 public:
 	void render(const Camera& camera) override;
 };

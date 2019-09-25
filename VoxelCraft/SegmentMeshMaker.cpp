@@ -52,6 +52,7 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
 	MeshGenerator solidMesh(meshes.solid.mesh);
+	MeshGenerator waterMesh(meshes.water.mesh);
 
 	if (chunk->isEmpty())
 		return;
@@ -144,6 +145,10 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 
 					if (!BlockCodex::getBlockData(backB).opaque)
 						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_back);
+					break;
+				case BlockCategory::WATER:
+					if (!BlockCodex::getBlockData(topB).opaque)
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top);
 					break;
 				}
 			}

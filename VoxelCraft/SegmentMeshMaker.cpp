@@ -147,8 +147,8 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_back);
 					break;
 				case BlockCategory::WATER:
-					if (!BlockCodex::getBlockData(topB).opaque)
-						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top);
+					if (topB == BlockType::VOID)
+						waterMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top);
 					break;
 				}
 			}

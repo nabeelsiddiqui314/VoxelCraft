@@ -7,5 +7,7 @@ public:
 	WaterRenderer();
 public:
 	void render(const Camera& camera) override;
+private:
+	sf::Clock c;
 };
 

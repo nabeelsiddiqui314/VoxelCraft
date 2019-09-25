@@ -67,6 +67,10 @@ void Shader::setUniform1i(const std::string& name, int val) {
 	glUniform1i(getUniformLocation(name), val);
 }
 
+void Shader::setUniform1f(const std::string& name, float val) {
+	glUniform1i(getUniformLocation(name), val);
+}
+
 GLint Shader::getUniformLocation(const std::string& name) {
 	if (m_uniformHashMap.find(name) != m_uniformHashMap.end())
 		return m_uniformHashMap.at(name);

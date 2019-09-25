@@ -11,9 +11,9 @@ Chunks FlatGenerator::generateChunk(const VecXZ& pos) {
 			for (std::int16_t y = 0; y < m_height; y++) {
 				if (y <= m_height - 5)
 					chunk.setBlock(x, y, z, BlockType::STONE);
-				else if (y <= m_height - 4)
-					chunk.setBlock(x, y, z, BlockType::WATER);
-				else if (y == m_height - 1)
+				else if (y <= m_height - 3)
+					chunk.setBlock(x, y, z, BlockType::DIRT);
+				else
 					chunk.setBlock(x, y, z, BlockType::WATER);
 			}
 		}

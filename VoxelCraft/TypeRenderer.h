@@ -14,8 +14,9 @@ public:
 protected:
 	void handleCameraTransform(const Camera& camera);
 	void drawModels();
+protected:
+	Shader p_shader;
 private:
 	std::vector<const Model*> m_models;
-	Shader m_shader;
 };
 

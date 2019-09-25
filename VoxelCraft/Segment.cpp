@@ -23,8 +23,12 @@ BlockType Segment::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) cons
 	return m_blocks[x + WIDTH * (y + WIDTH * z)];
 }
 
-void Segment::setMesh(const Mesh& mesh) {
-	m_mesh = mesh;
+void Segment::makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
+	const Segment* chunk,
+	const Segment* top, const Segment* bottom,
+	const Segment* left, const Segment* right,
+	const Segment* front, const Segment* back) {
+	ChunkModelsMaker(m_mesh, originX, originY, originZ, chunk, top, bottom, left, right, front, back);
 	m_hasMeshGenerated = true;
 }
 

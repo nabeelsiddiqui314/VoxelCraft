@@ -13,7 +13,11 @@ public:
 	void setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
 	BlockType getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
-	void setMesh(const Mesh& mesh);
+	void makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
+		const Segment* chunk,
+		const Segment* top, const Segment* bottom,
+		const Segment* left, const Segment* right,
+		const Segment* front, const Segment* back);
 	void loadModel();
 
 	void render(MasterRenderer& renderer);

@@ -8,8 +8,10 @@ public:
 	void setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
 	BlockType getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
-	void setMesh(const Mesh& mesh, std::int16_t y);
-	bool hasMesh(std::int16_t y) const;
+	void makeMesh(std::int16_t x, std::int16_t z,
+		const Chunks* left, const Chunks* right,
+		const Chunks* front, const Chunks* back);
+	bool hasMesh() const;
 
 	const Segment& getSegment(std::uint8_t index) const;
 	void render(MasterRenderer& renderer);
@@ -17,5 +19,6 @@ public:
 	static constexpr std::int16_t HEIGHT = 16;
 private:
 	std::array<Segment, HEIGHT> m_segments;
+	bool m_hasMesh = false;
 };
 

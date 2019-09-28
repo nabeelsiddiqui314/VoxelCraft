@@ -6,4 +6,5 @@ struct Mesh {
 	std::vector<GLfloat> vertices;
 	std::vector<GLfloat> textureCoords;
 	std::vector<GLuint> indices;
+	std::vector<GLfloat> lightFactorData;
 };

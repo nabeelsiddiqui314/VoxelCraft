@@ -46,6 +46,10 @@ const std::array<GLfloat, 12> SegmentMeshMaker::s_bottom = {
 	0, 0,  0
 };
 
+const GLfloat SegmentMeshMaker::s_topLight = 1.0f;
+const GLfloat SegmentMeshMaker::s_sideLight = 0.6f;
+const GLfloat SegmentMeshMaker::s_bottomLight = 0.2f;
+
 SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
 	const Segment* chunk,
 	const Segment* top, const Segment* bottom,
@@ -129,26 +133,26 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 				switch (BlockCodex::getBlockData(chunk->getBlock(x, y, z)).category) {
 				case BlockCategory::SOLID:
 					if (!BlockCodex::getBlockData(topB).opaque)
-						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top, s_topLight);
 
 					if (!BlockCodex::getBlockData(bottomB).opaque)
-						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordBottom, s_bottom);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordBottom, s_bottom, s_bottomLight);
 
 					if (!BlockCodex::getBlockData(leftB).opaque)
-						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_left);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_left, s_sideLight);
 
 					if (!BlockCodex::getBlockData(rightB).opaque)
-						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_right);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_right, s_sideLight);
 
 					if (!BlockCodex::getBlockData(frontB).opaque)
-						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_front);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_front, s_sideLight);
 
 					if (!BlockCodex::getBlockData(backB).opaque)
-						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_back);
+						solidMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordSide, s_back, s_sideLight);
 					break;
 				case BlockCategory::LIQUID:
 					if (topB == BlockType::VOID)
-						waterMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top);
+						waterMesh.addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texCoordTop, s_top, s_topLight);
 					break;
 				}
 			}

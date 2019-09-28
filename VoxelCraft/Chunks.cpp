@@ -12,7 +12,7 @@ BlockType Chunks::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const
 void Chunks::makeMesh(std::int16_t x, std::int16_t z,
 	const Chunks* left, const Chunks* right,
 	const Chunks* front, const Chunks* back) {
-	for (std::size_t y = 0; y < HEIGHT; y++) {
+	for (std::size_t y = HEIGHT - 1; y >= 0; y--) {
 		if (!m_segments[y].hasMeshGenerated()) {
 			if (y > 0 && y < Chunks::HEIGHT - 1) {
 				m_segments[y].makeMesh(x * Segment::WIDTH, y * Segment::WIDTH, z * Segment::WIDTH,

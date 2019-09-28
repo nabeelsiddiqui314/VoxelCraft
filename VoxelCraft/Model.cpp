@@ -13,6 +13,7 @@ void Model::addMesh(const Mesh& mesh) {
 
 	addVBO(3, mesh.vertices);
 	addVBO(2, mesh.textureCoords);
+	addVBO(1, mesh.lightFactorData);
 	addIBO(mesh.indices);
 }
 

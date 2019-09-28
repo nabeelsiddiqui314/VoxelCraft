@@ -6,6 +6,7 @@ SolidRenderer::SolidRenderer() : TypeRenderer("solid") {}
 
 void SolidRenderer::render(const Camera& camera) {
 	glEnable(GL_CULL_FACE);
+	glDisable(GL_BLEND);
 	p_shader.useProgram();
 	handleCameraTransform(camera);
 	drawModels();

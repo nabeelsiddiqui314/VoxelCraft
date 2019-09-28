@@ -17,6 +17,7 @@ public:
 	void setUniformMat4(const std::string& name, const glm::mat4& val);
 	void setUniform1i(const std::string& name, int val);
 	void setUniform1f(const std::string& name, float val);
+	void setUniform4f(const std::string& name, const glm::vec4& val);
 	GLint getUniformLocation(const std::string& name);
 private:
 	void CheckCompileErrors(GLuint shader, std::string type);

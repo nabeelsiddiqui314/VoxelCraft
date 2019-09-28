@@ -9,7 +9,7 @@ void BlockCodex::init() {
 	s_blocks[static_cast<std::size_t>(BlockType::DIRT)] = BlockData(2, 2, 2, BlockCategory::SOLID, true);
 	s_blocks[static_cast<std::size_t>(BlockType::STONE)] = BlockData(3, 3, 3, BlockCategory::SOLID, true);
 	s_blocks[static_cast<std::size_t>(BlockType::SAND)] = BlockData(4, 4, 4, BlockCategory::SOLID, true);
-	s_blocks[static_cast<std::size_t>(BlockType::WATER)] = BlockData(5, 5, 5, BlockCategory::WATER, false);
+	s_blocks[static_cast<std::size_t>(BlockType::WATER)] = BlockData(5, 5, 5, BlockCategory::LIQUID, false);
 }
 
 const BlockData& BlockCodex::getBlockData(BlockType id) {

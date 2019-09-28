@@ -14,7 +14,7 @@ struct BlockData {
 	: texCoordTop(0),
 	  texCoordSide(0),
 	  texCoordBottom(0),
-	  category(BlockCategory::SOLID),
+	  category(BlockCategory::NONE),
 	  opaque(false) {}
 
 	BlockData(int _texCoordTop, int _texCoordSide, int _texCoordBottom, const BlockCategory& _category, bool _opaque)

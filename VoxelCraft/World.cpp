@@ -2,7 +2,7 @@
 #include "World.h"
 
 World::World() : m_renderDistance(5) {
-	m_mapGenerator = std::make_unique<FlatGenerator>(256);
+	m_mapGenerator = std::make_unique<OverworldGenerator>();
 	m_threads.emplace_back([&]() {
 		loadChunks();
 	});

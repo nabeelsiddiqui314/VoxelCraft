@@ -6,6 +6,7 @@
 #include <memory>
 #include <thread>
 #include <mutex>
+#include <unordered_set>
 
 class World
 {
@@ -17,8 +18,10 @@ public:
 	void renderChunks(MasterRenderer& renderer);
 private:
 	void loadChunks();
+	void makeEditedMeshes();
 private:
 	ChunkManager m_chunks;
+	std::unordered_set<VecXZ> m_regenChunks;
 	VecXZ m_camPosition;
 	std::unique_ptr<MapGenerator> m_mapGenerator;
 	const int m_renderDistance;

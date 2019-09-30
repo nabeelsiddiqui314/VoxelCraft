@@ -32,6 +32,7 @@ void World::update(const Camera& camera) {
 		if (m_chunks.getBlock(m_camPosition, x, (int)floor(camera.getPosition().y), z) == BlockType::VOID) {
 			m_chunks.setBlock(m_camPosition, x, (int)floor(camera.getPosition().y), z, BlockType::SAND);
 			m_chunks.regenMesh(m_camPosition, camera.getPosition().y / Segment::WIDTH );
+			m_regenChunks.emplace(m_camPosition);
 		}
 	}
 }
@@ -57,13 +58,14 @@ void World::loadChunks() {
 
 		for (std::int16_t x = m_camPosition.x - m_chunkLoadRadius; x <= m_camPosition.x + m_chunkLoadRadius; x++) {
 			for (std::int16_t z = m_camPosition.z - m_chunkLoadRadius; z <= m_camPosition.z + m_chunkLoadRadius; z++) {
+				makeEditedMeshes();
+
 				if (!m_chunks.doesChunkExist({ x,z })) {
 					Chunks chunk;
 					chunk = m_mapGenerator->generateChunk({ x,z });
 
-					std::unique_lock<std::mutex> lock(m_mutex);
+					std::lock_guard<std::mutex> lock(m_mutex);
 					m_chunks.loadChunk({ x,z }, chunk);
-					lock.unlock();
 				}
 				else {
 					m_chunks.makeMesh({ x,z });
@@ -75,5 +77,16 @@ void World::loadChunks() {
 		m_chunkLoadRadius %= m_renderDistance;
 
 		std::this_thread::sleep_for(std::chrono::microseconds(10));
+	}
+}
+
+void World::makeEditedMeshes() {
+	for (auto itr = m_regenChunks.begin(); itr != m_regenChunks.end();) {
+		if (m_chunks.doesChunkExist(*itr)) {
+			m_chunks.makeMesh(*itr);
+			itr = m_regenChunks.erase(itr);
+		}
+		else
+			itr++;
 	}
 }

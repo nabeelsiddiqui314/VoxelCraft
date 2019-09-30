@@ -12,6 +12,7 @@ public:
 		const Chunks* left, const Chunks* right,
 		const Chunks* front, const Chunks* back);
 	bool hasMesh() const;
+	void cleanUp();
 
 	const Segment& getSegment(std::uint8_t index) const;
 	void render(MasterRenderer& renderer);

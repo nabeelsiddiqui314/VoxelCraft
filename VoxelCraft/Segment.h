@@ -20,6 +20,7 @@ public:
 		const Segment* left, const Segment* right,
 		const Segment* front, const Segment* back);
 	void loadModel();
+	void cleanUp();
 
 	void render(MasterRenderer& renderer);
 

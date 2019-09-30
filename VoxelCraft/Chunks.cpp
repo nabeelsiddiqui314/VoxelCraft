@@ -46,6 +46,12 @@ bool Chunks::hasMesh() const {
 	return m_hasMesh;
 }
 
+void Chunks::cleanUp() {
+	for (auto& segment : m_segments) {
+		segment.cleanUp();
+	}
+}
+
 const Segment& Chunks::getSegment(std::uint8_t index) const {
 	return m_segments[index];
 }

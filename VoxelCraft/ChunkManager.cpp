@@ -9,8 +9,15 @@ void ChunkManager::loadChunk(const VecXZ& pos, const Chunks& chunks) {
 	m_chunks.emplace(std::make_pair(pos, chunks));
 }
 
-void ChunkManager::unloadChunk(const VecXZ& pos) {
-	m_chunks.erase(pos);
+void ChunkManager::unloadChunks(const std::function<bool(const VecXZ& pos)>& cond) {
+	for (auto itr = m_chunks.begin(); itr != m_chunks.end();) {
+		if (cond(itr->first)) {
+			m_chunks[itr->first].cleanUp();
+			itr = m_chunks.erase(itr);
+		}
+		else
+			itr++;
+	}
 }
 
 bool ChunkManager::doesChunkExist(const VecXZ& pos) const {

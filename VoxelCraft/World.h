@@ -15,6 +15,7 @@ public:
 public:
 	void update(const Camera& camera);
 	void renderChunks(MasterRenderer& renderer);
+private:
 	void loadChunks();
 private:
 	ChunkManager m_chunks;

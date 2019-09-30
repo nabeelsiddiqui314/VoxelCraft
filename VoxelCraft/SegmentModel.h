@@ -5,6 +5,7 @@
 struct SegmentModel
 {
 public:
+	void cleanUp();
 	void loadMeshToModel();
 public:
 	Model model;

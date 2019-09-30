@@ -37,6 +37,11 @@ void Segment::loadModel() {
 	m_meshTypes.water.loadMeshToModel();
 }
 
+void Segment::cleanUp() {
+	m_meshTypes.solid.cleanUp();
+	m_meshTypes.water.cleanUp();
+}
+
 void Segment::render(MasterRenderer& renderer) {
 	renderer.addChunk(m_meshTypes);
 }

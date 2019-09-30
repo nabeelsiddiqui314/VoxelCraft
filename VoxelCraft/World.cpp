@@ -34,17 +34,10 @@ void World::renderChunks(MasterRenderer& renderer) {
 
 void World::loadChunks() {
 	while (m_running) {
-		for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
-			for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
-				if (x > m_camPosition.x + m_renderDistance || z > m_camPosition.z + m_renderDistance
-					|| x < m_camPosition.x - m_renderDistance || z < m_camPosition.z - m_renderDistance) {
-					if (m_chunks.doesChunkExist({ x,z })) {
-						std::lock_guard<std::mutex> lock(m_mutex);
-						m_chunks.unloadChunk({ x,z });
-					}
-				}
-			}
-		}
+		m_chunks.unloadChunks([&](const VecXZ& pos) {
+			return pos.x < m_camPosition.x - m_renderDistance || pos.z < m_camPosition.z - m_renderDistance
+				|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
+		});
 
 		bool shouldBreak = false;
 

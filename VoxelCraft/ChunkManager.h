@@ -2,6 +2,9 @@
 #include <unordered_map>
 #include "vecXZ.h"
 #include "Chunks.h"
+#include <functional>
+#include <algorithm>
+#include <utility>
 
 class ChunkManager
 {
@@ -10,7 +13,7 @@ public:
 	~ChunkManager();
 public:
 	void loadChunk(const VecXZ& pos, const Chunks& chunks);
-	void unloadChunk(const VecXZ& pos);
+	void unloadChunks(const std::function<bool(const VecXZ& pos)>& cond);
 
 	bool doesChunkExist(const VecXZ& pos) const;
 

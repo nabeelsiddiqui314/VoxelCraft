@@ -17,24 +17,6 @@ World::~World() {
 
 void World::update(const Camera& camera) {
 	m_camPosition = { (std::int16_t)(camera.getPosition().x / Segment::WIDTH), (std::int16_t)(camera.getPosition().z / Segment::WIDTH)};
-	if (m_chunks.doesChunkExist(m_camPosition)) {
-		std::int16_t x, z;
-		if (camera.getPosition().x >= 0)
-			x = (int)(camera.getPosition().x) % Segment::WIDTH;
-		else
-			x = Segment::WIDTH - abs((int)camera.getPosition().x) % Segment::WIDTH;
-
-		if (camera.getPosition().z >= 0)
-			z = (int)(camera.getPosition().z) % Segment::WIDTH;
-		else
-			z = Segment::WIDTH - abs((int)camera.getPosition().z) % Segment::WIDTH;
-
-		if (m_chunks.getBlock(m_camPosition, x, (int)floor(camera.getPosition().y), z) == BlockType::VOID) {
-			m_chunks.setBlock(m_camPosition, x, (int)floor(camera.getPosition().y), z, BlockType::SAND);
-			m_chunks.regenMesh(m_camPosition, camera.getPosition().y / Segment::WIDTH );
-			m_regenChunks.emplace(m_camPosition);
-		}
-	}
 }
 
 void World::renderChunks(MasterRenderer& renderer) {

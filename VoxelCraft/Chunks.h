@@ -11,7 +11,7 @@ public:
 	void makeMesh(std::int16_t x, std::int16_t z,
 		const Chunks* left, const Chunks* right,
 		const Chunks* front, const Chunks* back);
-	bool hasMesh() const;
+	void regenMesh(std::int16_t y);
 	void cleanUp();
 
 	const Segment& getSegment(std::uint8_t index) const;
@@ -20,6 +20,5 @@ public:
 	static constexpr std::int16_t HEIGHT = 16;
 private:
 	std::array<Segment, HEIGHT> m_segments;
-	bool m_hasMesh = false;
 };
 

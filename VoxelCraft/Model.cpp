@@ -8,6 +8,12 @@ Model::Model()
 	  m_ibo(0) {}
 
 void Model::addMesh(const Mesh& mesh) {
+	m_renderData.VAO = 0;
+	m_renderData.indicesCount = 0;
+	m_vboCount = 0;
+	m_ibo = 0;
+	m_vBuffer.clear();
+
 	generateVAO();
 	bindVao();
 

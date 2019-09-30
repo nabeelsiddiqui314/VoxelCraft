@@ -19,6 +19,7 @@ public:
 		const Segment* top, const Segment* bottom,
 		const Segment* left, const Segment* right,
 		const Segment* front, const Segment* back);
+	void regenMesh();
 	void loadModel();
 	void cleanUp();
 
@@ -27,6 +28,7 @@ public:
 	bool isAllOpaque() const;
 	bool isEmpty() const;
 	bool hasMeshGenerated() const;
+	bool hasModelLoaded() const;
 public:
 	static constexpr std::int16_t WIDTH = 16;
 private: 
@@ -36,5 +38,6 @@ private:
 
 	MeshTypes m_meshTypes;
 	bool m_hasMeshGenerated = false;
+	bool m_hasLoadedModel = false;
 };
 

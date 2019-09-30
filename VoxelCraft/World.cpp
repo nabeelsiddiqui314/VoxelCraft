@@ -17,7 +17,23 @@ World::~World() {
 
 void World::update(const Camera& camera) {
 	m_camPosition = { (std::int16_t)(camera.getPosition().x / Segment::WIDTH), (std::int16_t)(camera.getPosition().z / Segment::WIDTH)};
-	
+	if (m_chunks.doesChunkExist(m_camPosition)) {
+		std::int16_t x, z;
+		if (camera.getPosition().x >= 0)
+			x = (int)(camera.getPosition().x) % Segment::WIDTH;
+		else
+			x = Segment::WIDTH - abs((int)camera.getPosition().x) % Segment::WIDTH;
+
+		if (camera.getPosition().z >= 0)
+			z = (int)(camera.getPosition().z) % Segment::WIDTH;
+		else
+			z = Segment::WIDTH - abs((int)camera.getPosition().z) % Segment::WIDTH;
+
+		if (m_chunks.getBlock(m_camPosition, x, (int)floor(camera.getPosition().y), z) == BlockType::VOID) {
+			m_chunks.setBlock(m_camPosition, x, (int)floor(camera.getPosition().y), z, BlockType::SAND);
+			m_chunks.regenMesh(m_camPosition, camera.getPosition().y / Segment::WIDTH );
+		}
+	}
 }
 
 void World::renderChunks(MasterRenderer& renderer) {
@@ -39,8 +55,6 @@ void World::loadChunks() {
 				|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
 		});
 
-		bool shouldBreak = false;
-
 		for (std::int16_t x = m_camPosition.x - m_chunkLoadRadius; x <= m_camPosition.x + m_chunkLoadRadius; x++) {
 			for (std::int16_t z = m_camPosition.z - m_chunkLoadRadius; z <= m_camPosition.z + m_chunkLoadRadius; z++) {
 				if (!m_chunks.doesChunkExist({ x,z })) {
@@ -50,23 +64,15 @@ void World::loadChunks() {
 					std::unique_lock<std::mutex> lock(m_mutex);
 					m_chunks.loadChunk({ x,z }, chunk);
 					lock.unlock();
-					shouldBreak = true;
-					break;
 				}
 				else {
-					shouldBreak = m_chunks.makeMesh({ x,z });
-					if(shouldBreak)
-						break;
+					m_chunks.makeMesh({ x,z });
 				}
 			}
-			if (shouldBreak)
-				break;
 		}
 
-		if (!shouldBreak) {
-			m_chunkLoadRadius++;
-			m_chunkLoadRadius %= m_renderDistance;
-		}
+		m_chunkLoadRadius++;
+		m_chunkLoadRadius %= m_renderDistance;
 
 		std::this_thread::sleep_for(std::chrono::microseconds(10));
 	}

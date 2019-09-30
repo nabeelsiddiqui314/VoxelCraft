@@ -28,13 +28,19 @@ void Segment::makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t 
 	const Segment* top, const Segment* bottom,
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
+	cleanUp();
 	SegmentMeshMaker(m_meshTypes, originX, originY, originZ, chunk, top, bottom, left, right, front, back);
 	m_hasMeshGenerated = true;
+}
+
+void Segment::regenMesh() {
+	m_hasMeshGenerated = false;
 }
 
 void Segment::loadModel() {
 	m_meshTypes.solid.loadMeshToModel();
 	m_meshTypes.water.loadMeshToModel();
+	m_hasLoadedModel = true;
 }
 
 void Segment::cleanUp() {
@@ -56,4 +62,8 @@ bool Segment::isEmpty() const {
 
 bool Segment::hasMeshGenerated() const {
 	return m_hasMeshGenerated;
+}
+
+bool Segment::hasModelLoaded() const {
+	return m_hasLoadedModel;
 }

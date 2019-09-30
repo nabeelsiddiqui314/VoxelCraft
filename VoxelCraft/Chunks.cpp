@@ -12,9 +12,9 @@ BlockType Chunks::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const
 void Chunks::makeMesh(std::int16_t x, std::int16_t z,
 	const Chunks* left, const Chunks* right,
 	const Chunks* front, const Chunks* back) {
-	for (std::size_t y = HEIGHT - 1; y >= 0; y--) {
+	for (std::size_t y = HEIGHT - 1; y > 0; y--) {
 		if (!m_segments[y].hasMeshGenerated()) {
-			if (y > 0 && y < Chunks::HEIGHT - 1) {
+ 			if (y > 0 && y < Chunks::HEIGHT - 1) {
 				m_segments[y].makeMesh(x * Segment::WIDTH, y * Segment::WIDTH, z * Segment::WIDTH,
 					&getSegment(y), &getSegment(y + 1), &getSegment(y - 1), &left->getSegment(y), 
 					&right->getSegment(y), &front->getSegment(y), &back->getSegment(y));
@@ -29,21 +29,12 @@ void Chunks::makeMesh(std::int16_t x, std::int16_t z,
 					&getSegment(y), &getSegment(y + 1), nullptr, &left->getSegment(y),
 					&right->getSegment(y), &front->getSegment(y), &back->getSegment(y));
 			}
-			
-			break;
 		}
 	}
-	for (auto& segment : m_segments) {
-		if (!segment.hasMeshGenerated()) {
-			m_hasMesh = false;
-			return;
-		}
-	}
-	m_hasMesh = true;
 }
 
-bool Chunks::hasMesh() const {
-	return m_hasMesh;
+void Chunks::regenMesh(std::int16_t y) {
+	m_segments[y].regenMesh();
 }
 
 void Chunks::cleanUp() {
@@ -60,6 +51,8 @@ void Chunks::render(MasterRenderer& renderer) {
 	for (auto& segment : m_segments) {
 		if (segment.hasMeshGenerated()) {
 			segment.loadModel();
+		}
+		if (segment.hasModelLoaded()) {
 			segment.render(renderer);
 		}
 	}

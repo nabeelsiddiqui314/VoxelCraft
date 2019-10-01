@@ -1,11 +1,7 @@
 #include "stdafx.h"
 #include "OverworldGenerator.h"
 
-OverworldGenerator::OverworldGenerator() 
-	: m_seed(10000), 
-	  m_mt(m_rd()),
-      m_random(0.0f, 1.0f) {
-	m_mt.seed(m_seed);
+OverworldGenerator::OverworldGenerator() {
 }
 
 Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
@@ -15,7 +11,7 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 
 	for (std::int16_t x = 0; x < Segment::WIDTH; x++) {
 		for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
-			height = 100 * (getNoise(pos.x, pos.z, x, z));
+			height = (float)150 * (float)m_noise.getNoiseAt(pos.x, pos.z, x, z, Segment::WIDTH, 2); 
 			for (std::int16_t y = 0; y < height; y++) {
 				if (y <= height) {
 					if (y <= height - 5)
@@ -42,26 +38,4 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 		}
 	}
 	return chunk;
-}
-
-float OverworldGenerator::getNoise(int cx, int cz, float x, float z) {
-	cx *= Segment::WIDTH;
-	cz *= Segment::WIDTH;
-
-	m_mt.seed(cx * 23213 + cz * 90988 + m_seed);
-	float v1 = m_random(m_mt);
-
-	m_mt.seed((cx + Segment::WIDTH) * 23213 + cz * 90988 + m_seed);
-	float v2 = m_random(m_mt);
-
-	m_mt.seed(cx * 23213 + (cz + Segment::WIDTH) * 90988 + m_seed);
-	float v3 = m_random(m_mt);
-	
-	m_mt.seed((cx + Segment::WIDTH) * 23213 + (cz + Segment::WIDTH) * 90988 + m_seed);
-	float v4 = m_random(m_mt);
-
-	float i1 = v1 + (v2 - v1) * ((float)x / (float)Segment::WIDTH);
-	float i2 = v3 + (v4 - v3) * ((float)x / (float)Segment::WIDTH);
-
-	return i1 + (i2 - i1) * ((float)z / (float)Segment::WIDTH);
 }

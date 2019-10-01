@@ -164,6 +164,7 @@
     <ClInclude Include="BlockTypes.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ChunkManager.h" />
+    <ClInclude Include="Noise.h" />
     <ClInclude Include="SegmentMeshMaker.h" />
     <ClInclude Include="Chunks.h" />
     <ClInclude Include="FlatGenerator.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="BlockCodex.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChunkManager.cpp" />
+    <ClCompile Include="Noise.cpp" />
     <ClCompile Include="SegmentMeshMaker.cpp" />
     <ClCompile Include="Chunks.cpp" />
     <ClCompile Include="FlatGenerator.cpp" />

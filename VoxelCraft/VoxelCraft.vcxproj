@@ -166,6 +166,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ChunkManager.h" />
     <ClInclude Include="Composition.h" />
+    <ClInclude Include="Desert.h" />
     <ClInclude Include="Fields.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="SegmentMeshMaker.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChunkManager.cpp" />
     <ClCompile Include="Composition.cpp" />
+    <ClCompile Include="Desert.cpp" />
     <ClCompile Include="Fields.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="SegmentMeshMaker.cpp" />

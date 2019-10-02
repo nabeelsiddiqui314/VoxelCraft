@@ -153,6 +153,9 @@
     <ClInclude Include="Fields.h">
       <Filter>Header Files\Biomes</Filter>
     </ClInclude>
+    <ClInclude Include="Desert.h">
+      <Filter>Header Files\Biomes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -240,6 +243,9 @@
       <Filter>Source Files\Biomes</Filter>
     </ClCompile>
     <ClCompile Include="Fields.cpp">
+      <Filter>Source Files\Biomes</Filter>
+    </ClCompile>
+    <ClCompile Include="Desert.cpp">
       <Filter>Source Files\Biomes</Filter>
     </ClCompile>
   </ItemGroup>

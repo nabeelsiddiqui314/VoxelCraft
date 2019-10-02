@@ -1,10 +1,10 @@
 #pragma once
 #include "Biome.h"
 
-class Fields : public Biome
+class Desert : public Biome
 {
 public:
-	Fields(const std::uint32_t seed);
+	Desert(const std::uint32_t seed);
 public:
 	bool hasWater() const override;
 protected:

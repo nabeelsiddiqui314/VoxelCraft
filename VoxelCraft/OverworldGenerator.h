@@ -3,6 +3,7 @@
 #include "Noise.h"
 #include "Biome.h"
 #include "Fields.h"
+#include "Desert.h"
 
 class OverworldGenerator : public MapGenerator
 {
@@ -11,9 +12,11 @@ public:
 public:
 	virtual Chunks generateChunk(const VecXZ& pos) override;
 private:
-	const Biome* getBiome() const;
+	const std::shared_ptr<Biome> getCurrentBiome() const;
 private:
 	Noise m_biomeNoise;
-	Fields m_fields;
+	std::shared_ptr<Fields> m_fields;
+	std::shared_ptr<Desert> m_desert;
+	float m_biomeVal;
 };
 

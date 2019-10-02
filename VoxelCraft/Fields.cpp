@@ -4,6 +4,10 @@
 
 Fields::Fields(const std::uint32_t seed) : Biome(seed, getNoiseProperties(), getLayers()) {}
 
+bool Fields::hasWater() const {
+	return true;
+}
+
 NoiseProperties Fields::getNoiseProperties() const {
 	NoiseProperties properties;
 	properties.amplitude = 150;

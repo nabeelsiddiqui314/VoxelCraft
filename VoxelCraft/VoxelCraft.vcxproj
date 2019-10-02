@@ -158,12 +158,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Biome.h" />
     <ClInclude Include="BlockCategory.h" />
     <ClInclude Include="BlockCodex.h" />
     <ClInclude Include="BlockData.h" />
     <ClInclude Include="BlockTypes.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ChunkManager.h" />
+    <ClInclude Include="Composition.h" />
+    <ClInclude Include="Fields.h" />
     <ClInclude Include="Noise.h" />
     <ClInclude Include="SegmentMeshMaker.h" />
     <ClInclude Include="Chunks.h" />
@@ -191,9 +194,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Biome.cpp" />
     <ClCompile Include="BlockCodex.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChunkManager.cpp" />
+    <ClCompile Include="Composition.cpp" />
+    <ClCompile Include="Fields.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="SegmentMeshMaker.cpp" />
     <ClCompile Include="Chunks.cpp" />

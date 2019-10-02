@@ -2,11 +2,11 @@
 #include <random>
 
 struct NoiseProperties {
+	float octaves;
 	float amplitude;
+	float smoothness;
 	float persistance;
 	float lacunarity;
-	float octaves;
-	float smoothness;
 };
 
 class Noise
@@ -16,19 +16,19 @@ private:
 		float x, z;
 	};
 public:
-	Noise();
+	Noise(const std::uint32_t seed, const NoiseProperties& properties);
 public:
-	void setProperties(const NoiseProperties& properties);
-	float getOctaveNoise(float x, float z);
-	float getNoiseAt(float x, float z);
+	float getOctaveNoise(float x, float z) const;
+	float getNoiseAt(float x, float z) const;
 private:
-	float dot(const vec& v1, const vec& v2);
-	float lerp(float x, float a, float b);
-	float fade(float t);
+	float dot(const vec& v1, const vec& v2) const;
+	float lerp(float x, float a, float b) const;
+	float fade(float t) const;
 private:
 	const std::uint32_t m_seed;
-	std::random_device m_rd;
-	std::mt19937 m_mt;
-	std::uniform_int_distribution<int> m_random;
 	NoiseProperties m_properties;
+
+	std::random_device m_rd;
+	mutable std::mt19937 m_mt;
+	std::uniform_int_distribution<int> m_random;
 };

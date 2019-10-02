@@ -1,18 +1,15 @@
 #include "stdafx.h"
 #include "Noise.h"
 
-Noise::Noise()
-	: m_seed(1001010),
+Noise::Noise(const std::uint32_t seed, const NoiseProperties& properties)
+	: m_seed(seed),
+      m_properties(properties),
 	  m_mt(m_rd()),
       m_random(-1, 1) {
 	  m_mt.seed(m_seed); 
 }
 
-void Noise::setProperties(const NoiseProperties& properties) {
-	m_properties = properties;
-}
-
-float Noise::getOctaveNoise(float x, float z) {
+float Noise::getOctaveNoise(float x, float z) const {
 	float amplitude = 1;
 	float frequency = 1;
 	float maxValue = 0;
@@ -26,7 +23,7 @@ float Noise::getOctaveNoise(float x, float z) {
 	return total / maxValue;
 }
 
-float Noise::getNoiseAt(float x, float z)  {
+float Noise::getNoiseAt(float x, float z) const {
 	x /= m_properties.smoothness;
 	z /= m_properties.smoothness;
 	int xi = floor(x);
@@ -68,14 +65,14 @@ float Noise::getNoiseAt(float x, float z)  {
 	return m_properties.amplitude * ((lerp(v, xInter1, xInter2) + 1) / 2);
 }
 
-float Noise::dot(const vec& v1, const vec& v2) {
+float Noise::dot(const vec& v1, const vec& v2) const {
 	return v1.x * v2.x + v1.z * v2.z;
 }
 
-float Noise::lerp(float x, float a, float b) {
+float Noise::lerp(float x, float a, float b) const {
 	return a + x * (b -a);
 }
 
-float Noise::fade(float t) {
+float Noise::fade(float t) const {
 	return 6 * pow(t, 5) - 15 * pow(t, 4) + 10 * pow(t, 3);
 }

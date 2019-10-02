@@ -1,6 +1,8 @@
 #pragma once
 #include "MapGenerator.h"
 #include "Noise.h"
+#include "Biome.h"
+#include "Fields.h"
 
 class OverworldGenerator : public MapGenerator
 {
@@ -9,7 +11,9 @@ public:
 public:
 	virtual Chunks generateChunk(const VecXZ& pos) override;
 private:
-	Noise m_noise;
-	NoiseProperties m_properties;
+	const Biome* getBiome() const;
+private:
+	Noise m_biomeNoise;
+	Fields m_fields;
 };
 

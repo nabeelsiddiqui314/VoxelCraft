@@ -48,6 +48,7 @@ void World::loadChunks() {
 
 					std::lock_guard<std::mutex> lock(m_mutex);
 					m_chunks.loadChunk({ x,z }, chunk);
+					break;
 				}
 				else {
 					m_chunks.makeMesh({ x,z });

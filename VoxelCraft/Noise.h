@@ -1,6 +1,14 @@
 #pragma once
 #include <random>
 
+struct NoiseProperties {
+	float amplitude;
+	float persistance;
+	float lacunarity;
+	float octaves;
+	float smoothness;
+};
+
 class Noise
 {
 private:
@@ -10,8 +18,9 @@ private:
 public:
 	Noise();
 public:
-	float getOctaveNoise(int wx, int wz, int lx, int lz, int width);
-	float getNoiseAt(int wx, int wz, int lx, int lz, int width, int stretching);
+	void setProperties(const NoiseProperties& properties);
+	float getOctaveNoise(float x, float z);
+	float getNoiseAt(float x, float z);
 private:
 	float dot(const vec& v1, const vec& v2);
 	float lerp(float x, float a, float b);
@@ -21,4 +30,5 @@ private:
 	std::random_device m_rd;
 	std::mt19937 m_mt;
 	std::uniform_int_distribution<int> m_random;
+	NoiseProperties m_properties;
 };

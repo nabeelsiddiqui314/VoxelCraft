@@ -1,49 +1,47 @@
 #include "stdafx.h"
 #include "Noise.h"
 
-Noise::Noise() 
+Noise::Noise()
 	: m_seed(1001010),
 	  m_mt(m_rd()),
       m_random(-1, 1) {
 	  m_mt.seed(m_seed); 
 }
 
-float Noise::getOctaveNoise(int wx, int wz, int lx, int lz, int width) {
-	for (int i = 0; i < 3; i++) {
-		
-	}
-	return 0.0f;
+void Noise::setProperties(const NoiseProperties& properties) {
+	m_properties = properties;
 }
 
-float Noise::getNoiseAt(int wx, int wz, int lx, int lz, int width, int stretching)  {
-	if (wx >= 0) {
-		lx = lx + (wx % stretching) * width;
+float Noise::getOctaveNoise(float x, float z) {
+	float amplitude = 1;
+	float frequency = 1;
+	float maxValue = 0;
+	float total = 0;
+	for (int i = 0; i < m_properties.octaves; i++) {
+		total += amplitude * getNoiseAt(x * frequency, z * frequency);
+		maxValue += amplitude;
+		frequency *= m_properties.lacunarity;
+		amplitude /= m_properties.persistance;
 	}
-	else {
-		//lx = width - 1 - lx;
-		//lx = lx + (wx % stretching) * width;
-	}
+	return total / maxValue;
+}
 
-	if (wz >= 0) {
-		lz = lz + (wz % stretching) * width;
-	}
-	else {
-		//lz = width - 1 - lz;
-		//lz = lz + (wz % stretching) * width;
-	}
+float Noise::getNoiseAt(float x, float z)  {
+	x /= m_properties.smoothness;
+	z /= m_properties.smoothness;
+	int xi = floor(x);
+	int zi = floor(z);
 
-
-	wx /= stretching;
-	wz /= stretching;
-	width *= stretching;
+	float xf = x - xi;
+	float zf = z - zi;
 
 	auto edgeVec = [&](int xOff, int zOff){
-		m_mt.seed((wx + xOff) * 298773213 + (wz  + zOff) * 907879988 + m_seed);
-		float x, z;
-		x = m_random(m_mt);
-		z = m_random(m_mt);
+		m_mt.seed((xi + xOff) * 298773213 + (zi + zOff) * 907879988 + m_seed);
+		float vx, vz;
+		vx = m_random(m_mt);
+		vz = m_random(m_mt);
 
-		return vec({ x,z });
+		return vec({ vx, vz });
 	};
 
 	auto bLeftE  = edgeVec(0, 0);
@@ -51,23 +49,23 @@ float Noise::getNoiseAt(int wx, int wz, int lx, int lz, int width, int stretchin
 	auto fLeftE  = edgeVec(0, 1);
 	auto fRightE = edgeVec(1, 1);
 
-	vec bLeftD  = {(float)(lx        )  / (float)width, (float)(lz        )  / (float)width};
-	vec bRightD = {(float)(lx - width)  / (float)width, (float)(lz        )  / (float)width};
-	vec fLeftD  = {(float)(lx        )  / (float)width, (float)(lz - width)  / (float)width};
-	vec fRightD = {(float)(lx - width)  / (float)width, (float)(lz - width)  / (float)width};
+	vec bLeftD  = {xf    , zf};
+	vec bRightD = {xf - 1, zf};
+	vec fLeftD  = {xf    , zf - 1};
+	vec fRightD = {xf - 1, zf - 1};
 
 	float bLeftDot = dot(bLeftE, bLeftD);
 	float bRightDot = dot(bRightE, bRightD);
 	float fLeftDot = dot(fLeftE, fLeftD);
 	float fRightDot = dot(fRightE, fRightD);
 
-	float u = fade((float)lx / (float)width);
-	float v = fade((float)lz / (float)width);
+	float u = fade(xf);
+	float v = fade(zf);
 
 	float xInter1 = lerp(u, bLeftDot, bRightDot);
 	float xInter2 = lerp(u, fLeftDot, fRightDot);
 
-	return (lerp(v, xInter1, xInter2) + 1) / 2;
+	return m_properties.amplitude * ((lerp(v, xInter1, xInter2) + 1) / 2);
 }
 
 float Noise::dot(const vec& v1, const vec& v2) {

@@ -2,6 +2,12 @@
 #include "OverworldGenerator.h"
 
 OverworldGenerator::OverworldGenerator() {
+	m_properties.amplitude = 150;
+	m_properties.smoothness = 70;
+	m_properties.octaves = 5;
+	m_properties.persistance = 4;
+	m_properties.lacunarity = 4;
+	m_noise.setProperties(m_properties);
 }
 
 Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
@@ -11,7 +17,7 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 
 	for (std::int16_t x = 0; x < Segment::WIDTH; x++) {
 		for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
-			height = (float)150 * (float)m_noise.getNoiseAt(pos.x, pos.z, x, z, Segment::WIDTH, 2); 
+			height = m_noise.getOctaveNoise(x + pos.x * Segment::WIDTH, z + pos.z * Segment::WIDTH);
 			for (std::int16_t y = 0; y < height; y++) {
 				if (y <= height) {
 					if (y <= height - 5)

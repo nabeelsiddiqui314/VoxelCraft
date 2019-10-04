@@ -14,13 +14,12 @@ void TypeRenderer::addModel(const Model* model) {
 
 void TypeRenderer::handleCameraTransform(const Camera& camera) {
 	p_shader.useProgram();
-	glm::mat4 view = camera.getViewMatrix();
-	glm::mat4 projection = glm::perspective(glm::radians(70.0f), (float)1000 / (float)600, 0.1f, 1000.0f);
-	p_shader.setUniformMat4("u_view", view);
-	p_shader.setUniformMat4("u_projection", projection);
+	p_shader.setUniformMat4("u_view", camera.getViewMatrix());
+	p_shader.setUniformMat4("u_projection", camera.getProjMatrix());
 }
 
 void TypeRenderer::drawModels() {
+	std::cout << m_models.size() << "\n";
 	for (auto& model : m_models) {
 		model->bindVao();
 		glDrawElements(GL_TRIANGLES, model->getRenderData().indicesCount, GL_UNSIGNED_INT, nullptr);

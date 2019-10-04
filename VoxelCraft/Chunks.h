@@ -15,10 +15,12 @@ public:
 	void cleanUp();
 
 	const Segment& getSegment(std::uint8_t index) const;
-	void render(MasterRenderer& renderer);
+	void makeBoxes(std::int64_t x, std::int64_t z);
+	void render(MasterRenderer& renderer, const Frustum& frustum);
 public:
 	static constexpr std::int16_t HEIGHT = 16;
 private:
 	std::array<Segment, HEIGHT> m_segments;
+	AABB m_box;
 };
 

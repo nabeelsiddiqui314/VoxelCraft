@@ -15,9 +15,10 @@ public:
 	~World();
 public:
 	void update(const Camera& camera);
-	void renderChunks(MasterRenderer& renderer);
+	void renderChunks(MasterRenderer& renderer, const Frustum& frustum);
 private:
 	void loadChunks();
+	void makeMeshes();
 	void makeEditedMeshes();
 private:
 	ChunkManager m_chunks;

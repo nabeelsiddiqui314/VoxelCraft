@@ -24,7 +24,7 @@ public:
 	const Chunks& getChunkAt(const VecXZ& pos) const;
 	void regenMesh(const VecXZ& pos, std::int16_t y);
 
-	void render(const VecXZ& pos, MasterRenderer& renderer);
+	void render(const VecXZ& pos, MasterRenderer& renderer, const Frustum& frustum);
 private:
 	std::unordered_map<VecXZ, Chunks> m_chunks;
 };

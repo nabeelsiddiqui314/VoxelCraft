@@ -5,7 +5,7 @@ Camera::Camera()
 : m_position(0.0f, 0.0f, 0.0f),
   m_worldUp(0.0f, 1.0f, 0.0f),
   m_up(0.0f, 1.0f, 0.0f),
-  m_front(0.0f, 0.0f, -1.0f),
+  m_front(0.0f, 0.0f, 1.0f),
   m_right(1.0f, 0.0f, 0.0f),
   m_yaw(-90.0f),
   m_pitch(0.0f),
@@ -13,6 +13,7 @@ Camera::Camera()
   m_sensitivity(0.2f) {
 	m_worldUp = m_up;
 	calculateVectors();
+	m_projMatrix = glm::perspective(glm::radians(70.0f), (float)1000 / (float)600, 0.1f, 1000.0f);
 }
 
 void Camera::updateMovement(const Direction& dir, float dt) {
@@ -44,14 +45,23 @@ void Camera::updateRotation(float xOffset, float yOffset) {
 		m_pitch = -89.0f;
 
 	calculateVectors();
+	m_viewfrustum.updateFrustum(m_projMatrix * getViewMatrix());
+}
+
+const glm::mat4& Camera::getProjMatrix() const {
+	return m_projMatrix;
 }
 
 const glm::mat4 Camera::getViewMatrix() const {
-	return glm::lookAt(m_position, m_position + m_front, m_up);
+	return glm::lookAt(m_position, m_position + m_front, m_worldUp);
 }
 
 const glm::vec3& Camera::getPosition() const {
 	return m_position;
+}
+
+const Frustum & Camera::getFrustum() const {
+	return m_viewfrustum;
 }
 
 void Camera::calculateVectors() {

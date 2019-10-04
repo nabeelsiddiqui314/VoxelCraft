@@ -7,6 +7,7 @@ ChunkManager::~ChunkManager() {
 
 void ChunkManager::loadChunk(const VecXZ& pos, const Chunks& chunks) {
 	m_chunks.emplace(std::make_pair(pos, chunks));
+	m_chunks[pos].makeBoxes(pos.x, pos.z);
 }
 
 void ChunkManager::unloadChunks(const std::function<bool(const VecXZ& pos)>& cond) {
@@ -50,6 +51,6 @@ void ChunkManager::regenMesh(const VecXZ& pos, std::int16_t y) {
 	m_chunks[pos].regenMesh(y);
 }
 
-void ChunkManager::render(const VecXZ & pos, MasterRenderer & renderer) {
-	m_chunks[pos].render(renderer);
+void ChunkManager::render(const VecXZ& pos, MasterRenderer& renderer, const Frustum& frustum) {
+	m_chunks[pos].render(renderer, frustum);
 }

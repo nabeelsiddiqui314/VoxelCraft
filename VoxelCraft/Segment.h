@@ -23,7 +23,7 @@ public:
 	void loadModel();
 	void cleanUp();
 
-	void render(MasterRenderer& renderer);
+	void render(MasterRenderer& renderer, const Frustum& frustum);
 
 	bool isAllOpaque() const;
 	bool isEmpty() const;

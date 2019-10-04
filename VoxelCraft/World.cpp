@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "World.h"
 
-World::World() : m_renderDistance(5) {
+World::World() : m_renderDistance(8) {
 	m_mapGenerator = std::make_unique<OverworldGenerator>();
 	m_threads.emplace_back([&]() {
 		loadChunks();
@@ -19,14 +19,13 @@ void World::update(const Camera& camera) {
 	m_camPosition = { (std::int16_t)(camera.getPosition().x / Segment::WIDTH), (std::int16_t)(camera.getPosition().z / Segment::WIDTH)};
 }
 
-void World::renderChunks(MasterRenderer& renderer) {
-	std::lock_guard<std::mutex> lock(m_mutex);
+void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {
 	for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
 		for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
+			std::lock_guard<std::mutex> lock(m_mutex);
 			if (!m_chunks.doesChunkExist({x,z}))
 				continue;
-
-			m_chunks.render({x,z}, renderer);
+			m_chunks.render({x,z}, renderer, frustum);
 		}
 	}
 }
@@ -46,8 +45,9 @@ void World::loadChunks() {
 					Chunks chunk;
 					chunk = m_mapGenerator->generateChunk({ x,z });
 
-					std::lock_guard<std::mutex> lock(m_mutex);
+					std::unique_lock<std::mutex> lock(m_mutex);
 					m_chunks.loadChunk({ x,z }, chunk);
+					lock.unlock();
 					break;
 				}
 				else {

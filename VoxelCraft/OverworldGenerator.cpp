@@ -9,7 +9,6 @@ OverworldGenerator::OverworldGenerator()
 
 Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 	Chunks chunk;
-	sf::Clock c;
 	std::int16_t height;
     m_biomeVal = m_biomeNoise.getNoiseAt(pos.x * Segment::WIDTH, pos.z * Segment::WIDTH);
 
@@ -38,7 +37,6 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 			}
 		}
 	}
-	std::cout << c.getElapsedTime().asMilliseconds() << "\n";
 	return chunk;
 }
 

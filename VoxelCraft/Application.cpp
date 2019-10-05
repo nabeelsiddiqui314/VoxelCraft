@@ -12,7 +12,6 @@ Application::Application() {
 	if(glewInit() != GLEW_OK)
 		return;
 
-	glViewport(0, 0, 1000, 600);
 	glEnable(GL_DEPTH_TEST);
 	m_renderer = std::make_unique<MasterRenderer>();
 	m_world = std::make_unique<World>();
@@ -23,6 +22,10 @@ Application::Application() {
 
 void Application::run() {
 	while (!glfwWindowShouldClose(m_window)) {
+		glfwGetWindowSize(m_window, &m_windowWidth, &m_windowHeight);
+		glViewport(0, 0, m_windowWidth, m_windowHeight);
+		m_camera->updateWindowSize(m_windowWidth, m_windowHeight);
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 			m_camera->updateMovement(Camera::FORWARD, frameClock.getElapsedTime().asSeconds());
 		}

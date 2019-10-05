@@ -17,5 +17,7 @@ private:
 	std::unique_ptr<Camera> m_camera;
 	sf::Clock frameClock;
 	float xLast, yLast;
+	int m_windowWidth;
+	int m_windowHeight;
 };
 

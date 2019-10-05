@@ -37,8 +37,8 @@ void World::loadChunks() {
 				|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
 		});
 
-		for (std::int16_t x = m_camPosition.x - m_chunkLoadRadius; x <= m_camPosition.x + m_chunkLoadRadius; x++) {
-			for (std::int16_t z = m_camPosition.z - m_chunkLoadRadius; z <= m_camPosition.z + m_chunkLoadRadius; z++) {
+		for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
+			for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
 				makeEditedMeshes();
 
 				if (!m_chunks.doesChunkExist({ x, z })) {
@@ -53,10 +53,6 @@ void World::loadChunks() {
 				}
 			}
 		}
-
-		m_chunkLoadRadius++;
-		m_chunkLoadRadius %= m_renderDistance;
-
 		std::this_thread::sleep_for(std::chrono::microseconds(10));
 	}
 }

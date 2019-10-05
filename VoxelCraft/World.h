@@ -28,5 +28,4 @@ private:
 	std::vector<std::thread> m_threads;
 	std::mutex m_mutex;
 	bool m_running = true;
-	int m_chunkLoadRadius = 0;
 };

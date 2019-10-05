@@ -18,6 +18,7 @@ Application::Application() {
 	m_camera = std::make_unique<Camera>();
 	BlockCodex::init();
 	TextureAtlas::init(8);
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 }
 
 void Application::run() {
@@ -47,6 +48,7 @@ void Application::run() {
 		frameClock.restart();
 
 		m_camera->updateRotation(sf::Mouse::getPosition().x - xLast, -sf::Mouse::getPosition().y + yLast);
+		glfwSetCursorPos(m_window, m_windowWidth / 2, m_windowHeight / 2);
 		xLast = sf::Mouse::getPosition().x;
 		yLast = sf::Mouse::getPosition().y;
 
@@ -55,6 +57,7 @@ void Application::run() {
 		m_renderer->render(m_window, *m_camera);
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
+		glfwSetWindowShouldClose(m_window, sf::Keyboard::isKeyPressed(sf::Keyboard::Escape));
 	}
 }
 

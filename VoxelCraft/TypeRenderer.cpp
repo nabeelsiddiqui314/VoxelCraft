@@ -16,8 +16,8 @@ void TypeRenderer::handleCameraTransform(const Camera& camera) {
 	p_shader.useProgram();
 	p_shader.setUniformMat4("u_view", camera.getViewMatrix());
 	p_shader.setUniformMat4("u_projection", camera.getProjMatrix());
-	p_shader.setUniform1f("u_density", 0.007f);
-	p_shader.setUniform1f("u_gradient", 5.8f);
+	p_shader.setUniform1f("u_density", 0.005f);
+	p_shader.setUniform1f("u_gradient", 6.0f);
 	p_shader.setUniform3f("u_skyColor", { 0.59f, 0.74f, 0.87f });
 }
 

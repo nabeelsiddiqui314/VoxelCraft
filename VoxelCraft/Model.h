@@ -14,6 +14,7 @@ public:
 	void addIBO(const std::vector<GLuint>& iBuffer);
 	void bindVao() const;
 	const RenderData& getRenderData() const;
+	void cleanUp();
 private:
 	RenderData m_renderData;
 	std::vector<GLuint> m_vBuffer;

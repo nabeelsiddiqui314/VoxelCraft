@@ -17,6 +17,11 @@ World::~World() {
 
 void World::update(const Camera& camera) {
 	m_camPosition = { (std::int16_t)(camera.getPosition().x / Segment::WIDTH), (std::int16_t)(camera.getPosition().z / Segment::WIDTH)};
+
+	m_chunks.unloadChunks([&](const VecXZ& pos) {
+		return pos.x < m_camPosition.x - m_renderDistance || pos.z < m_camPosition.z - m_renderDistance
+			|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
+	});
 }
 
 void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {
@@ -32,11 +37,6 @@ void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {
 
 void World::loadChunks() {
 	while (m_running) {
-		m_chunks.unloadChunks([&](const VecXZ& pos) {
-			return pos.x < m_camPosition.x - m_renderDistance || pos.z < m_camPosition.z - m_renderDistance
-				|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
-		});
-
 		for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
 			for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
 				makeEditedMeshes();

@@ -47,6 +47,11 @@ void Segment::loadModel() {
 void Segment::cleanUp() {
 	m_meshTypes.solid.cleanUp();
 	m_meshTypes.water.cleanUp();
+
+	if (m_hasLoadedModel) {
+		m_meshTypes.solid.model.cleanUp();
+		m_meshTypes.water.model.cleanUp();
+	}
 }
 
 void Segment::render(MasterRenderer& renderer) {

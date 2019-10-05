@@ -47,21 +47,17 @@ const Segment& Chunks::getSegment(std::uint8_t index) const {
 	return m_segments[index];
 }
 
-void Chunks::makeBoxes(std::int64_t x, std::int64_t z) {
-	m_box.dimensions.x = Segment::WIDTH; 
-	m_box.dimensions.y = Chunks::HEIGHT * Segment::WIDTH;
-	m_box.dimensions.z = Segment::WIDTH;
-
-	m_box.position.x = x * Segment::WIDTH; 
-	m_box.position.y = 0;
-	m_box.position.z = z * Segment::WIDTH;
+void Chunks::makeBoxes(const VecXZ& pos) {
+	for (std::size_t y = 0; y < Chunks::HEIGHT; y++) {
+		m_segments[y].setBoxPosition(glm::vec3(pos.x * Segment::WIDTH, y * Segment::WIDTH, pos.z * Segment::WIDTH));
+	}
 }
 
 void Chunks::render(MasterRenderer& renderer, const Frustum& frustum) {
-	if (!frustum.isBoxInFrustum(m_box))
-		return;
-
 	for (auto& segment : m_segments) {
+		if (segment.isEmpty() || !frustum.isBoxInFrustum(segment.getBox()))
+			continue;
+
 		if (segment.hasMeshGenerated()) {
 			segment.loadModel();
 		}

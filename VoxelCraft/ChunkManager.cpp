@@ -7,7 +7,7 @@ ChunkManager::~ChunkManager() {
 
 void ChunkManager::loadChunk(const VecXZ& pos, const Chunks& chunks) {
 	m_chunks.emplace(std::make_pair(pos, chunks));
-	m_chunks[pos].makeBoxes(pos.x, pos.z);
+	m_chunks[pos].makeBoxes(pos);
 }
 
 void ChunkManager::unloadChunks(const std::function<bool(const VecXZ& pos)>& cond) {

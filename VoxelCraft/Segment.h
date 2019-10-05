@@ -25,6 +25,9 @@ public:
 
 	void render(MasterRenderer& renderer, const Frustum& frustum);
 
+	void setBoxPosition(const glm::vec3& pos);
+	const AABB& getBox() const;
+
 	bool isAllOpaque() const;
 	bool isEmpty() const;
 	bool hasMeshGenerated() const;
@@ -35,6 +38,8 @@ private:
 	std::array<BlockType, WIDTH * WIDTH * WIDTH> m_blocks;
 	std::int16_t m_opaqueCount;
 	std::int16_t m_voidCount;
+
+	AABB m_box;
 
 	MeshTypes m_meshTypes;
 	bool m_hasMeshGenerated = false;

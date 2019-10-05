@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "World.h"
 
-World::World() : m_renderDistance(8) {
+World::World() : m_renderDistance(10) {
 	m_mapGenerator = std::make_unique<OverworldGenerator>();
 	m_threads.emplace_back([&]() {
 		loadChunks();
@@ -41,7 +41,7 @@ void World::loadChunks() {
 			for (std::int16_t z = m_camPosition.z - m_chunkLoadRadius; z <= m_camPosition.z + m_chunkLoadRadius; z++) {
 				makeEditedMeshes();
 
-				if (!m_chunks.doesChunkExist({ x,z })) {
+				if (!m_chunks.doesChunkExist({ x, z })) {
 					Chunks chunk;
 					chunk = m_mapGenerator->generateChunk({ x,z });
 

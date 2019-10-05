@@ -3,6 +3,7 @@
 
 Segment::Segment() : m_opaqueCount(0), m_voidCount(WIDTH * WIDTH * WIDTH) {
 	m_blocks.fill(BlockType::VOID);
+	m_box.dimensions = {Segment::WIDTH, Segment::WIDTH, Segment::WIDTH};
 }
 
 void Segment::setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id) {
@@ -50,6 +51,14 @@ void Segment::cleanUp() {
 
 void Segment::render(MasterRenderer& renderer, const Frustum& frustum) {
 	renderer.addChunk(m_meshTypes);
+}
+
+void Segment::setBoxPosition(const glm::vec3& pos) {
+	m_box.position = pos;
+}
+
+const AABB& Segment::getBox() const {
+	return m_box;
 }
 
 bool Segment::isAllOpaque() const {

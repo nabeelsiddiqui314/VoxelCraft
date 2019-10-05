@@ -266,16 +266,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="solid.vert">
+    <None Include="shaders\solid.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="solid.frag">
+    <None Include="shaders\solid.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="water.vert">
+    <None Include="shaders\water.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="water.frag">
+    <None Include="shaders\water.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

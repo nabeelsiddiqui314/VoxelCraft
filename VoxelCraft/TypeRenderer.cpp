@@ -3,7 +3,7 @@
 
 
 TypeRenderer::TypeRenderer(const std::string& shader) {
-	p_shader.loadShader(std::string(shader + ".vert").c_str(), std::string(shader + ".frag").c_str());
+	p_shader.loadShader(std::string("shaders/" + shader + ".vert").c_str(), std::string("shaders/" + shader + ".frag").c_str());
 	p_shader.useProgram();
 	p_shader.setUniform1i("u_texture", 0);
 }

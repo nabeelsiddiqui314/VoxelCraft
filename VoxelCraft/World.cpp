@@ -42,9 +42,7 @@ void World::loadChunks() {
 				makeEditedMeshes();
 
 				if (!m_chunks.doesChunkExist({ x, z })) {
-					Chunks chunk;
-					chunk = m_mapGenerator->generateChunk({ x,z });
-
+					const auto& chunk = m_mapGenerator->generateChunk({ x,z });
 					std::unique_lock<std::mutex> lock(m_mutex);
 					m_chunks.loadChunk({ x,z }, chunk);
 					lock.unlock();

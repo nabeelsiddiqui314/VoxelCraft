@@ -18,7 +18,6 @@ public:
 	void renderChunks(MasterRenderer& renderer, const Frustum& frustum);
 private:
 	void loadChunks();
-	void makeMeshes();
 	void makeEditedMeshes();
 private:
 	ChunkManager m_chunks;

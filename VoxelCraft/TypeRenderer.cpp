@@ -19,7 +19,6 @@ void TypeRenderer::handleCameraTransform(const Camera& camera) {
 }
 
 void TypeRenderer::drawModels() {
-	std::cout << m_models.size() << "\n";
 	for (auto& model : m_models) {
 		model->bindVao();
 		glDrawElements(GL_TRIANGLES, model->getRenderData().indicesCount, GL_UNSIGNED_INT, nullptr);

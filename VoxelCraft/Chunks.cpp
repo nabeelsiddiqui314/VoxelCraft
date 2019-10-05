@@ -55,14 +55,15 @@ void Chunks::makeBoxes(const VecXZ& pos) {
 
 void Chunks::render(MasterRenderer& renderer, const Frustum& frustum) {
 	for (auto& segment : m_segments) {
-		if (segment.isEmpty() || !frustum.isBoxInFrustum(segment.getBox()))
+		if (segment.isEmpty())
 			continue;
 
 		if (segment.hasMeshGenerated()) {
 			segment.loadModel();
 		}
 		if (segment.hasModelLoaded()) {
-			segment.render(renderer, frustum);
+			if(frustum.isBoxInFrustum(segment.getBox()))
+				segment.render(renderer);
 		}
 	}
 }

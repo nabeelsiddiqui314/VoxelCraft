@@ -23,7 +23,7 @@ public:
 	void loadModel();
 	void cleanUp();
 
-	void render(MasterRenderer& renderer, const Frustum& frustum);
+	void render(MasterRenderer& renderer);
 
 	void setBoxPosition(const glm::vec3& pos);
 	const AABB& getBox() const;

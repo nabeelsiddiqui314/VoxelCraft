@@ -49,7 +49,7 @@ void Segment::cleanUp() {
 	m_meshTypes.water.cleanUp();
 }
 
-void Segment::render(MasterRenderer& renderer, const Frustum& frustum) {
+void Segment::render(MasterRenderer& renderer) {
 	renderer.addChunk(m_meshTypes);
 }
 

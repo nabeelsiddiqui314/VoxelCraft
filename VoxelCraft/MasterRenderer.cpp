@@ -15,7 +15,7 @@ void MasterRenderer::addChunk(const MeshTypes& models) {
 }
 
 void MasterRenderer::render(GLFWwindow* window, const Camera& camera) {
-	glClearColor(0, 0.2, 1, 1);
+	glClearColor(0.59f, 0.74f, 0.87f, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_solidRenderer->render(camera);

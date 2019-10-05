@@ -86,6 +86,10 @@ void Shader::setUniformMat4(const std::string& name, const glm::mat4& val) {
 	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &val[0][0]);
 }
 
+void Shader::setUniform3f(const std::string& name, const glm::vec3& val) {
+	glUniform3f(getUniformLocation(name), val.x, val.y, val.z);
+}
+
 void Shader::CheckCompileErrors(GLuint shader, std::string type) {
 	int success;
 	char infoLog[1024];

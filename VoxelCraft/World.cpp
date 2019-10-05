@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "World.h"
 
-World::World() : m_renderDistance(10) {
+World::World() : m_renderDistance(16) {
 	m_mapGenerator = std::make_unique<OverworldGenerator>();
 	m_threads.emplace_back([&]() {
 		loadChunks();

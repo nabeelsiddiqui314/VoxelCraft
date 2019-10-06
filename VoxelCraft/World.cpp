@@ -21,8 +21,6 @@ void World::update(const Camera& camera) {
 		return pos.x < m_camPosition.x - m_renderDistance || pos.z < m_camPosition.z - m_renderDistance
 			|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
 	});
-
-	m_camPosition = { (std::int16_t)(camera.getPosition().x / Segment::WIDTH), (std::int16_t)(camera.getPosition().z / Segment::WIDTH) };
 }
 
 void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {
@@ -43,7 +41,7 @@ void World::loadChunks() {
 				makeEditedMeshes();
 
 				if (!m_chunks.doesChunkExist({ x, z })) {
-					const auto& chunk = m_mapGenerator->generateChunk({ x,z });
+					const auto chunk = m_mapGenerator->generateChunk({ x,z });
 					std::unique_lock<std::mutex> lock(m_mutex);
 					m_chunks.loadChunk({ x,z }, chunk);
 					lock.unlock();
@@ -61,9 +59,10 @@ void World::loadChunks() {
 void World::makeEditedMeshes() {
 	std::unique_lock<std::mutex> lock(m_mutex);
 	for (auto itr = m_regenChunks.begin(); itr != m_regenChunks.end();) {
-		if (m_chunks.doesChunkExist(*itr)) { 
+		if (m_chunks.doesChunkExist(*itr)) {
+			const auto pos = *itr;
 			lock.unlock();
-			m_chunks.makeMesh(*itr);
+			m_chunks.makeMesh(pos);
 			lock.lock();
 			itr = m_regenChunks.erase(itr);
 		}

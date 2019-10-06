@@ -165,6 +165,9 @@
     <ClInclude Include="AABB.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Raycast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -262,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="Plane.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Raycast.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

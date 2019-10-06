@@ -58,9 +58,13 @@ void Model::deleteBuffers() {
 		glDeleteBuffers(1, &vBuffer);
 	}
 	glDeleteBuffers(1, &m_ibo);
-	glDeleteVertexArrays(1, &m_renderData.VAO);
+    glDeleteVertexArrays(1, &m_renderData.VAO);
 
 	cleanUp();
+}
+
+bool Model::hasData() {
+	return m_renderData.VAO != 0;
 }
 
 void Model::cleanUp() {

@@ -16,12 +16,13 @@ World::~World() {
 }
 
 void World::update(const Camera& camera) {
-	m_camPosition = { (std::int16_t)(camera.getPosition().x / Segment::WIDTH), (std::int16_t)(camera.getPosition().z / Segment::WIDTH)};
-
+	std::lock_guard<std::mutex> lock(m_mutex);
 	m_chunks.unloadChunks([&](const VecXZ& pos) {
 		return pos.x < m_camPosition.x - m_renderDistance || pos.z < m_camPosition.z - m_renderDistance
 			|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
 	});
+
+	m_camPosition = { (std::int16_t)(camera.getPosition().x / Segment::WIDTH), (std::int16_t)(camera.getPosition().z / Segment::WIDTH) };
 }
 
 void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {
@@ -58,9 +59,12 @@ void World::loadChunks() {
 }
 
 void World::makeEditedMeshes() {
+	std::unique_lock<std::mutex> lock(m_mutex);
 	for (auto itr = m_regenChunks.begin(); itr != m_regenChunks.end();) {
-		if (m_chunks.doesChunkExist(*itr)) {
+		if (m_chunks.doesChunkExist(*itr)) { 
+			lock.unlock();
 			m_chunks.makeMesh(*itr);
+			lock.lock();
 			itr = m_regenChunks.erase(itr);
 		}
 		else

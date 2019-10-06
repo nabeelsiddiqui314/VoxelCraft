@@ -32,13 +32,16 @@ void Segment::makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t 
 	cleanUp();
 	SegmentMeshMaker(m_meshTypes, originX, originY, originZ, chunk, top, bottom, left, right, front, back);
 	m_hasMeshGenerated = true;
+	m_hasLoadedModel = false;
 }
 
 void Segment::regenMesh() {
+	m_hasLoadedModel = true;
 	m_hasMeshGenerated = false;
 }
 
 void Segment::loadModel() {
+	cleanBuffers();
 	m_meshTypes.solid.loadMeshToModel();
 	m_meshTypes.water.loadMeshToModel();
 	m_hasLoadedModel = true;
@@ -50,8 +53,10 @@ void Segment::cleanUp() {
 }
 
 void Segment::cleanBuffers() {
-	m_meshTypes.solid.model.deleteBuffers();
-	m_meshTypes.water.model.deleteBuffers();
+	if(m_meshTypes.solid.model.hasData())
+		m_meshTypes.solid.model.deleteBuffers();
+	if(m_meshTypes.water.model.hasData())
+		m_meshTypes.water.model.deleteBuffers();
 }
 
 void Segment::render(MasterRenderer& renderer) {

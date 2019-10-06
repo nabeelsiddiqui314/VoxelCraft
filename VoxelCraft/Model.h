@@ -15,6 +15,7 @@ public:
 	void bindVao() const;
 	const RenderData& getRenderData() const;
 	void deleteBuffers();
+	bool hasData();
 private:
 	void cleanUp();
 private:

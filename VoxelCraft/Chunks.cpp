@@ -34,15 +34,13 @@ void Chunks::makeMesh(std::int16_t x, std::int16_t z,
 }
 
 void Chunks::regenMesh(std::int16_t y) {
-	m_segments[y].regenMesh();
+	if(m_segments[y].hasMeshGenerated())
+		m_segments[y].regenMesh();
 }
 
 void Chunks::cleanUp() {
 	for (auto& segment : m_segments) {
-		segment.cleanUp();
-		if (segment.hasModelLoaded()) {
-			segment.cleanBuffers();
-		}
+		segment.cleanBuffers();
 	}
 }
 

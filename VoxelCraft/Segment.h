@@ -22,6 +22,7 @@ public:
 	void regenMesh();
 	void loadModel();
 	void cleanUp();
+	void cleanBuffers();
 
 	void render(MasterRenderer& renderer);
 

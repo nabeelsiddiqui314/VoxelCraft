@@ -8,6 +8,8 @@ Model::Model()
 	  m_ibo(0) {}
 
 void Model::addMesh(const Mesh& mesh) {
+	cleanUp();
+
 	generateVAO();
 	bindVao();
 
@@ -51,13 +53,17 @@ const RenderData& Model::getRenderData() const {
 	return m_renderData;
 }
 
-void Model::cleanUp() {
+void Model::deleteBuffers() {
 	for (auto& vBuffer : m_vBuffer) {
 		glDeleteBuffers(1, &vBuffer);
 	}
 	glDeleteBuffers(1, &m_ibo);
 	glDeleteVertexArrays(1, &m_renderData.VAO);
 
+	cleanUp();
+}
+
+void Model::cleanUp() {
 	m_renderData.VAO = 0;
 	m_renderData.indicesCount = 0;
 	m_vboCount = 0;

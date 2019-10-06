@@ -40,6 +40,9 @@ void Chunks::regenMesh(std::int16_t y) {
 void Chunks::cleanUp() {
 	for (auto& segment : m_segments) {
 		segment.cleanUp();
+		if (segment.hasModelLoaded()) {
+			segment.cleanBuffers();
+		}
 	}
 }
 
@@ -58,7 +61,7 @@ void Chunks::render(MasterRenderer& renderer, const Frustum& frustum) {
 		if (segment.isEmpty())
 			continue;
 
-		if (segment.hasMeshGenerated()) {
+		if (segment.hasMeshGenerated() && !segment.hasModelLoaded()) {
 			segment.loadModel();
 		}
 		if (segment.hasModelLoaded()) {

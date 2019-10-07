@@ -84,9 +84,6 @@
     <ClInclude Include="SegmentModel.h">
       <Filter>Header Files\Chunks</Filter>
     </ClInclude>
-    <ClInclude Include="BlockCategory.h">
-      <Filter>Header Files\Chunks</Filter>
-    </ClInclude>
     <ClInclude Include="BlockCodex.h">
       <Filter>Header Files\Chunks</Filter>
     </ClInclude>
@@ -185,6 +182,15 @@
     </ClInclude>
     <ClInclude Include="StateManager.h">
       <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderType.h">
+      <Filter>Header Files\Chunks</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockShape.h">
+      <Filter>Header Files\Chunks</Filter>
+    </ClInclude>
+    <ClInclude Include="FloraRenderer.h">
+      <Filter>Header Files\Renderers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +299,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
+    <ClCompile Include="FloraRenderer.cpp">
+      <Filter>Source Files\Renderers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -306,6 +315,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shaders\water.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\flora.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\flora.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -43,20 +43,26 @@ void Segment::regenMesh() {
 void Segment::loadModel() {
 	cleanBuffers();
 	m_meshTypes.solid.loadMeshToModel();
-	m_meshTypes.water.loadMeshToModel();
+	m_meshTypes.liquid.loadMeshToModel();
+	m_meshTypes.flora.loadMeshToModel();
 	m_hasLoadedModel = true;
 }
 
 void Segment::cleanUp() {
 	m_meshTypes.solid.cleanUp();
-	m_meshTypes.water.cleanUp();
+	m_meshTypes.liquid.cleanUp();
+	m_meshTypes.flora.cleanUp();
 }
 
 void Segment::cleanBuffers() {
 	if(m_meshTypes.solid.model.hasData())
 		m_meshTypes.solid.model.deleteBuffers();
-	if(m_meshTypes.water.model.hasData())
-		m_meshTypes.water.model.deleteBuffers();
+
+	if(m_meshTypes.liquid.model.hasData())
+		m_meshTypes.liquid.model.deleteBuffers();
+
+	if (m_meshTypes.flora.model.hasData())
+		m_meshTypes.flora.model.deleteBuffers();
 }
 
 void Segment::render(MasterRenderer& renderer) {

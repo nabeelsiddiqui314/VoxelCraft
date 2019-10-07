@@ -1,26 +1,30 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "BlockCategory.h"
+#include "ShaderType.h"
+#include "BlockShape.h"
 
 struct BlockData {
-	int texCoordTop;
-	int texCoordSide;
-	int texCoordBottom;
+	int texTop;
+	int texSide;
+	int texBottom;
 
-	BlockCategory category;
+	BlockShape shape;
+	ShaderType shaderType;
 	bool opaque;
 
 	BlockData() 
-	: texCoordTop(0),
-	  texCoordSide(0),
-	  texCoordBottom(0),
-	  category(BlockCategory::NONE),
+	: texTop(0),
+	  texSide(0),
+	  texBottom(0),
+	  shape(BlockShape::CUBE),
+	  shaderType(ShaderType::SOLID),
 	  opaque(false) {}
 
-	BlockData(int _texCoordTop, int _texCoordSide, int _texCoordBottom, const BlockCategory& _category, bool _opaque)
-	:   texCoordTop(_texCoordTop),
-		texCoordSide(_texCoordSide),
-		texCoordBottom(_texCoordBottom),
-	  category(_category),
-	  opaque(_opaque) {}
+	BlockData(int _texTop, int _texSide, int _texBottom, BlockShape _shape, ShaderType _shaderType, bool _opaque)
+	:   texTop   (_texTop),
+		texSide  (_texSide),
+		texBottom(_texBottom),
+		shape(_shape),
+		shaderType(_shaderType),
+	     opaque(_opaque) {}
 };

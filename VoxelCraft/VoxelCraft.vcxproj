@@ -159,7 +159,9 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Biome.h" />
-    <ClInclude Include="BlockCategory.h" />
+    <ClInclude Include="BlockShape.h" />
+    <ClInclude Include="FloraRenderer.h" />
+    <ClInclude Include="ShaderType.h" />
     <ClInclude Include="BlockCodex.h" />
     <ClInclude Include="BlockData.h" />
     <ClInclude Include="BlockTypes.h" />
@@ -210,6 +212,7 @@
     <ClCompile Include="Composition.cpp" />
     <ClCompile Include="Desert.cpp" />
     <ClCompile Include="Fields.cpp" />
+    <ClCompile Include="FloraRenderer.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Noise.cpp" />
@@ -245,6 +248,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="shaders\flora.frag" />
+    <None Include="shaders\flora.vert" />
     <None Include="shaders\solid.frag" />
     <None Include="shaders\solid.vert" />
     <None Include="shaders\water.frag" />

@@ -14,5 +14,6 @@ public:
 
 struct MeshTypes {
 	SegmentModel solid;
-	SegmentModel water;
+	SegmentModel liquid;
+	SegmentModel flora;
 };

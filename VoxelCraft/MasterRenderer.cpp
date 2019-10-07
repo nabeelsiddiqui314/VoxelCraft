@@ -4,14 +4,18 @@
 MasterRenderer::MasterRenderer() {
 	m_solidRenderer = std::make_unique<SolidRenderer>();
 	m_waterRenderer = std::make_unique<WaterRenderer>();
+	m_floraRenderer = std::make_unique<FloraRenderer>();
 }
 
 void MasterRenderer::addChunk(const MeshTypes& models) {
 	if (models.solid.model.getRenderData().VAO != 0)
 		m_solidRenderer->addModel(&models.solid.model);
 
-	if (models.water.model.getRenderData().VAO != 0)
-		m_waterRenderer->addModel(&models.water.model);
+	if (models.liquid.model.getRenderData().VAO != 0)
+		m_waterRenderer->addModel(&models.liquid.model);
+
+	if (models.flora.model.getRenderData().VAO != 0)
+		m_floraRenderer->addModel(&models.flora.model);
 }
 
 void MasterRenderer::renderChunks(const Camera& camera) {
@@ -20,4 +24,5 @@ void MasterRenderer::renderChunks(const Camera& camera) {
 
 	m_solidRenderer->render(camera);
 	m_waterRenderer->render(camera);
+	m_floraRenderer->render(camera);
 }

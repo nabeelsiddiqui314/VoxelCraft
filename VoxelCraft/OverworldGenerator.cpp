@@ -19,19 +19,31 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 
 		for (int y = Chunks::HEIGHT * Segment::WIDTH; y-- > 0;) {
 			if (y <= height) {
-				chunk.setBlock(x, y, z, getCurrentBiome().getComposition().getBlockAt(depth));
+				if (y == height) {
+					int r = rand() % 100;
+					if (m_biomeVal < 0.6f) {
+						if(r > 80)
+							chunk.setBlock(x, y, z, BlockType::ROSE);
+					}
+					else {
+						if (r > 90)
+							chunk.setBlock(x, y, z, BlockType::SHRUB);
+					}
+					depth = -1;
+				}
+				else {
+					chunk.setBlock(x, y, z, getCurrentBiome().getComposition().getBlockAt(depth));
+				}
 				depth++;
 			}
 			if (getCurrentBiome().hasWater()) {
 				if (y <= Chunks::HEIGHT * Segment::WIDTH / 4) {
-					switch (BlockCodex::getBlockData(chunk.getBlock(x, y, z)).category) {
-					case BlockCategory::NONE:
+					if (chunk.getBlock(x, y, z) == BlockType::VOID) {
 						if (y <= Chunks::HEIGHT * Segment::WIDTH / 4 - 3)
 							chunk.setBlock(x, y, z, BlockType::WATER);
-						break;
-					case BlockCategory::SOLID:
+					}
+					else {
 						chunk.setBlock(x, y, z, BlockType::SAND);
-						break;
 					}
 				}
 			}

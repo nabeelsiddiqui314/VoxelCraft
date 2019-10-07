@@ -10,6 +10,8 @@ enum class BlockType : Block_id {
 	STONE,
 	SAND,
 	WATER,
+	ROSE,
+	SHRUB,
 
 	COUNT
 };

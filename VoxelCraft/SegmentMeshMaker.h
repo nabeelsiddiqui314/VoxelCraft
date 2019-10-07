@@ -20,6 +20,8 @@ private:
 	static const std::array<GLfloat, 12> s_left;
 	static const std::array<GLfloat, 12> s_top;
 	static const std::array<GLfloat, 12> s_bottom;
+	static const std::array<GLfloat, 12> s_crossA;
+	static const std::array<GLfloat, 12> s_crossB;
 
 	static const GLfloat s_topLight;
 	static const GLfloat s_sideLight;

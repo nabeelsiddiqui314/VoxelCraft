@@ -3,6 +3,7 @@
 #include "FlatGenerator.h"
 #include "OverworldGenerator.h"
 #include "MasterRenderer.h"
+#include "RayCast.h"
 #include <memory>
 #include <thread>
 #include <mutex>

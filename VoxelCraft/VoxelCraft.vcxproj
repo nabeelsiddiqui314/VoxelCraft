@@ -209,7 +209,7 @@
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="Plane.cpp" />
-    <ClCompile Include="Raycast.cpp" />
+    <ClCompile Include="RayCast.cpp" />
     <ClCompile Include="SegmentMeshMaker.cpp" />
     <ClCompile Include="Chunks.cpp" />
     <ClCompile Include="FlatGenerator.cpp" />

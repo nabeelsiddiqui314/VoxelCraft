@@ -24,6 +24,7 @@ public:
 	const glm::mat4& getProjMatrix() const;
 	const glm::mat4 getViewMatrix() const;
 	const glm::vec3& getPosition() const;
+	const glm::vec3& getForward() const;
 	const Frustum& getFrustum() const;
 private:
 	void calculateVectors();

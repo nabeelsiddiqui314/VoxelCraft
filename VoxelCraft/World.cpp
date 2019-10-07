@@ -21,6 +21,8 @@ void World::update(const Camera& camera) {
 		return pos.x < m_camPosition.x - m_renderDistance || pos.z < m_camPosition.z - m_renderDistance
 			|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
 	});
+
+	m_camPosition = { (int)camera.getPosition().x / Segment::WIDTH, (int)camera.getPosition().z / Segment::WIDTH };
 }
 
 void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {

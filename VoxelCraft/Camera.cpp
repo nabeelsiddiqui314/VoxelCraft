@@ -64,6 +64,10 @@ const glm::vec3& Camera::getPosition() const {
 	return m_position;
 }
 
+const glm::vec3 & Camera::getForward() const {
+	return m_front;
+}
+
 const Frustum & Camera::getFrustum() const {
 	return m_viewfrustum;
 }

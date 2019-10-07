@@ -170,7 +170,9 @@
     <ClInclude Include="Desert.h" />
     <ClInclude Include="Fields.h" />
     <ClInclude Include="Frustum.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Noise.h" />
+    <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Raycast.h" />
     <ClInclude Include="SegmentMeshMaker.h" />
@@ -187,6 +189,8 @@
     <ClInclude Include="SolidRenderer.h" />
     <ClInclude Include="RenderData.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateManager.h" />
     <ClInclude Include="stbi.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -207,6 +211,7 @@
     <ClCompile Include="Desert.cpp" />
     <ClCompile Include="Fields.cpp" />
     <ClCompile Include="Frustum.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="RayCast.cpp" />
@@ -222,6 +227,7 @@
     <ClCompile Include="SegmentModel.cpp" />
     <ClCompile Include="SolidRenderer.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="stbi.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

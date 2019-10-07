@@ -12,7 +12,7 @@ public:
 	MasterRenderer();
 public:
 	void addChunk(const MeshTypes& models);
-	void render(GLFWwindow* window, const Camera& camera);
+	void renderChunks(const Camera& camera);
 private:
 	std::unique_ptr<TypeRenderer> m_solidRenderer;
 	std::unique_ptr<TypeRenderer> m_waterRenderer;

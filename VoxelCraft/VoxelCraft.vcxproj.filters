@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Biomes">
       <UniqueIdentifier>{deb7f5a6-d6e3-4ee6-8fdc-ad11e7afcd63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{c0707b7e-0133-495b-ab30-900849979115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{1a774d5a-7f3e-42e4-a5f8-1a686b664058}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -168,6 +174,18 @@
     <ClInclude Include="Raycast.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="NonCopyable.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -268,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="RayCast.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

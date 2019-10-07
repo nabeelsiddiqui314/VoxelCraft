@@ -14,7 +14,7 @@ void MasterRenderer::addChunk(const MeshTypes& models) {
 		m_waterRenderer->addModel(&models.water.model);
 }
 
-void MasterRenderer::render(GLFWwindow* window, const Camera& camera) {
+void MasterRenderer::renderChunks(const Camera& camera) {
 	glClearColor(0.59f, 0.74f, 0.87f, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

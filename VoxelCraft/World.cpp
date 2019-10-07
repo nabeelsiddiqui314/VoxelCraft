@@ -4,7 +4,7 @@
 World::World() : m_renderDistance(16) {
 	m_mapGenerator = std::make_unique<OverworldGenerator>();
 	m_threads.emplace_back([&]() {
-		loadChunks();
+		makeChunks();
 	});
 }
 
@@ -13,6 +13,26 @@ World::~World() {
 	for (auto& thread : m_threads) {
 		thread.join();
 	}
+}
+
+void World::setBlock(std::int64_t x, std::int64_t y, std::int64_t z, BlockType block) {
+	std::lock_guard<std::mutex> lock(m_mutex);
+	const auto& pos = getChunkPos(x, z);
+	if (m_chunks.doesChunkExist(pos)) {
+		updateMeshes(pos, y / Segment::WIDTH);
+		std::tie(x, y, z) = getBlockPos(x, y, z);
+		m_chunks.setBlock(pos, x, y, z, block);
+	}
+}
+
+BlockType World::getBlock(std::int64_t x, std::int64_t y, std::int64_t z) const {
+	std::lock_guard<std::mutex> lock(m_mutex);
+	const auto& pos = getChunkPos(x, z);
+	if (m_chunks.doesChunkExist(pos)) {
+		std::tie(x, y, z) = getBlockPos(x, y, z);
+		return m_chunks.getBlock(pos, x, y, z);
+	}
+	return BlockType::VOID;
 }
 
 void World::update(const Camera& camera) {
@@ -36,7 +56,7 @@ void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {
 	}
 }
 
-void World::loadChunks() {
+void World::makeChunks() {
 	while (m_running) {
 		for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
 			for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
@@ -71,4 +91,33 @@ void World::makeEditedMeshes() {
 		else
 			itr++;
 	}
+}
+
+void World::updateMeshes(const VecXZ& pos, std::int16_t y) {
+	if (y > 0) {
+		m_chunks.regenMesh(pos, y - 1);
+	}
+	if (y < Chunks::HEIGHT - 1) {
+		m_chunks.regenMesh(pos, y + 1);
+	}
+
+	m_chunks.regenMesh(pos, y);
+	m_chunks.regenMesh({ pos.x + 1, pos.z     }, y);
+	m_chunks.regenMesh({ pos.x    , pos.z + 1 }, y);
+	m_chunks.regenMesh({ pos.x - 1, pos.z     }, y);
+	m_chunks.regenMesh({ pos.x    , pos.z - 1 }, y);
+
+	m_regenChunks.emplace(pos);
+	m_regenChunks.insert({pos.x + 1, pos.z     });
+	m_regenChunks.insert({pos.x    , pos.z + 1 });
+	m_regenChunks.insert({pos.x - 1, pos.z     });
+	m_regenChunks.insert({pos.x    , pos.z - 1 });
+}
+
+const VecXZ World::getChunkPos(std::int64_t x, std::int64_t z) const {
+	return {x / Segment::WIDTH, z / Segment::WIDTH};
+}
+
+const std::tuple<int, int, int> World::getBlockPos(std::int64_t x, std::int64_t y, std::int64_t z) const {
+	return std::tuple<int, int, int>(abs(x) % Segment::WIDTH, y, abs(z) % Segment::WIDTH);
 }

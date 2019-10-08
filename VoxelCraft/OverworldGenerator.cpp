@@ -22,11 +22,11 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 				if (y == height) {
 					int r = rand() % 100;
 					if (m_biomeVal < 0.6f) {
-						if(r > 80)
+						if(r > 98)
 							chunk.setBlock(x, y, z, BlockType::ROSE);
 					}
 					else {
-						if (r > 90)
+						if (r > 98)
 							chunk.setBlock(x, y, z, BlockType::SHRUB);
 					}
 					depth = -1;

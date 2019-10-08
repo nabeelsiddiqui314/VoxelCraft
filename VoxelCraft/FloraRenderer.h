@@ -7,5 +7,7 @@ public:
 	FloraRenderer();
 public:
 	void render(const Camera& camera) override;
+private:
+	sf::Clock m_time;
 };
 

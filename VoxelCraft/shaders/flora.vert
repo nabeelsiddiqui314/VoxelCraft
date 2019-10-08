@@ -13,9 +13,17 @@ uniform mat4 u_projection;
 
 uniform float u_density;
 uniform float u_gradient;
+uniform float u_time;
+uniform float u_frequency;
+uniform float u_amplitude;
+
+vec3 getPos() {
+	return position + vec3( u_amplitude * sin((position.x * position.y + u_time) * u_frequency), 0, 
+	                        u_amplitude * sin((position.z * position.y + u_time) * u_frequency) );
+}
 
 void main() {
-	gl_Position = u_projection * u_view * vec4(position, 1.0);
+	gl_Position = u_projection * u_view * vec4(getPos(), 1.0);
 	v_texCoords = texCoords;
 	v_lighting = vec4(lighting, lighting, lighting, 1.0);
 

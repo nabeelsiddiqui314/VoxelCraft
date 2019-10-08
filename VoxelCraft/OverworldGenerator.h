@@ -14,6 +14,7 @@ public:
 private:
 	const Biome& getCurrentBiome() const;
 private:
+	const std::uint32_t m_seed;
 	Noise m_biomeNoise;
 	Fields m_fields;
 	Desert m_desert;

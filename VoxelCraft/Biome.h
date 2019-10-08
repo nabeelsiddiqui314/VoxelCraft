@@ -11,6 +11,7 @@ public:
 	float getHeightAt(int x, int z) const;
 	const Composition& getComposition() const;
 	virtual bool hasWater() const = 0;
+	virtual BlockType getDecorativeBlock() const = 0;
 protected:
 	virtual NoiseProperties getNoiseProperties() const = 0;
 	virtual std::vector<Composition::Layer> getLayers() const = 0;

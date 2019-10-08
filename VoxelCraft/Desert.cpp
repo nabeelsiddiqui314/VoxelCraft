@@ -9,6 +9,10 @@ bool Desert::hasWater() const {
 	return false;
 }
 
+BlockType Desert::getDecorativeBlock() const {
+	return BlockType::SHRUB;
+}
+
 NoiseProperties Desert::getNoiseProperties() const {
 	NoiseProperties properties;
 	properties.amplitude = 200;

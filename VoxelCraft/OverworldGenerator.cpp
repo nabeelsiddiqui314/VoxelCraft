@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "OverworldGenerator.h"
 
-OverworldGenerator::OverworldGenerator() 
-	: m_biomeNoise(13213210, {1, 1, 1000, 2, 2}),
-	  m_fields(13213210),
-	  m_desert(13213210)
+OverworldGenerator::OverworldGenerator()
+	: m_seed(13213210),
+	  m_biomeNoise(m_seed, {1, 1, 1000, 2, 2}),
+	  m_fields(m_seed),
+	  m_desert(m_seed)
       {}
 
 Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
@@ -20,16 +21,15 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 		for (int y = Chunks::HEIGHT * Segment::WIDTH; y-- > 0;) {
 			if (y <= height) {
 				if (y == height) {
-					int r = rand() % 100;
-					if (m_biomeVal < 0.6f) {
-						if(r > 98)
-							chunk.setBlock(x, y, z, BlockType::ROSE);
+					const auto& decorativeBlock = getCurrentBiome().getDecorativeBlock();
+					if (decorativeBlock != BlockType::VOID) {
+						srand(m_seed + pos.x * 2312321 * x * pos.z * 898009 * z);
+						int r = rand() % 1000;
+						if (r > 990) {
+							chunk.setBlock(x, y, z, decorativeBlock);
+						}
+						depth = -1;
 					}
-					else {
-						if (r > 98)
-							chunk.setBlock(x, y, z, BlockType::SHRUB);
-					}
-					depth = -1;
 				}
 				else {
 					chunk.setBlock(x, y, z, getCurrentBiome().getComposition().getBlockAt(depth));

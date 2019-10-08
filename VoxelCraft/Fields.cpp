@@ -8,6 +8,10 @@ bool Fields::hasWater() const {
 	return true;
 }
 
+BlockType Fields::getDecorativeBlock() const {
+	return BlockType::ROSE;
+}
+
 NoiseProperties Fields::getNoiseProperties() const {
 	NoiseProperties properties;
 	properties.amplitude = 150;

@@ -9,13 +9,13 @@ Noise::Noise(const std::uint32_t seed, const NoiseProperties& properties)
 	  m_mt.seed(m_seed); 
 }
 
-float Noise::getOctaveNoise(float x, float z) const {
+float Noise::getNoiseAt(float x, float z) const {
 	float amplitude = 1;
 	float frequency = 1;
 	float maxValue = 0;
 	float total = 0;
 	for (int i = 0; i < m_properties.octaves; i++) {
-		total += amplitude * getNoiseAt(x * frequency, z * frequency);
+		total += amplitude * getBasicNoise(x * frequency, z * frequency);
 		maxValue += amplitude;
 		frequency *= m_properties.lacunarity;
 		amplitude /= m_properties.persistance;
@@ -23,7 +23,7 @@ float Noise::getOctaveNoise(float x, float z) const {
 	return total / maxValue;
 }
 
-float Noise::getNoiseAt(float x, float z) const {
+float Noise::getBasicNoise(float x, float z) const {
 	x /= m_properties.smoothness;
 	z /= m_properties.smoothness;
 	int xi = floor(x);

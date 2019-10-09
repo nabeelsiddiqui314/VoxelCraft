@@ -18,9 +18,9 @@ private:
 public:
 	Noise(const std::uint32_t seed, const NoiseProperties& properties);
 public:
-	float getOctaveNoise(float x, float z) const;
 	float getNoiseAt(float x, float z) const;
 private:
+	float getBasicNoise(float x, float z) const;
 	float dot(const vec& v1, const vec& v2) const;
 	float lerp(float x, float a, float b) const;
 	float fade(float t) const;

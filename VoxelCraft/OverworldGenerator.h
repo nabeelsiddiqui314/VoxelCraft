@@ -10,6 +10,7 @@ class OverworldGenerator : public MapGenerator
 private:
 	struct LerpSqaure {
 		float x1min, x1max, x2min, x2max;
+		bool shouldLerp;
 	};
 public:
 	OverworldGenerator();
@@ -20,7 +21,7 @@ private:
 	float biLerp(float x, float z, float x1min, float x1max, float x2min, float x2max);
 	void setSquares(int x, int z);
 	void setCurrentSqare(int x, int z);
-	float getHeight(float x, float z);
+	float getLerpedHeight(float x, float z);
 private:
 	const std::uint32_t m_seed;
 	Noise m_biomeNoise;

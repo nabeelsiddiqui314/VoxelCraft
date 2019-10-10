@@ -20,7 +20,14 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 		float biomeValue = m_biomeNoise.getNoiseAt(x + pos.x * Segment::WIDTH, z + pos.z * Segment::WIDTH);
 		const auto& biome = getBiome(biomeValue);
 
-		height = getHeight(x, z);
+		setCurrentSqare(x, z);
+		if (p_currentSquare->shouldLerp) {
+			height = getLerpedHeight(x, z);
+		}
+		else {
+			height = biome.getHeightAt(x + pos.x * Segment::WIDTH, z + pos.z * Segment::WIDTH);
+		}
+		height = biome.applyFunctionTo(height);
 
 		int depth = 0;
 		for (int y = Chunks::HEIGHT * Segment::WIDTH; y-- > 0;) {
@@ -81,11 +88,18 @@ void OverworldGenerator::setSquares(int x, int z) {
 		int X = cx + ox * width;
 		int Z = cz + oz * width;
 
-		sq.x1min = getBiome(m_biomeNoise.getNoiseAt(X, Z)).getHeightAt(X, Z) / chunkHeight;
-		sq.x1max = getBiome(m_biomeNoise.getNoiseAt(X + width, Z)).getHeightAt(X + width, Z) / chunkHeight;
+		const auto* x1min = &getBiome(m_biomeNoise.getNoiseAt(X, Z));
+		const auto*	x1max = &getBiome(m_biomeNoise.getNoiseAt(X + width, Z));
+		const auto*	x2min = &getBiome(m_biomeNoise.getNoiseAt(X, Z + width));
+		const auto*	x2max = &getBiome(m_biomeNoise.getNoiseAt(X + width, Z + width));
 
-		sq.x2min = getBiome(m_biomeNoise.getNoiseAt(X, Z + width)).getHeightAt(X, Z + width) / chunkHeight;
-		sq.x2max = getBiome(m_biomeNoise.getNoiseAt(X + width, Z + width)).getHeightAt(X + width, Z + width) / chunkHeight;
+		sq.shouldLerp = x1min != x1max || x2min != x2max || x1min != x2max;
+		if (sq.shouldLerp) {
+			sq.x1min = x1min->getHeightAt(X, Z) / chunkHeight;
+			sq.x1max = x1max->getHeightAt(X + width, Z) / chunkHeight;
+			sq.x2min = x2min->getHeightAt(X, Z + width) / chunkHeight;
+			sq.x2max = x2max->getHeightAt(X + width, Z + width) / chunkHeight;
+		}
 	};
 
 	makeSquare(m_topLeft, 0, 0);
@@ -111,11 +125,10 @@ void OverworldGenerator::setCurrentSqare(int x, int z) {
 	}
 }
 
-float OverworldGenerator::getHeight(float x, float z) {
+float OverworldGenerator::getLerpedHeight(float x, float z) {
 	static const float chunkHeight = Segment::WIDTH * Chunks::HEIGHT;
 	static const int width = Segment::WIDTH / 2;
 
-	setCurrentSqare(x, z);
 	x = (int)x % width;
 	z = (int)z % width;
 

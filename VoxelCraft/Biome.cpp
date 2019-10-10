@@ -6,9 +6,13 @@ Biome::Biome(const std::uint32_t seed, const NoiseProperties& properties, const 
 {}
 
 float Biome::getHeightAt(int x, int z) const {
-	return m_heightMap.getNoiseAt(x, z);
+	return applyFunctionTo(m_heightMap.getNoiseAt(x, z));
 }
 
 const Composition& Biome::getComposition() const {
 	return m_composition;
+}
+
+float Biome::applyFunctionTo(float y) const {
+	return y;
 }

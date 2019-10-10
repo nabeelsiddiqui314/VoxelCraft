@@ -9,6 +9,7 @@ public:
 	virtual ~Biome() {}
 public:
 	float getHeightAt(int x, int z) const;
+	virtual float applyFunctionTo(float y) const;
 	const Composition& getComposition() const;
 	virtual bool hasWater() const = 0;
 	virtual BlockType getDecorativeBlock() const = 0;

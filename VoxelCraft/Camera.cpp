@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 Camera::Camera() 
-: m_position(0.0f, 0.0f, 0.0f),
+: m_position(0.0f, 150.0f, 0.0f),
   m_worldUp(0.0f, 1.0f, 0.0f),
   m_up(0.0f, 1.0f, 0.0f),
   m_front(0.0f, 0.0f, 1.0f),

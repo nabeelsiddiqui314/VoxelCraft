@@ -58,8 +58,8 @@ void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {
 
 void World::makeChunks() {
 	while (m_running) {
-		for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
-			for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
+		for (std::int16_t x = m_camPosition.x - m_currentRadius; x <= m_camPosition.x + m_currentRadius; x++) {
+			for (std::int16_t z = m_camPosition.z - m_currentRadius; z <= m_camPosition.z + m_currentRadius; z++) {
 				makeEditedMeshes();
 
 				if (!m_chunks.doesChunkExist({ x, z })) {
@@ -67,13 +67,15 @@ void World::makeChunks() {
 					std::unique_lock<std::mutex> lock(m_mutex);
 					m_chunks.loadChunk({ x,z }, chunk);
 					lock.unlock();
-					break;
+					//break;
 				}
 				else {
 					m_chunks.makeMesh({ x,z });
 				}
 			}
 		}
+		m_currentRadius++;
+		m_currentRadius %= m_renderDistance;
 		std::this_thread::sleep_for(std::chrono::microseconds(10));
 	}
 }

@@ -36,4 +36,5 @@ private:
 	std::vector<std::thread> m_threads;
 	mutable std::mutex m_mutex;
 	bool m_running = true;
+	int m_currentRadius = 0;
 };

@@ -64,10 +64,8 @@ void World::makeChunks() {
 
 				if (!m_chunks.doesChunkExist({ x, z })) {
 					const auto chunk = m_mapGenerator->generateChunk({ x,z });
-					std::unique_lock<std::mutex> lock(m_mutex);
+					std::lock_guard<std::mutex> lock(m_mutex);
 					m_chunks.loadChunk({ x,z }, chunk);
-					lock.unlock();
-					//break;
 				}
 				else {
 					m_chunks.makeMesh({ x,z });

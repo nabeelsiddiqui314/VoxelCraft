@@ -55,6 +55,12 @@
     <Filter Include="Source Files\States">
       <UniqueIdentifier>{1a774d5a-7f3e-42e4-a5f8-1a686b664058}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Blocks">
+      <UniqueIdentifier>{a7d4142a-1963-4e2e-9d06-7654005a4140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Blocks">
+      <UniqueIdentifier>{6e4cfe31-06d5-44e6-a7ed-08c13de48ff6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -82,15 +88,6 @@
       <Filter>Header Files\Chunks</Filter>
     </ClInclude>
     <ClInclude Include="SegmentModel.h">
-      <Filter>Header Files\Chunks</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockCodex.h">
-      <Filter>Header Files\Chunks</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockTypes.h">
-      <Filter>Header Files\Chunks</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockData.h">
       <Filter>Header Files\Chunks</Filter>
     </ClInclude>
     <ClInclude Include="MeshGenerator.h">
@@ -183,14 +180,32 @@
     <ClInclude Include="StateManager.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderType.h">
-      <Filter>Header Files\Chunks</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockShape.h">
-      <Filter>Header Files\Chunks</Filter>
-    </ClInclude>
     <ClInclude Include="FloraRenderer.h">
       <Filter>Header Files\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockCodex.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockData.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockShape.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockTypes.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderType.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockUpdateHandler.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundFloraHandler.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -210,9 +225,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Chunks.cpp">
-      <Filter>Source Files\Chunks</Filter>
-    </ClCompile>
-    <ClCompile Include="BlockCodex.cpp">
       <Filter>Source Files\Chunks</Filter>
     </ClCompile>
     <ClCompile Include="Segment.cpp">
@@ -301,6 +313,18 @@
     </ClCompile>
     <ClCompile Include="FloraRenderer.cpp">
       <Filter>Source Files\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockCodex.cpp">
+      <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundFloraHandler.cpp">
+      <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockUpdateHandler.cpp">
+      <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

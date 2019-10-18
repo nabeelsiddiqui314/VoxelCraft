@@ -160,7 +160,9 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Biome.h" />
     <ClInclude Include="BlockShape.h" />
+    <ClInclude Include="BlockUpdateHandler.h" />
     <ClInclude Include="FloraRenderer.h" />
+    <ClInclude Include="GroundFloraHandler.h" />
     <ClInclude Include="ShaderType.h" />
     <ClInclude Include="BlockCodex.h" />
     <ClInclude Include="BlockData.h" />
@@ -199,6 +201,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureAtlas.h" />
     <ClInclude Include="TypeRenderer.h" />
+    <ClInclude Include="vector3.h" />
     <ClInclude Include="vecXZ.h" />
     <ClInclude Include="WaterRenderer.h" />
     <ClInclude Include="World.h" />
@@ -207,6 +210,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Biome.cpp" />
     <ClCompile Include="BlockCodex.cpp" />
+    <ClCompile Include="BlockUpdateHandler.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChunkManager.cpp" />
     <ClCompile Include="Composition.cpp" />
@@ -215,6 +219,7 @@
     <ClCompile Include="FloraRenderer.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GroundFloraHandler.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="RayCast.cpp" />
@@ -241,6 +246,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureAtlas.cpp" />
     <ClCompile Include="TypeRenderer.cpp" />
+    <ClCompile Include="vector3.cpp" />
     <ClCompile Include="vecXZ.cpp" />
     <ClCompile Include="VoxelCraft.cpp" />
     <ClCompile Include="WaterRenderer.cpp" />

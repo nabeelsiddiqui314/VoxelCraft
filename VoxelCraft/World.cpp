@@ -6,6 +6,9 @@ World::World() : m_renderDistance(16) {
 	m_threads.emplace_back([&]() {
 		makeChunks();
 	});
+	m_threads.emplace_back([&]() {
+		updateBlocks();
+	});
 }
 
 World::~World() {
@@ -16,18 +19,25 @@ World::~World() {
 }
 
 void World::setBlock(std::int64_t x, std::int64_t y, std::int64_t z, BlockType block) {
-	std::lock_guard<std::mutex> lock(m_mutex);
+	int X = x, Y = y, Z = z;
 	const auto& pos = getChunkPos(x, z);
+
+	std::lock_guard<std::recursive_mutex> lock(m_mutex);
 	if (m_chunks.doesChunkExist(pos)) {
 		updateMeshes(pos, y / Segment::WIDTH);
+		updateMeshes(pos, (y + 1) / Segment::WIDTH);
+		updateMeshes(pos, (y - 1) / Segment::WIDTH);
 		std::tie(x, y, z) = getBlockPos(x, y, z);
 		m_chunks.setBlock(pos, x, y, z, block);
+
+		addToUpdates(X, Y, Z);
 	}
 }
 
 BlockType World::getBlock(std::int64_t x, std::int64_t y, std::int64_t z) const {
-	std::lock_guard<std::mutex> lock(m_mutex);
 	const auto& pos = getChunkPos(x, z);
+	
+	std::lock_guard<std::recursive_mutex> lock(m_mutex);
 	if (m_chunks.doesChunkExist(pos)) {
 		std::tie(x, y, z) = getBlockPos(x, y, z);
 		return m_chunks.getBlock(pos, x, y, z);
@@ -36,7 +46,7 @@ BlockType World::getBlock(std::int64_t x, std::int64_t y, std::int64_t z) const 
 }
 
 void World::update(const Camera& camera) {
-	std::lock_guard<std::mutex> lock(m_mutex);
+	std::lock_guard<std::recursive_mutex> lock(m_mutex);
 	m_chunks.unloadChunks([&](const VecXZ& pos) {
 		return pos.x < m_camPosition.x - m_renderDistance || pos.z < m_camPosition.z - m_renderDistance
 			|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
@@ -48,7 +58,7 @@ void World::update(const Camera& camera) {
 void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {
 	for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
 		for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
-			std::lock_guard<std::mutex> lock(m_mutex);
+			std::lock_guard<std::recursive_mutex> lock(m_mutex);
 			if (!m_chunks.doesChunkExist({x,z}))
 				continue;
 			m_chunks.render({x,z}, renderer, frustum);
@@ -64,7 +74,7 @@ void World::makeChunks() {
 
 				if (!m_chunks.doesChunkExist({ x, z })) {
 					const auto chunk = m_mapGenerator->generateChunk({ x,z });
-					std::lock_guard<std::mutex> lock(m_mutex);
+					std::lock_guard<std::recursive_mutex> lock(m_mutex);
 					m_chunks.loadChunk({ x,z }, chunk);
 				}
 				else {
@@ -78,8 +88,28 @@ void World::makeChunks() {
 	}
 }
 
+void World::updateBlocks() {
+	while (m_running) {
+		std::unique_lock<std::recursive_mutex> lock(m_mutex);
+		for (auto itr = m_updateList.begin(); itr != m_updateList.end();) {
+			int x = itr->x;
+			int y = itr->y;
+			int z = itr->z;
+
+			if (BlockCodex::getBlockData(getBlock(x, y, z)).updateHandler->update(*this, x, y, z)) {
+				itr = m_updateList.erase(itr);
+			}
+			else {
+				itr++;
+			}
+		}
+		lock.unlock();
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	}
+}
+
 void World::makeEditedMeshes() {
-	std::unique_lock<std::mutex> lock(m_mutex);
+	std::unique_lock<std::recursive_mutex> lock(m_mutex);
 	for (auto itr = m_regenChunks.begin(); itr != m_regenChunks.end();) {
 		if (m_chunks.doesChunkExist(*itr)) {
 			const auto pos = *itr;
@@ -112,6 +142,16 @@ void World::updateMeshes(const VecXZ& pos, std::int16_t y) {
 	m_regenChunks.insert({pos.x    , pos.z + 1 });
 	m_regenChunks.insert({pos.x - 1, pos.z     });
 	m_regenChunks.insert({pos.x    , pos.z - 1 });
+}
+
+void World::addToUpdates(int x, int y, int z) {
+	m_updateList.insert({ x    , y,     z });
+	m_updateList.insert({ x + 1, y,     z });
+	m_updateList.insert({ x - 1, y,     z });
+	m_updateList.insert({ x,     y + 1, z });
+	m_updateList.insert({ x,     y - 1, z });
+	m_updateList.insert({ x,     y,     z + 1 });
+	m_updateList.insert({ x,     y,     z - 1 });
 }
 
 const VecXZ World::getChunkPos(std::int64_t x, std::int64_t z) const {

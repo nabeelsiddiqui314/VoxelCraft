@@ -33,7 +33,7 @@ void Game::update(float dt) {
 	yLast = sf::Mouse::getPosition().y;
 
 	m_world.update(m_camera);
-
+	
 	editBlocks();
 }
 

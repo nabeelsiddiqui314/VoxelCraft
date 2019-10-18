@@ -54,7 +54,7 @@ void Game::editBlocks() {
 		for (int i = 0; i < 10; i++) {
 			if (m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::VOID &&
 				m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::WATER) {
-				m_world.setBlock(lastBlock.x, lastBlock.y, lastBlock.z, BlockType::SAND);
+				m_world.setBlock(lastBlock.x, lastBlock.y, lastBlock.z, BlockType::WATER);
 				break;
 			}
 			else {

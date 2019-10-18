@@ -52,7 +52,8 @@ void Game::editBlocks() {
 		glm::vec3 lastBlock;
 
 		for (int i = 0; i < 10; i++) {
-			if (m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::VOID) {
+			if (m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::VOID &&
+				m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::WATER) {
 				m_world.setBlock(lastBlock.x, lastBlock.y, lastBlock.z, BlockType::SAND);
 				break;
 			}
@@ -69,7 +70,8 @@ void Game::editBlocks() {
 		ray.traverse();
 
 		for (int i = 0; i < 10; i++) {
-			if (m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::VOID) {
+			if (m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::VOID &&
+				m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::WATER) {
 				m_world.setBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z, BlockType::VOID);
 				break;
 			}

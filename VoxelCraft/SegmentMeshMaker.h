@@ -7,6 +7,16 @@ class Segment;
 
 class SegmentMeshMaker
 {
+private:
+	enum {
+		BLOCK,
+		TOP,
+		BOTTOM,
+		LEFT,
+		RIGHT,
+		FRONT,
+		BACK
+	};
 public:
 	SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
 		const Segment* chunk,

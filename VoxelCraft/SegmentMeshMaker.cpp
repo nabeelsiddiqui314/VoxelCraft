@@ -83,115 +83,134 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 		}
 	}
 
-	BlockType topB
-		, bottomB
-		, leftB
-		, rightB
-		, frontB
-		, backB;
+	std::array<BlockType, 7> blk;
 
 	auto setNeighbors = [&](std::int16_t x, std::int16_t y, std::int16_t z) {
+		blk[BLOCK] = chunk->getBlock(x, y, z);
+
 		// x
 		if (x - 1 < 0)
-			leftB = left->getBlock(Segment::WIDTH - 1, y, z);
+			blk[LEFT] = left->getBlock(Segment::WIDTH - 1, y, z);
 		else
-			leftB = chunk->getBlock(x - 1, y, z);
+			blk[LEFT] = chunk->getBlock(x - 1, y, z);
 
 		if (x + 1 >= Segment::WIDTH)
-			rightB = right->getBlock(0, y, z);
+			blk[RIGHT] = right->getBlock(0, y, z);
 		else
-			rightB = chunk->getBlock(x + 1, y, z);
+			blk[RIGHT] = chunk->getBlock(x + 1, y, z);
 
 		//z
 
 		if (z - 1 < 0)
-			backB = back->getBlock(x, y, Segment::WIDTH - 1);
+			blk[BACK] = back->getBlock(x, y, Segment::WIDTH - 1);
 		else
-			backB = chunk->getBlock(x, y, z - 1);
+			blk[BACK] = chunk->getBlock(x, y, z - 1);
 
 		if (z + 1 >= Segment::WIDTH)
-			frontB = front->getBlock(x, y, 0);
+			blk[FRONT] = front->getBlock(x, y, 0);
 		else
-			frontB = chunk->getBlock(x, y, z + 1);
+			blk[FRONT] = chunk->getBlock(x, y, z + 1);
 
 		// y
 		if (y - 1 < 0) {
 			if (bottom == nullptr)
-				bottomB = BlockType::VOID;
+				blk[BOTTOM] = BlockType::VOID;
 			else
-				bottomB = bottom->getBlock(x, Segment::WIDTH - 1, z);
+				blk[BOTTOM] = bottom->getBlock(x, Segment::WIDTH - 1, z);
 		}
 		else
-			bottomB = chunk->getBlock(x, y - 1, z);
+			blk[BOTTOM] = chunk->getBlock(x, y - 1, z);
 
 		if (y + 1 >= Segment::WIDTH) {
 			if (top == nullptr)
-				topB = BlockType::VOID;
+				blk[TOP] = BlockType::VOID;
 			else
-				topB = top->getBlock(x, 0, z);
+				blk[TOP] = top->getBlock(x, 0, z);
 		}
 		else
-			topB = chunk->getBlock(x, y + 1, z);
+			blk[TOP] = chunk->getBlock(x, y + 1, z);
 	};
 
-	for (std::int16_t x = 0; x < Segment::WIDTH; x++) {
-		for (std::int16_t y = 0; y < Segment::WIDTH; y++) {
-			for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
-				if (chunk->getBlock(x, y, z) == BlockType::VOID)
-					continue;
-				setNeighbors(x, y, z);
+	auto shouldAddCube = [&](int block) {
+		return !BlockCodex::getBlockData(blk[block]).opaque;
+	};
 
-				std::int16_t oX = x + originX;
-				std::int16_t oY = y + originY;
-				std::int16_t oZ = z + originZ;
-
-				MeshGenerator* currentMesh = nullptr;
-				switch (BlockCodex::getBlockData(chunk->getBlock(x, y, z)).shaderType) {
-				case ShaderType::SOLID:
-					currentMesh = &solidMesh;
-					break;
-				case ShaderType::LIQUID:
-					currentMesh = &liquidMesh;
-					break;
-				case ShaderType::FLORA:
-					currentMesh = &floraMesh;
-					break;
-				}
-
-				switch (BlockCodex::getBlockData(chunk->getBlock(x, y, z)).shape) {
-				case BlockShape::CUBE:
-					if (!BlockCodex::getBlockData(topB).opaque)
-						currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texTop, s_top, s_topLight);
-
-					if (!BlockCodex::getBlockData(bottomB).opaque)
-						currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texBottom, s_bottom, s_bottomLight);
-
-					if (!BlockCodex::getBlockData(leftB).opaque)
-						currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_left, s_sideLight);
-
-					if (!BlockCodex::getBlockData(rightB).opaque)
-						currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_right, s_sideLight);
-
-					if (!BlockCodex::getBlockData(frontB).opaque)
-						currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_front, s_sideLight);
-
-					if (!BlockCodex::getBlockData(backB).opaque)
-						currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_back, s_sideLight);
-					break;
-				case BlockShape::PLANE:
-					if (topB == BlockType::VOID)
-						currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texTop, s_top, s_topLight);
-					break;
-				case BlockShape::CROSS:
-					if (!BlockCodex::getBlockData(frontB).opaque || !BlockCodex::getBlockData(backB).opaque  ||
-						!BlockCodex::getBlockData(leftB).opaque  || !BlockCodex::getBlockData(rightB).opaque ||
-						!BlockCodex::getBlockData(topB).opaque   || !BlockCodex::getBlockData(bottomB).opaque) {
-						currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texTop, s_crossA, s_topLight);
-						currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texTop, s_crossB, s_topLight);
-					}
-					break;
-				}
+	auto shouldAddBlob = [&](int block) {
+		if (BlockCodex::getBlockData(blk[BLOCK]).shaderType == ShaderType::LIQUID) {
+			if (block == TOP) {
+				return blk[BLOCK] != blk[block]; // for liquids dont cull opaque top sides.
 			}
+		}
+		return !BlockCodex::getBlockData(blk[block]).opaque && blk[BLOCK] != blk[block];
+	};
+
+	for (std::int16_t x = 0; x < Segment::WIDTH; x++)
+	for (std::int16_t y = 0; y < Segment::WIDTH; y++)
+	for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
+		if (chunk->getBlock(x, y, z) == BlockType::VOID)
+			continue;
+		setNeighbors(x, y, z);
+
+		std::int16_t oX = x + originX;
+		std::int16_t oY = y + originY;
+		std::int16_t oZ = z + originZ;
+
+		MeshGenerator* currentMesh = nullptr;
+		switch (BlockCodex::getBlockData(blk[BLOCK]).shaderType) {
+		case ShaderType::SOLID:
+			currentMesh = &solidMesh;
+			break;
+		case ShaderType::LIQUID:
+			currentMesh = &liquidMesh;
+			break;
+		case ShaderType::FLORA:
+			currentMesh = &floraMesh;
+			break;
+		}
+
+		switch (BlockCodex::getBlockData(blk[BLOCK]).shape) {
+		case BlockShape::CUBE:
+			if (shouldAddCube(TOP))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texTop, s_top, s_topLight);
+
+			if (shouldAddCube(BOTTOM))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texBottom, s_bottom, s_bottomLight);
+
+			if (shouldAddCube(LEFT))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texSide, s_left, s_sideLight);
+
+			if (shouldAddCube(RIGHT))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texSide, s_right, s_sideLight);
+
+			if (shouldAddCube(FRONT))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texSide, s_front, s_sideLight);
+
+			if (shouldAddCube(BACK))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texSide, s_back, s_sideLight);
+			break;
+		case BlockShape::BLOB:
+			if (shouldAddBlob(TOP))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texTop, s_top, s_topLight);
+
+			if (shouldAddBlob(BOTTOM))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texBottom, s_bottom, s_bottomLight);
+
+			if (shouldAddBlob(LEFT))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_left, s_sideLight);
+
+			if (shouldAddBlob(RIGHT))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_right, s_sideLight);
+
+			if (shouldAddBlob(FRONT))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_front, s_sideLight);
+
+			if (shouldAddBlob(BACK))
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_back, s_sideLight);
+			break;
+		case BlockShape::CROSS:
+			currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texTop, s_crossA, s_topLight);
+			currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texTop, s_crossB, s_topLight);
+			break;
 		}
 	}
 }

@@ -9,7 +9,7 @@ void BlockCodex::init() {
 	s_blocks[index(BlockType::DIRT)]  = BlockData(std::make_unique<BlockUpdateHandler>(), 2, 2, 2, BlockShape::CUBE, ShaderType::SOLID , true);
 	s_blocks[index(BlockType::STONE)] = BlockData(std::make_unique<BlockUpdateHandler>(), 3, 3, 3, BlockShape::CUBE, ShaderType::SOLID , true);
 	s_blocks[index(BlockType::SAND)]  = BlockData(std::make_unique<BlockUpdateHandler>(), 4, 4, 4, BlockShape::CUBE, ShaderType::SOLID , true);
-	s_blocks[index(BlockType::WATER)] = BlockData(std::make_unique<LiquidHandler>(), 5, 5, 5, BlockShape::PLANE, ShaderType::LIQUID, false);
+	s_blocks[index(BlockType::WATER)] = BlockData(std::make_unique<LiquidHandler>(),      5, 5, 5, BlockShape::BLOB, ShaderType::LIQUID, false);
 	s_blocks[index(BlockType::ROSE)]  = BlockData(std::make_unique<GroundFloraHandler>(), 6, 6, 6, BlockShape::CROSS, ShaderType::FLORA, false);
 	s_blocks[index(BlockType::SHRUB)] = BlockData(std::make_unique<GroundFloraHandler>(), 7, 7, 7, BlockShape::CROSS, ShaderType::FLORA, false);
 }

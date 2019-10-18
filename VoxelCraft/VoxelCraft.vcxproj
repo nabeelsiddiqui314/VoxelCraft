@@ -163,6 +163,7 @@
     <ClInclude Include="BlockUpdateHandler.h" />
     <ClInclude Include="FloraRenderer.h" />
     <ClInclude Include="GroundFloraHandler.h" />
+    <ClInclude Include="LiquidHandler.h" />
     <ClInclude Include="ShaderType.h" />
     <ClInclude Include="BlockCodex.h" />
     <ClInclude Include="BlockData.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GroundFloraHandler.cpp" />
+    <ClCompile Include="LiquidHandler.cpp" />
     <ClCompile Include="Noise.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="RayCast.cpp" />

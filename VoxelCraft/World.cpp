@@ -98,13 +98,14 @@ void World::updateBlocks() {
 
 			if (BlockCodex::getBlockData(getBlock(x, y, z)).updateHandler->update(*this, x, y, z)) {
 				itr = m_updateList.erase(itr);
+				break;
 			}
 			else {
 				itr++;
 			}
 		}
 		lock.unlock();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	}
 }
 

@@ -207,6 +207,9 @@
     <ClInclude Include="vector3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LiquidHandler.h">
+      <Filter>Header Files\Blocks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -325,6 +328,9 @@
     </ClCompile>
     <ClCompile Include="vector3.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LiquidHandler.cpp">
+      <Filter>Source Files\Blocks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

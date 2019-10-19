@@ -3,6 +3,7 @@
 #include "ShaderType.h"
 #include "BlockShape.h"
 #include "BlockUpdateHandler.h"
+#include "NonUpdatable.h"
 #include <memory>
 
 struct BlockData {
@@ -17,7 +18,7 @@ struct BlockData {
 	bool opaque;
 
 	BlockData() 
-	: updateHandler(std::make_unique<BlockUpdateHandler>()),
+	: updateHandler(std::make_unique<NonUpdatable>()),
 	  texTop(0),
 	  texSide(0),
 	  texBottom(0),

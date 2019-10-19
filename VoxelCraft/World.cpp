@@ -146,13 +146,19 @@ void World::updateMeshes(const VecXZ& pos, std::int16_t y) {
 }
 
 void World::addToUpdates(int x, int y, int z) {
-	m_updateList.insert({ x    , y,     z });
-	m_updateList.insert({ x + 1, y,     z });
-	m_updateList.insert({ x - 1, y,     z });
-	m_updateList.insert({ x,     y + 1, z });
-	m_updateList.insert({ x,     y - 1, z });
-	m_updateList.insert({ x,     y,     z + 1 });
-	m_updateList.insert({ x,     y,     z - 1 });
+	auto tryAdd = [&](int X, int Y, int Z) {
+		if (BlockCodex::getBlockData(getBlock(X, Y, Z)).updateHandler->isUpdatable()) {
+			m_updateList.insert({ X, Y, Z });
+		}
+	};
+
+	tryAdd(x    , y,     z    );
+	tryAdd(x + 1, y,     z    );
+	tryAdd(x - 1, y,     z    );
+	tryAdd(x,     y + 1, z    );
+	tryAdd(x,     y - 1, z    );
+	tryAdd(x,     y,     z + 1);
+	tryAdd(x,     y,     z - 1);
 }
 
 const VecXZ World::getChunkPos(std::int64_t x, std::int64_t z) const {

@@ -162,8 +162,10 @@
     <ClInclude Include="BlockShape.h" />
     <ClInclude Include="BlockUpdateHandler.h" />
     <ClInclude Include="FloraRenderer.h" />
+    <ClInclude Include="GravityBlockHandler.h" />
     <ClInclude Include="GroundFloraHandler.h" />
     <ClInclude Include="LiquidHandler.h" />
+    <ClInclude Include="NonUpdatable.h" />
     <ClInclude Include="ShaderType.h" />
     <ClInclude Include="BlockCodex.h" />
     <ClInclude Include="BlockData.h" />
@@ -220,9 +222,11 @@
     <ClCompile Include="FloraRenderer.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GravityBlockHandler.cpp" />
     <ClCompile Include="GroundFloraHandler.cpp" />
     <ClCompile Include="LiquidHandler.cpp" />
     <ClCompile Include="Noise.cpp" />
+    <ClCompile Include="NonUpdatable.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="RayCast.cpp" />
     <ClCompile Include="SegmentMeshMaker.cpp" />

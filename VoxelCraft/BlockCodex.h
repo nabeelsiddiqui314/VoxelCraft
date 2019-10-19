@@ -2,8 +2,6 @@
 #include "BlockTypes.h"
 #include "BlockData.h"
 #include <array>
-#include "GroundFloraHandler.h"
-#include "LiquidHandler.h"
 
 class BlockCodex
 {

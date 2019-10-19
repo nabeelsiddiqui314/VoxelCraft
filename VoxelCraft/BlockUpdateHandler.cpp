@@ -10,10 +10,6 @@ bool BlockUpdateHandler::update(World& world, int x, int y, int z) {
 	return false; // dont remove from list if it is in the midst of cool down
 }
 
-bool BlockUpdateHandler::callUpdate(World & world, int x, int y, int z) {
+bool BlockUpdateHandler::isUpdatable() const {
 	return true;
-}
-
-int BlockUpdateHandler::getCoolDownTime() const {
-	return 0;
 }

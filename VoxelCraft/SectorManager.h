@@ -1,31 +1,31 @@
 #pragma once
 #include <unordered_map>
 #include "vecXZ.h"
-#include "Chunks.h"
+#include "Sector.h"
 #include <functional>
 #include <algorithm>
 #include <utility>
 
-class ChunkManager
+class SectorManager
 {
 public:
-	ChunkManager() = default;
-	~ChunkManager();
+	SectorManager() = default;
+	~SectorManager();
 public:
-	void loadChunk(const VecXZ& pos, const Chunks& chunks);
-	void unloadChunks(const std::function<bool(const VecXZ& pos)>& cond);
+	void loadSector(const VecXZ& pos, const Sector& sectors);
+	void unloadSector(const std::function<bool(const VecXZ& pos)>& cond);
 
-	bool doesChunkExist(const VecXZ& pos) const;
+	bool doesSectorExist(const VecXZ& pos) const;
 
 	void setBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
 	BlockType getBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const;
 
 	void makeMesh(const VecXZ& pos);
-	const Chunks& getChunkAt(const VecXZ& pos) const;
+	const Sector& getSectorAt(const VecXZ& pos) const;
 	void regenMesh(const VecXZ& pos, std::int16_t y);
 
 	void render(const VecXZ& pos, MasterRenderer& renderer, const Frustum& frustum);
 private:
-	std::unordered_map<VecXZ, Chunks> m_chunks;
+	std::unordered_map<VecXZ, Sector> m_sectors;
 };
 

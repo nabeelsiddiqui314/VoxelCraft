@@ -25,9 +25,6 @@
     <Filter Include="Header Files\Util">
       <UniqueIdentifier>{bbdd2e19-c6eb-4d6c-b85f-61248317445e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Chunks">
-      <UniqueIdentifier>{6693d2cb-63a2-42cb-b1db-5327dbc5fcd3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\MapGen">
       <UniqueIdentifier>{bcea7fe8-03dc-415b-817b-f4fe7e93866a}</UniqueIdentifier>
     </Filter>
@@ -39,9 +36,6 @@
     </Filter>
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{4c41b6b8-f944-43e3-95f4-435ee0cdd85c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Chunks">
-      <UniqueIdentifier>{4515a5f2-ff4b-49c6-a05b-cdd8ff9eb71b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Biomes">
       <UniqueIdentifier>{3adf3352-a5cf-47cc-a052-1483805dc42c}</UniqueIdentifier>
@@ -61,6 +55,12 @@
     <Filter Include="Source Files\Blocks">
       <UniqueIdentifier>{6e4cfe31-06d5-44e6-a7ed-08c13de48ff6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Sector">
+      <UniqueIdentifier>{4515a5f2-ff4b-49c6-a05b-cdd8ff9eb71b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sector">
+      <UniqueIdentifier>{6693d2cb-63a2-42cb-b1db-5327dbc5fcd3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -78,20 +78,14 @@
     <ClInclude Include="vecXZ.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Chunks.h">
-      <Filter>Header Files\Chunks</Filter>
-    </ClInclude>
-    <ClInclude Include="ChunkManager.h">
-      <Filter>Header Files\Chunks</Filter>
-    </ClInclude>
     <ClInclude Include="Segment.h">
-      <Filter>Header Files\Chunks</Filter>
+      <Filter>Header Files\Sector</Filter>
     </ClInclude>
     <ClInclude Include="SegmentModel.h">
-      <Filter>Header Files\Chunks</Filter>
+      <Filter>Header Files\Sector</Filter>
     </ClInclude>
     <ClInclude Include="MeshGenerator.h">
-      <Filter>Header Files\Chunks</Filter>
+      <Filter>Header Files\Sector</Filter>
     </ClInclude>
     <ClInclude Include="MasterRenderer.h">
       <Filter>Header Files\Renderers</Filter>
@@ -106,7 +100,7 @@
       <Filter>Header Files\Renderers</Filter>
     </ClInclude>
     <ClInclude Include="SegmentMeshMaker.h">
-      <Filter>Header Files\Chunks</Filter>
+      <Filter>Header Files\Sector</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header Files\GLstuff</Filter>
@@ -142,7 +136,7 @@
       <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="World.h">
-      <Filter>Header Files\Chunks</Filter>
+      <Filter>Header Files\Sector</Filter>
     </ClInclude>
     <ClInclude Include="Biome.h">
       <Filter>Header Files\Biomes</Filter>
@@ -216,6 +210,12 @@
     <ClInclude Include="NonUpdatable.h">
       <Filter>Header Files\Blocks</Filter>
     </ClInclude>
+    <ClInclude Include="SectorManager.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="Sector.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -233,26 +233,20 @@
     <ClCompile Include="vecXZ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Chunks.cpp">
-      <Filter>Source Files\Chunks</Filter>
-    </ClCompile>
     <ClCompile Include="Segment.cpp">
-      <Filter>Source Files\Chunks</Filter>
+      <Filter>Source Files\Sector</Filter>
     </ClCompile>
     <ClCompile Include="SegmentModel.cpp">
-      <Filter>Source Files\Chunks</Filter>
+      <Filter>Source Files\Sector</Filter>
     </ClCompile>
     <ClCompile Include="SegmentMeshMaker.cpp">
-      <Filter>Source Files\Chunks</Filter>
+      <Filter>Source Files\Sector</Filter>
     </ClCompile>
     <ClCompile Include="MeshGenerator.cpp">
-      <Filter>Source Files\Chunks</Filter>
+      <Filter>Source Files\Sector</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp">
-      <Filter>Source Files\Chunks</Filter>
-    </ClCompile>
-    <ClCompile Include="ChunkManager.cpp">
-      <Filter>Source Files\Chunks</Filter>
+      <Filter>Source Files\Sector</Filter>
     </ClCompile>
     <ClCompile Include="FlatGenerator.cpp">
       <Filter>Source Files\MapGen</Filter>
@@ -343,6 +337,12 @@
     </ClCompile>
     <ClCompile Include="NonUpdatable.cpp">
       <Filter>Source Files\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="SectorManager.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="Sector.cpp">
+      <Filter>Source Files\Sector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -65,7 +65,7 @@ const GLfloat SegmentMeshMaker::s_sideLight = 0.6f;
 const GLfloat SegmentMeshMaker::s_bottomLight = 0.4f;
 
 SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
-	const Segment* chunk,
+	const Segment* sector,
 	const Segment* top, const Segment* bottom,
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
@@ -73,10 +73,10 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 	MeshGenerator liquidMesh(meshes.liquid.mesh);
 	MeshGenerator floraMesh(meshes.flora.mesh);
 
-	if (chunk->isEmpty())
+	if (sector->isEmpty())
 		return;
 	if (top && bottom) {
-		if (chunk->isAllOpaque() && top->isAllOpaque() && bottom->isAllOpaque() &&
+		if (sector->isAllOpaque() && top->isAllOpaque() && bottom->isAllOpaque() &&
 			left->isAllOpaque() && right->isAllOpaque() && front->isAllOpaque() &&
 			back->isAllOpaque()) {
 			return;
@@ -86,30 +86,30 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 	std::array<BlockType, 7> blk;
 
 	auto setNeighbors = [&](std::int16_t x, std::int16_t y, std::int16_t z) {
-		blk[BLOCK] = chunk->getBlock(x, y, z);
+		blk[BLOCK] = sector->getBlock(x, y, z);
 
 		// x
 		if (x - 1 < 0)
 			blk[LEFT] = left->getBlock(Segment::WIDTH - 1, y, z);
 		else
-			blk[LEFT] = chunk->getBlock(x - 1, y, z);
+			blk[LEFT] = sector->getBlock(x - 1, y, z);
 
 		if (x + 1 >= Segment::WIDTH)
 			blk[RIGHT] = right->getBlock(0, y, z);
 		else
-			blk[RIGHT] = chunk->getBlock(x + 1, y, z);
+			blk[RIGHT] = sector->getBlock(x + 1, y, z);
 
 		//z
 
 		if (z - 1 < 0)
 			blk[BACK] = back->getBlock(x, y, Segment::WIDTH - 1);
 		else
-			blk[BACK] = chunk->getBlock(x, y, z - 1);
+			blk[BACK] = sector->getBlock(x, y, z - 1);
 
 		if (z + 1 >= Segment::WIDTH)
 			blk[FRONT] = front->getBlock(x, y, 0);
 		else
-			blk[FRONT] = chunk->getBlock(x, y, z + 1);
+			blk[FRONT] = sector->getBlock(x, y, z + 1);
 
 		// y
 		if (y - 1 < 0) {
@@ -119,7 +119,7 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 				blk[BOTTOM] = bottom->getBlock(x, Segment::WIDTH - 1, z);
 		}
 		else
-			blk[BOTTOM] = chunk->getBlock(x, y - 1, z);
+			blk[BOTTOM] = sector->getBlock(x, y - 1, z);
 
 		if (y + 1 >= Segment::WIDTH) {
 			if (top == nullptr)
@@ -128,7 +128,7 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 				blk[TOP] = top->getBlock(x, 0, z);
 		}
 		else
-			blk[TOP] = chunk->getBlock(x, y + 1, z);
+			blk[TOP] = sector->getBlock(x, y + 1, z);
 	};
 
 	auto shouldAddCube = [&](int block) {
@@ -147,7 +147,7 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 	for (std::int16_t x = 0; x < Segment::WIDTH; x++)
 	for (std::int16_t y = 0; y < Segment::WIDTH; y++)
 	for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
-		if (chunk->getBlock(x, y, z) == BlockType::VOID)
+		if (sector->getBlock(x, y, z) == BlockType::VOID)
 			continue;
 		setNeighbors(x, y, z);
 
@@ -190,22 +190,22 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 			break;
 		case BlockShape::BLOB:
 			if (shouldAddBlob(TOP))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texTop, s_top, s_topLight);
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texTop, s_top, s_topLight);
 
 			if (shouldAddBlob(BOTTOM))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texBottom, s_bottom, s_bottomLight);
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texBottom, s_bottom, s_bottomLight);
 
 			if (shouldAddBlob(LEFT))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_left, s_sideLight);
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texSide, s_left, s_sideLight);
 
 			if (shouldAddBlob(RIGHT))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_right, s_sideLight);
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texSide, s_right, s_sideLight);
 
 			if (shouldAddBlob(FRONT))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_front, s_sideLight);
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texSide, s_front, s_sideLight);
 
 			if (shouldAddBlob(BACK))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(chunk->getBlock(x, y, z)).texSide, s_back, s_sideLight);
+				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texSide, s_back, s_sideLight);
 			break;
 		case BlockShape::CROSS:
 			currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texTop, s_crossA, s_topLight);

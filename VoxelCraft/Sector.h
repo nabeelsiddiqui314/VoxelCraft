@@ -3,15 +3,15 @@
 #include "Segment.h"
 #include "vecXZ.h"
 
-class Chunks
+class Sector
 {
 public:
 	void setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
 	BlockType getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
 	void makeMesh(std::int16_t x, std::int16_t z,
-		const Chunks* left, const Chunks* right,
-		const Chunks* front, const Chunks* back);
+		const Sector* left, const Sector* right,
+		const Sector* front, const Sector* back);
 	void regenMesh(std::int16_t y);
 	void cleanUp();
 

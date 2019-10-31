@@ -12,8 +12,8 @@ class MasterRenderer
 public:
 	MasterRenderer();
 public:
-	void addChunk(const MeshTypes& models);
-	void renderChunks(const Camera& camera);
+	void addSector(const MeshTypes& models);
+	void renderSector(const Camera& camera);
 private:
 	std::unique_ptr<TypeRenderer> m_solidRenderer;
 	std::unique_ptr<TypeRenderer> m_waterRenderer;

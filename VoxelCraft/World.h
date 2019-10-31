@@ -1,5 +1,5 @@
 #pragma once
-#include "ChunkManager.h"
+#include "SectorManager.h"
 #include "FlatGenerator.h"
 #include "OverworldGenerator.h"
 #include "MasterRenderer.h"
@@ -19,20 +19,20 @@ public:
 	BlockType getBlock(std::int64_t x, std::int64_t y, std::int64_t z) const;
 
 	void update(const Camera& camera);
-	void renderChunks(MasterRenderer& renderer, const Frustum& frustum);
+	void renderSector(MasterRenderer& renderer, const Frustum& frustum);
 private:
-	void makeChunks();
+	void makeSector();
 	void updateBlocks();
 
 	void makeEditedMeshes();
 	void updateMeshes(const VecXZ& pos, std::int16_t y);
 	void addToUpdates(int x, int y, int z);
 
-	const VecXZ getChunkPos(std::int64_t x, std::int64_t z) const;
+	const VecXZ getSectorPos(std::int64_t x, std::int64_t z) const;
 	const std::tuple<int, int, int> getBlockPos(std::int64_t x, std::int64_t y, std::int64_t z) const;
 private:
-	ChunkManager m_chunks;
-	std::unordered_set<VecXZ> m_regenChunks;
+	SectorManager m_sectors;
+	std::unordered_set<VecXZ> m_regenSectors;
 	std::unordered_set<Vector3> m_updateList;
 	VecXZ m_camPosition;
 	std::unique_ptr<MapGenerator> m_mapGenerator;

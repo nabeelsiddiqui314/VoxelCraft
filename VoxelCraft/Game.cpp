@@ -38,8 +38,8 @@ void Game::update(float dt) {
 }
 
 void Game::render(MasterRenderer& renderer) {
-	m_world.renderChunks(renderer, m_camera.getFrustum());
-	renderer.renderChunks(m_camera);
+	m_world.renderSector(renderer, m_camera.getFrustum());
+	renderer.renderSector(m_camera);
 }
 
 void Game::editBlocks() {

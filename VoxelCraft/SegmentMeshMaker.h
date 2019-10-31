@@ -19,7 +19,7 @@ private:
 	};
 public:
 	SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
-		const Segment* chunk,
+		const Segment* sector,
 		const Segment* top, const Segment* bottom,
 		const Segment* left, const Segment* right,
 		const Segment* front, const Segment* back);

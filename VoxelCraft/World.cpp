@@ -4,7 +4,7 @@
 World::World() : m_renderDistance(16) {
 	m_mapGenerator = std::make_unique<OverworldGenerator>();
 	m_threads.emplace_back([&]() {
-		makeChunks();
+		makeSector();
 	});
 	m_threads.emplace_back([&]() {
 		updateBlocks();
@@ -20,34 +20,34 @@ World::~World() {
 
 void World::setBlock(std::int64_t x, std::int64_t y, std::int64_t z, BlockType block) {
 	int X = x, Y = y, Z = z;
-	const auto& pos = getChunkPos(x, z);
+	const auto& pos = getSectorPos(x, z);
 
 	std::lock_guard<std::recursive_mutex> lock(m_mutex);
-	if (m_chunks.doesChunkExist(pos)) {
+	if (m_sectors.doesSectorExist(pos)) {
 		updateMeshes(pos, y / Segment::WIDTH);
 		updateMeshes(pos, (y + 1) / Segment::WIDTH);
 		updateMeshes(pos, (y - 1) / Segment::WIDTH);
 		std::tie(x, y, z) = getBlockPos(x, y, z);
-		m_chunks.setBlock(pos, x, y, z, block);
+		m_sectors.setBlock(pos, x, y, z, block);
 
 		addToUpdates(X, Y, Z);
 	}
 }
 
 BlockType World::getBlock(std::int64_t x, std::int64_t y, std::int64_t z) const {
-	const auto& pos = getChunkPos(x, z);
+	const auto& pos = getSectorPos(x, z);
 	
 	std::lock_guard<std::recursive_mutex> lock(m_mutex);
-	if (m_chunks.doesChunkExist(pos)) {
+	if (m_sectors.doesSectorExist(pos)) {
 		std::tie(x, y, z) = getBlockPos(x, y, z);
-		return m_chunks.getBlock(pos, x, y, z);
+		return m_sectors.getBlock(pos, x, y, z);
 	}
 	return BlockType::VOID;
 }
 
 void World::update(const Camera& camera) {
 	std::lock_guard<std::recursive_mutex> lock(m_mutex);
-	m_chunks.unloadChunks([&](const VecXZ& pos) {
+	m_sectors.unloadSector([&](const VecXZ& pos) {
 		return pos.x < m_camPosition.x - m_renderDistance || pos.z < m_camPosition.z - m_renderDistance
 			|| pos.x > m_camPosition.x + m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
 	});
@@ -55,30 +55,30 @@ void World::update(const Camera& camera) {
 	m_camPosition = { (int)camera.getPosition().x / Segment::WIDTH, (int)camera.getPosition().z / Segment::WIDTH };
 }
 
-void World::renderChunks(MasterRenderer& renderer, const Frustum& frustum) {
+void World::renderSector(MasterRenderer& renderer, const Frustum& frustum) {
 	for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
 		for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
 			std::lock_guard<std::recursive_mutex> lock(m_mutex);
-			if (!m_chunks.doesChunkExist({x,z}))
+			if (!m_sectors.doesSectorExist({x,z}))
 				continue;
-			m_chunks.render({x,z}, renderer, frustum);
+			m_sectors.render({x,z}, renderer, frustum);
 		}
 	}
 }
 
-void World::makeChunks() {
+void World::makeSector() {
 	while (m_running) {
 		for (std::int16_t x = m_camPosition.x - m_currentRadius; x <= m_camPosition.x + m_currentRadius; x++) {
 			for (std::int16_t z = m_camPosition.z - m_currentRadius; z <= m_camPosition.z + m_currentRadius; z++) {
 				makeEditedMeshes();
 
-				if (!m_chunks.doesChunkExist({ x, z })) {
-					const auto chunk = m_mapGenerator->generateChunk({ x,z });
+				if (!m_sectors.doesSectorExist({ x, z })) {
+					const auto sector = m_mapGenerator->generateSector({ x,z });
 					std::lock_guard<std::recursive_mutex> lock(m_mutex);
-					m_chunks.loadChunk({ x,z }, chunk);
+					m_sectors.loadSector({ x,z }, sector);
 				}
 				else {
-					m_chunks.makeMesh({ x,z });
+					m_sectors.makeMesh({ x,z });
 				}
 			}
 		}
@@ -111,13 +111,13 @@ void World::updateBlocks() {
 
 void World::makeEditedMeshes() {
 	std::unique_lock<std::recursive_mutex> lock(m_mutex);
-	for (auto itr = m_regenChunks.begin(); itr != m_regenChunks.end();) {
-		if (m_chunks.doesChunkExist(*itr)) {
+	for (auto itr = m_regenSectors.begin(); itr != m_regenSectors.end();) {
+		if (m_sectors.doesSectorExist(*itr)) {
 			const auto pos = *itr;
 			lock.unlock();
-			m_chunks.makeMesh(pos);
+			m_sectors.makeMesh(pos);
 			lock.lock();
-			itr = m_regenChunks.erase(itr);
+			itr = m_regenSectors.erase(itr);
 		}
 		else
 			itr++;
@@ -126,23 +126,23 @@ void World::makeEditedMeshes() {
 
 void World::updateMeshes(const VecXZ& pos, std::int16_t y) {
 	if (y > 0) {
-		m_chunks.regenMesh(pos, y - 1);
+		m_sectors.regenMesh(pos, y - 1);
 	}
-	if (y < Chunks::HEIGHT - 1) {
-		m_chunks.regenMesh(pos, y + 1);
+	if (y < Sector::HEIGHT - 1) {
+		m_sectors.regenMesh(pos, y + 1);
 	}
 
-	m_chunks.regenMesh(pos, y);
-	m_chunks.regenMesh({ pos.x + 1, pos.z     }, y);
-	m_chunks.regenMesh({ pos.x    , pos.z + 1 }, y);
-	m_chunks.regenMesh({ pos.x - 1, pos.z     }, y);
-	m_chunks.regenMesh({ pos.x    , pos.z - 1 }, y);
+	m_sectors.regenMesh(pos, y);
+	m_sectors.regenMesh({ pos.x + 1, pos.z     }, y);
+	m_sectors.regenMesh({ pos.x    , pos.z + 1 }, y);
+	m_sectors.regenMesh({ pos.x - 1, pos.z     }, y);
+	m_sectors.regenMesh({ pos.x    , pos.z - 1 }, y);
 
-	m_regenChunks.emplace(pos);
-	m_regenChunks.insert({pos.x + 1, pos.z     });
-	m_regenChunks.insert({pos.x    , pos.z + 1 });
-	m_regenChunks.insert({pos.x - 1, pos.z     });
-	m_regenChunks.insert({pos.x    , pos.z - 1 });
+	m_regenSectors.emplace(pos);
+	m_regenSectors.insert({pos.x + 1, pos.z     });
+	m_regenSectors.insert({pos.x    , pos.z + 1 });
+	m_regenSectors.insert({pos.x - 1, pos.z     });
+	m_regenSectors.insert({pos.x    , pos.z - 1 });
 }
 
 void World::addToUpdates(int x, int y, int z) {
@@ -161,7 +161,7 @@ void World::addToUpdates(int x, int y, int z) {
 	tryAdd(x,     y,     z - 1);
 }
 
-const VecXZ World::getChunkPos(std::int64_t x, std::int64_t z) const {
+const VecXZ World::getSectorPos(std::int64_t x, std::int64_t z) const {
 	return {x / Segment::WIDTH, z / Segment::WIDTH};
 }
 

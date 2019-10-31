@@ -25,12 +25,12 @@ BlockType Segment::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) cons
 }
 
 void Segment::makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
-	const Segment* chunk,
+	const Segment* sector,
 	const Segment* top, const Segment* bottom,
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
 	cleanUp();
-	SegmentMeshMaker(m_meshTypes, originX, originY, originZ, chunk, top, bottom, left, right, front, back);
+	SegmentMeshMaker(m_meshTypes, originX, originY, originZ, sector, top, bottom, left, right, front, back);
 	m_hasMeshGenerated = true;
 	m_hasLoadedModel = false;
 }
@@ -66,7 +66,7 @@ void Segment::cleanBuffers() {
 }
 
 void Segment::render(MasterRenderer& renderer) {
-	renderer.addChunk(m_meshTypes);
+	renderer.addSector(m_meshTypes);
 }
 
 void Segment::setBoxPosition(const glm::vec3& pos) {

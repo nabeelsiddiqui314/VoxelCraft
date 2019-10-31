@@ -172,7 +172,7 @@
     <ClInclude Include="BlockTypes.h" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="ChunkManager.h" />
+    <ClInclude Include="SectorManager.h" />
     <ClInclude Include="Composition.h" />
     <ClInclude Include="Desert.h" />
     <ClInclude Include="Fields.h" />
@@ -183,7 +183,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Raycast.h" />
     <ClInclude Include="SegmentMeshMaker.h" />
-    <ClInclude Include="Chunks.h" />
+    <ClInclude Include="Sector.h" />
     <ClInclude Include="FlatGenerator.h" />
     <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="MasterRenderer.h" />
@@ -215,7 +215,7 @@
     <ClCompile Include="BlockCodex.cpp" />
     <ClCompile Include="BlockUpdateHandler.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="ChunkManager.cpp" />
+    <ClCompile Include="SectorManager.cpp" />
     <ClCompile Include="Composition.cpp" />
     <ClCompile Include="Desert.cpp" />
     <ClCompile Include="Fields.cpp" />
@@ -230,7 +230,7 @@
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="RayCast.cpp" />
     <ClCompile Include="SegmentMeshMaker.cpp" />
-    <ClCompile Include="Chunks.cpp" />
+    <ClCompile Include="Sector.cpp" />
     <ClCompile Include="FlatGenerator.cpp" />
     <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="MasterRenderer.cpp" />

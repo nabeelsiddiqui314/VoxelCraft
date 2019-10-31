@@ -9,8 +9,8 @@ OverworldGenerator::OverworldGenerator()
 	p_currentSquare(nullptr)
       {}
 
-Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
-	Chunks chunk;
+Sector OverworldGenerator::generateSector(const VecXZ& pos) {
+	Sector sector;
 	std::int16_t height;
 
 	setSquares(pos.x, pos.z);
@@ -30,7 +30,7 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 		height = biome.applyFunctionTo(height);
 
 		int depth = 0;
-		for (int y = Chunks::HEIGHT * Segment::WIDTH; y-- > 0;) {
+		for (int y = Sector::HEIGHT * Segment::WIDTH; y-- > 0;) {
 			if (y <= height) {
 				if (y == height) {
 					const auto& decorativeBlock = biome.getDecorativeBlock();
@@ -38,30 +38,30 @@ Chunks OverworldGenerator::generateChunk(const VecXZ& pos) {
 						srand(m_seed + pos.x * 2312321 * x * pos.z * 898009 * z);
 						int r = rand() % 1000;
 						if (r > 990) {
-							chunk.setBlock(x, y, z, decorativeBlock);
+							sector.setBlock(x, y, z, decorativeBlock);
 						}
 						depth = -1;
 					}
 				}
 				else {
-					chunk.setBlock(x, y, z, biome.getComposition().getBlockAt(depth));
+					sector.setBlock(x, y, z, biome.getComposition().getBlockAt(depth));
 				}
 				depth++;
 			}
 			if (biome.hasWater()) {
-				if (y <= Chunks::HEIGHT * Segment::WIDTH / 4) {
-					if (chunk.getBlock(x, y, z) == BlockType::VOID) {
-						if (y <= Chunks::HEIGHT * Segment::WIDTH / 4 - 3)
-							chunk.setBlock(x, y, z, BlockType::WATER);
+				if (y <= Sector::HEIGHT * Segment::WIDTH / 4) {
+					if (sector.getBlock(x, y, z) == BlockType::VOID) {
+						if (y <= Sector::HEIGHT * Segment::WIDTH / 4 - 3)
+							sector.setBlock(x, y, z, BlockType::WATER);
 					}
 					else {
-						chunk.setBlock(x, y, z, BlockType::SAND);
+						sector.setBlock(x, y, z, BlockType::SAND);
 					}
 				}
 			}
 		}
 	}
-	return chunk;
+	return sector;
 }
 
 const Biome& OverworldGenerator::getBiome(float biomeValue) const {
@@ -79,7 +79,7 @@ float OverworldGenerator::biLerp(float x, float z, float x1min, float x1max, flo
 
 void OverworldGenerator::setSquares(int x, int z) {
 	static const int width = Segment::WIDTH / 2;
-	static const float chunkHeight = Segment::WIDTH * Chunks::HEIGHT;
+	static const float sectorHeight = Segment::WIDTH * Sector::HEIGHT;
 
 	int cx = x * Segment::WIDTH;
 	int cz = z * Segment::WIDTH;
@@ -95,10 +95,10 @@ void OverworldGenerator::setSquares(int x, int z) {
 
 		sq.shouldLerp = x1min != x1max || x2min != x2max || x1min != x2max;
 		if (sq.shouldLerp) {
-			sq.x1min = x1min->getHeightAt(X, Z) / chunkHeight;
-			sq.x1max = x1max->getHeightAt(X + width, Z) / chunkHeight;
-			sq.x2min = x2min->getHeightAt(X, Z + width) / chunkHeight;
-			sq.x2max = x2max->getHeightAt(X + width, Z + width) / chunkHeight;
+			sq.x1min = x1min->getHeightAt(X, Z) / sectorHeight;
+			sq.x1max = x1max->getHeightAt(X + width, Z) / sectorHeight;
+			sq.x2min = x2min->getHeightAt(X, Z + width) / sectorHeight;
+			sq.x2max = x2max->getHeightAt(X + width, Z + width) / sectorHeight;
 		}
 	};
 
@@ -126,7 +126,7 @@ void OverworldGenerator::setCurrentSqare(int x, int z) {
 }
 
 float OverworldGenerator::getLerpedHeight(float x, float z) {
-	static const float chunkHeight = Segment::WIDTH * Chunks::HEIGHT;
+	static const float sectorHeight = Segment::WIDTH * Sector::HEIGHT;
 	static const int width = Segment::WIDTH / 2;
 
 	x = (int)x % width;
@@ -136,5 +136,5 @@ float OverworldGenerator::getLerpedHeight(float x, float z) {
 	z /= (float)width;
 
 	return biLerp(x, z, p_currentSquare->x1min, p_currentSquare->x1max,
-		p_currentSquare->x2min, p_currentSquare->x2max) * chunkHeight;
+		p_currentSquare->x2min, p_currentSquare->x2max) * sectorHeight;
 }

@@ -7,7 +7,7 @@ MasterRenderer::MasterRenderer() {
 	m_floraRenderer = std::make_unique<FloraRenderer>();
 }
 
-void MasterRenderer::addChunk(const MeshTypes& models) {
+void MasterRenderer::addSector(const MeshTypes& models) {
 	if (models.solid.model.getRenderData().VAO != 0)
 		m_solidRenderer->addModel(&models.solid.model);
 
@@ -18,7 +18,7 @@ void MasterRenderer::addChunk(const MeshTypes& models) {
 		m_floraRenderer->addModel(&models.flora.model);
 }
 
-void MasterRenderer::renderChunks(const Camera& camera) {
+void MasterRenderer::renderSector(const Camera& camera) {
 	glClearColor(0.59f, 0.74f, 0.87f, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

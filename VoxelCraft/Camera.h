@@ -18,7 +18,7 @@ public:
 public:
 	Camera();
 public:
-	void updateWindowSize(int width, int height);
+	void updateWindowSize(float width, float height);
 	void updateMovement(const Direction& dir, float dt);
 	void updateRotation(float xOffest, float yOffset);
 	const glm::mat4& getProjMatrix() const;

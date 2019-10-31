@@ -13,11 +13,10 @@ Camera::Camera()
   m_sensitivity(0.2f) {
 	m_worldUp = m_up;
 	calculateVectors();
-	m_projMatrix = glm::perspective(glm::radians(70.0f), (float)1000 / (float)600, 0.1f, 1000.0f);
 }
 
-void Camera::updateWindowSize(int width, int height) {
-	m_projMatrix = glm::perspective(glm::radians(70.0f), (float)width / (float)height, 0.1f, 1000.0f);
+void Camera::updateWindowSize(float width, float height) {
+	m_projMatrix = glm::perspective(glm::radians(70.0f), width / height, 0.1f, 1000.0f);
 }
 
 void Camera::updateMovement(const Direction& dir, float dt) {

@@ -11,7 +11,7 @@ public:
 	void update(float dt) override;
 	void render(MasterRenderer& renderer) override;
 private:
-	void editBlocks();
+	void editVoxels();
 private:
 	Camera m_camera;
 	World m_world;

@@ -49,17 +49,17 @@
     <Filter Include="Source Files\States">
       <UniqueIdentifier>{1a774d5a-7f3e-42e4-a5f8-1a686b664058}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Blocks">
-      <UniqueIdentifier>{a7d4142a-1963-4e2e-9d06-7654005a4140}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Blocks">
-      <UniqueIdentifier>{6e4cfe31-06d5-44e6-a7ed-08c13de48ff6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Sector">
       <UniqueIdentifier>{4515a5f2-ff4b-49c6-a05b-cdd8ff9eb71b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Sector">
       <UniqueIdentifier>{6693d2cb-63a2-42cb-b1db-5327dbc5fcd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Voxels">
+      <UniqueIdentifier>{a7d4142a-1963-4e2e-9d06-7654005a4140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Voxels">
+      <UniqueIdentifier>{6e4cfe31-06d5-44e6-a7ed-08c13de48ff6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -177,44 +177,41 @@
     <ClInclude Include="FloraRenderer.h">
       <Filter>Header Files\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="BlockCodex.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockData.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockShape.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockTypes.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderType.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockUpdateHandler.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
     <ClInclude Include="GroundFloraHandler.h">
-      <Filter>Header Files\Blocks</Filter>
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
     <ClInclude Include="vector3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LiquidHandler.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="GravityBlockHandler.h">
-      <Filter>Header Files\Blocks</Filter>
-    </ClInclude>
-    <ClInclude Include="NonUpdatable.h">
-      <Filter>Header Files\Blocks</Filter>
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
     <ClInclude Include="SectorManager.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
     <ClInclude Include="Sector.h">
       <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxelEnums.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxelUpdateHandler.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityHandler.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxelData.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxelCodex.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="NonUpdatable.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxelElement.h">
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -317,32 +314,35 @@
     <ClCompile Include="FloraRenderer.cpp">
       <Filter>Source Files\Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="BlockCodex.cpp">
-      <Filter>Source Files\Blocks</Filter>
-    </ClCompile>
     <ClCompile Include="GroundFloraHandler.cpp">
-      <Filter>Source Files\Blocks</Filter>
-    </ClCompile>
-    <ClCompile Include="BlockUpdateHandler.cpp">
-      <Filter>Source Files\Blocks</Filter>
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
     <ClCompile Include="vector3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LiquidHandler.cpp">
-      <Filter>Source Files\Blocks</Filter>
-    </ClCompile>
-    <ClCompile Include="GravityBlockHandler.cpp">
-      <Filter>Source Files\Blocks</Filter>
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
     <ClCompile Include="NonUpdatable.cpp">
-      <Filter>Source Files\Blocks</Filter>
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
     <ClCompile Include="SectorManager.cpp">
       <Filter>Source Files\Sector</Filter>
     </ClCompile>
     <ClCompile Include="Sector.cpp">
       <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxelCodex.cpp">
+      <Filter>Source Files\Voxels</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateHandler.cpp">
+      <Filter>Source Files\Voxels</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityHandler.cpp">
+      <Filter>Source Files\Voxels</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxelElement.cpp">
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -159,17 +159,15 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Biome.h" />
-    <ClInclude Include="BlockShape.h" />
-    <ClInclude Include="BlockUpdateHandler.h" />
+    <ClInclude Include="VoxelElement.h" />
+    <ClInclude Include="VoxelUpdateHandler.h" />
     <ClInclude Include="FloraRenderer.h" />
-    <ClInclude Include="GravityBlockHandler.h" />
+    <ClInclude Include="GravityHandler.h" />
     <ClInclude Include="GroundFloraHandler.h" />
     <ClInclude Include="LiquidHandler.h" />
     <ClInclude Include="NonUpdatable.h" />
-    <ClInclude Include="ShaderType.h" />
-    <ClInclude Include="BlockCodex.h" />
-    <ClInclude Include="BlockData.h" />
-    <ClInclude Include="BlockTypes.h" />
+    <ClInclude Include="VoxelCodex.h" />
+    <ClInclude Include="VoxelData.h" />
     <ClInclude Include="AABB.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="SectorManager.h" />
@@ -206,14 +204,16 @@
     <ClInclude Include="TypeRenderer.h" />
     <ClInclude Include="vector3.h" />
     <ClInclude Include="vecXZ.h" />
+    <ClInclude Include="VoxelEnums.h" />
     <ClInclude Include="WaterRenderer.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Biome.cpp" />
-    <ClCompile Include="BlockCodex.cpp" />
-    <ClCompile Include="BlockUpdateHandler.cpp" />
+    <ClCompile Include="VoxelElement.cpp" />
+    <ClCompile Include="VoxelCodex.cpp" />
+    <ClCompile Include="UpdateHandler.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="SectorManager.cpp" />
     <ClCompile Include="Composition.cpp" />
@@ -222,7 +222,7 @@
     <ClCompile Include="FloraRenderer.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GravityBlockHandler.cpp" />
+    <ClCompile Include="GravityHandler.cpp" />
     <ClCompile Include="GroundFloraHandler.cpp" />
     <ClCompile Include="LiquidHandler.cpp" />
     <ClCompile Include="Noise.cpp" />

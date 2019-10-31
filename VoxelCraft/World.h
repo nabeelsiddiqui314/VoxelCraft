@@ -15,21 +15,21 @@ public:
 	World();
 	~World();
 public:
-	void setBlock(std::int64_t x, std::int64_t y, std::int64_t z, BlockType block);
-	BlockType getBlock(std::int64_t x, std::int64_t y, std::int64_t z) const;
+	void setVoxel(std::int64_t x, std::int64_t y, std::int64_t z, Voxel::Type voxel);
+	Voxel::Element getVoxel(std::int64_t x, std::int64_t y, std::int64_t z) const;
 
 	void update(const Camera& camera);
 	void renderSector(MasterRenderer& renderer, const Frustum& frustum);
 private:
 	void makeSector();
-	void updateBlocks();
+	void updateVoxels();
 
 	void makeEditedMeshes();
 	void updateMeshes(const VecXZ& pos, std::int16_t y);
 	void addToUpdates(int x, int y, int z);
 
 	const VecXZ getSectorPos(std::int64_t x, std::int64_t z) const;
-	const std::tuple<int, int, int> getBlockPos(std::int64_t x, std::int64_t y, std::int64_t z) const;
+	const std::tuple<int, int, int> getVoxelPos(std::int64_t x, std::int64_t y, std::int64_t z) const;
 private:
 	SectorManager m_sectors;
 	std::unordered_set<VecXZ> m_regenSectors;

@@ -1,16 +1,16 @@
 #pragma once
 #include <vector>
-#include "BlockTypes.h"
+#include "VoxelEnums.h"
 
 class Composition
 {
 public:
-	typedef std::pair<BlockType, int> Layer;
+	typedef std::pair<Voxel::Type, int> Layer;
 public:
 	Composition(const std::vector<Layer>& layers);
 	~Composition() = default;
 public:
-	BlockType getBlockAt(int depth) const;
+	Voxel::Type getVoxelAt(int depth) const;
 private:
 	std::vector<Layer> m_layers;
 };

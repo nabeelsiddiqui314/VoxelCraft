@@ -33,29 +33,29 @@ Sector OverworldGenerator::generateSector(const VecXZ& pos) {
 		for (int y = Sector::HEIGHT * Segment::WIDTH; y-- > 0;) {
 			if (y <= height) {
 				if (y == height) {
-					const auto& decorativeBlock = biome.getDecorativeBlock();
-					if (decorativeBlock != BlockType::VOID) {
+					auto decorativeVoxel = biome.getDecorativeVoxel();
+					if (decorativeVoxel != Voxel::Type::VOID) {
 						srand(m_seed + pos.x * 2312321 * x * pos.z * 898009 * z);
 						int r = rand() % 1000;
 						if (r > 990) {
-							sector.setBlock(x, y, z, decorativeBlock);
+							sector.setVoxel(x, y, z, decorativeVoxel);
 						}
 						depth = -1;
 					}
 				}
 				else {
-					sector.setBlock(x, y, z, biome.getComposition().getBlockAt(depth));
+					sector.setVoxel(x, y, z, biome.getComposition().getVoxelAt(depth));
 				}
 				depth++;
 			}
 			if (biome.hasWater()) {
 				if (y <= Sector::HEIGHT * Segment::WIDTH / 4) {
-					if (sector.getBlock(x, y, z) == BlockType::VOID) {
+					if (sector.getVoxel(x, y, z) == Voxel::Type::VOID) {
 						if (y <= Sector::HEIGHT * Segment::WIDTH / 4 - 3)
-							sector.setBlock(x, y, z, BlockType::WATER);
+							sector.setVoxel(x, y, z, Voxel::Type::WATER);
 					}
 					else {
-						sector.setBlock(x, y, z, BlockType::SAND);
+						sector.setVoxel(x, y, z, Voxel::Type::SAND);
 					}
 				}
 			}

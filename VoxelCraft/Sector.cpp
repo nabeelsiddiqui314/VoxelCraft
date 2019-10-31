@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "Sector.h"
 
-void Sector::setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id) {
-	m_segments[y / Segment::WIDTH].setBlock(x, y % Segment::WIDTH, z, id);
+void Sector::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id) {
+	m_segments[y / Segment::WIDTH].setVoxel(x, y % Segment::WIDTH, z, id);
 }
 
-BlockType Sector::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const {
-	return m_segments[y / Segment::WIDTH].getBlock(x, y % Segment::WIDTH, z);
+Voxel::Element Sector::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const {
+	return m_segments[y / Segment::WIDTH].getVoxel(x, y % Segment::WIDTH, z);
 }
 
 void Sector::makeMesh(std::int16_t x, std::int16_t z,

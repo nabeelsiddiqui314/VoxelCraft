@@ -34,7 +34,7 @@ void Game::update(float dt) {
 
 	m_world.update(m_camera);
 	
-	editBlocks();
+	editVoxels();
 }
 
 void Game::render(MasterRenderer& renderer) {
@@ -42,23 +42,23 @@ void Game::render(MasterRenderer& renderer) {
 	renderer.renderSector(m_camera);
 }
 
-void Game::editBlocks() {
+void Game::editVoxels() {
 	static bool didclickLeft;
 	static bool didclickRight;
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && !didclickRight) {
 		auto ray = RayCast(m_camera.getPosition(), m_camera.getForward());
 		ray.traverse();
-		glm::vec3 lastBlock;
+		glm::vec3 lastVoxel;
 
 		for (int i = 0; i < 10; i++) {
-			if (m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::VOID &&
-				m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::WATER) {
-				m_world.setBlock(lastBlock.x, lastBlock.y, lastBlock.z, BlockType::SAND);
+			if (m_world.getVoxel(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != Voxel::Type::VOID &&
+				m_world.getVoxel(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != Voxel::Type::WATER) {
+				m_world.setVoxel(lastVoxel.x, lastVoxel.y, lastVoxel.z, Voxel::Type::SAND);
 				break;
 			}
 			else {
-				lastBlock = ray.getDestination();
+				lastVoxel = ray.getDestination();
 				ray.traverse();
 			}
 		}
@@ -70,9 +70,9 @@ void Game::editBlocks() {
 		ray.traverse();
 
 		for (int i = 0; i < 10; i++) {
-			if (m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::VOID &&
-				m_world.getBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != BlockType::WATER) {
-				m_world.setBlock(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z, BlockType::VOID);
+			if (m_world.getVoxel(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != Voxel::Type::VOID &&
+				m_world.getVoxel(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != Voxel::Type::WATER) {
+				m_world.setVoxel(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z, Voxel::Type::VOID);
 				break;
 			}
 			else {

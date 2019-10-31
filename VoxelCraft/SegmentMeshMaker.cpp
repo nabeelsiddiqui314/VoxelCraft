@@ -65,7 +65,7 @@ const GLfloat SegmentMeshMaker::s_sideLight = 0.6f;
 const GLfloat SegmentMeshMaker::s_bottomLight = 0.4f;
 
 SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
-	const Segment* sector,
+	const Segment* segment,
 	const Segment* top, const Segment* bottom,
 	const Segment* left, const Segment* right,
 	const Segment* front, const Segment* back) {
@@ -73,81 +73,81 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 	MeshGenerator liquidMesh(meshes.liquid.mesh);
 	MeshGenerator floraMesh(meshes.flora.mesh);
 
-	if (sector->isEmpty())
+	if (segment->isEmpty())
 		return;
 	if (top && bottom) {
-		if (sector->isAllOpaque() && top->isAllOpaque() && bottom->isAllOpaque() &&
+		if (segment->isAllOpaque() && top->isAllOpaque() && bottom->isAllOpaque() &&
 			left->isAllOpaque() && right->isAllOpaque() && front->isAllOpaque() &&
 			back->isAllOpaque()) {
 			return;
 		}
 	}
 
-	std::array<BlockType, 7> blk;
+	std::array<Voxel::Element, 7> vxl;
 
 	auto setNeighbors = [&](std::int16_t x, std::int16_t y, std::int16_t z) {
-		blk[BLOCK] = sector->getBlock(x, y, z);
+		vxl[VOXEL] = segment->getVoxel(x, y, z);
 
 		// x
 		if (x - 1 < 0)
-			blk[LEFT] = left->getBlock(Segment::WIDTH - 1, y, z);
+			vxl[LEFT] = left->getVoxel(Segment::WIDTH - 1, y, z);
 		else
-			blk[LEFT] = sector->getBlock(x - 1, y, z);
+			vxl[LEFT] = segment->getVoxel(x - 1, y, z);
 
 		if (x + 1 >= Segment::WIDTH)
-			blk[RIGHT] = right->getBlock(0, y, z);
+			vxl[RIGHT] = right->getVoxel(0, y, z);
 		else
-			blk[RIGHT] = sector->getBlock(x + 1, y, z);
+			vxl[RIGHT] = segment->getVoxel(x + 1, y, z);
 
 		//z
 
 		if (z - 1 < 0)
-			blk[BACK] = back->getBlock(x, y, Segment::WIDTH - 1);
+			vxl[BACK] = back->getVoxel(x, y, Segment::WIDTH - 1);
 		else
-			blk[BACK] = sector->getBlock(x, y, z - 1);
+			vxl[BACK] = segment->getVoxel(x, y, z - 1);
 
 		if (z + 1 >= Segment::WIDTH)
-			blk[FRONT] = front->getBlock(x, y, 0);
+			vxl[FRONT] = front->getVoxel(x, y, 0);
 		else
-			blk[FRONT] = sector->getBlock(x, y, z + 1);
+			vxl[FRONT] = segment->getVoxel(x, y, z + 1);
 
 		// y
 		if (y - 1 < 0) {
 			if (bottom == nullptr)
-				blk[BOTTOM] = BlockType::VOID;
+				vxl[BOTTOM] = Voxel::Type::VOID;
 			else
-				blk[BOTTOM] = bottom->getBlock(x, Segment::WIDTH - 1, z);
+				vxl[BOTTOM] = bottom->getVoxel(x, Segment::WIDTH - 1, z);
 		}
 		else
-			blk[BOTTOM] = sector->getBlock(x, y - 1, z);
+			vxl[BOTTOM] = segment->getVoxel(x, y - 1, z);
 
 		if (y + 1 >= Segment::WIDTH) {
 			if (top == nullptr)
-				blk[TOP] = BlockType::VOID;
+				vxl[TOP] = Voxel::Type::VOID;
 			else
-				blk[TOP] = top->getBlock(x, 0, z);
+				vxl[TOP] = top->getVoxel(x, 0, z);
 		}
 		else
-			blk[TOP] = sector->getBlock(x, y + 1, z);
+			vxl[TOP] = segment->getVoxel(x, y + 1, z);
 	};
 
-	auto shouldAddCube = [&](int block) {
-		return !BlockCodex::getBlockData(blk[block]).opaque;
+	auto shouldAddCube = [&](int voxel) {
+		return !vxl[voxel].getInfo().opaque;
 	};
 
-	auto shouldAddBlob = [&](int block) {
-		if (BlockCodex::getBlockData(blk[BLOCK]).shaderType == ShaderType::LIQUID) {
-			if (block == TOP) {
-				return blk[BLOCK] != blk[block]; // for liquids dont cull opaque top sides.
+	auto shouldAddBlob = [&](int voxel) {
+		if (vxl[VOXEL].getInfo().shaderType == Voxel::ShaderType::LIQUID) {
+			if (voxel == TOP) {
+				return vxl[VOXEL] != vxl[voxel].id; // for liquids dont cull opaque top sides.
 			}
 		}
-		return !BlockCodex::getBlockData(blk[block]).opaque && blk[BLOCK] != blk[block];
+		return !vxl[voxel].getInfo().opaque && vxl[VOXEL] != vxl[voxel].id;
 	};
 
 	for (std::int16_t x = 0; x < Segment::WIDTH; x++)
 	for (std::int16_t y = 0; y < Segment::WIDTH; y++)
 	for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
-		if (sector->getBlock(x, y, z) == BlockType::VOID)
+		if (segment->getVoxel(x, y, z) == Voxel::Type::VOID)
 			continue;
 		setNeighbors(x, y, z);
 
@@ -156,60 +156,60 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 		std::int16_t oZ = z + originZ;
 
 		MeshGenerator* currentMesh = nullptr;
-		switch (BlockCodex::getBlockData(blk[BLOCK]).shaderType) {
-		case ShaderType::SOLID:
+		switch (vxl[VOXEL].getInfo().shaderType) {
+		case Voxel::ShaderType::SOLID:
 			currentMesh = &solidMesh;
 			break;
-		case ShaderType::LIQUID:
+		case Voxel::ShaderType::LIQUID:
 			currentMesh = &liquidMesh;
 			break;
-		case ShaderType::FLORA:
+		case Voxel::ShaderType::FLORA:
 			currentMesh = &floraMesh;
 			break;
 		}
 
-		switch (BlockCodex::getBlockData(blk[BLOCK]).shape) {
-		case BlockShape::CUBE:
+		switch (vxl[VOXEL].getInfo().shape) {
+		case Voxel::Shape::CUBE:
 			if (shouldAddCube(TOP))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texTop, s_top, s_topLight);
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_top, s_topLight);
 
 			if (shouldAddCube(BOTTOM))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texBottom, s_bottom, s_bottomLight);
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texBottom, s_bottom, s_bottomLight);
 
 			if (shouldAddCube(LEFT))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texSide, s_left, s_sideLight);
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_left, s_sideLight);
 
 			if (shouldAddCube(RIGHT))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texSide, s_right, s_sideLight);
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_right, s_sideLight);
 
 			if (shouldAddCube(FRONT))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texSide, s_front, s_sideLight);
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_front, s_sideLight);
 
 			if (shouldAddCube(BACK))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texSide, s_back, s_sideLight);
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_back, s_sideLight);
 			break;
-		case BlockShape::BLOB:
+		case Voxel::Shape::BLOB:
 			if (shouldAddBlob(TOP))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texTop, s_top, s_topLight);
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_top, s_topLight);
 
 			if (shouldAddBlob(BOTTOM))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texBottom, s_bottom, s_bottomLight);
-
-			if (shouldAddBlob(LEFT))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texSide, s_left, s_sideLight);
-
-			if (shouldAddBlob(RIGHT))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texSide, s_right, s_sideLight);
-
-			if (shouldAddBlob(FRONT))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texSide, s_front, s_sideLight);
-
-			if (shouldAddBlob(BACK))
-				currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(sector->getBlock(x, y, z)).texSide, s_back, s_sideLight);
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texBottom, s_bottom, s_bottomLight);
+												 
+			if (shouldAddBlob(LEFT))			 
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_left, s_sideLight);
+												 
+			if (shouldAddBlob(RIGHT))			 
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_right, s_sideLight);
+												 
+			if (shouldAddBlob(FRONT))			 
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_front, s_sideLight);
+												 
+			if (shouldAddBlob(BACK))			 
+				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_back, s_sideLight);
 			break;
-		case BlockShape::CROSS:
-			currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texTop, s_crossA, s_topLight);
-			currentMesh->addFace(oX, oY, oZ, BlockCodex::getBlockData(blk[BLOCK]).texTop, s_crossB, s_topLight);
+		case Voxel::Shape::CROSS:
+			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossA, s_topLight);
+			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossB, s_topLight);
 			break;
 		}
 	}

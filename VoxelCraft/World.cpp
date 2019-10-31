@@ -7,7 +7,7 @@ World::World() : m_renderDistance(16) {
 		makeSector();
 	});
 	m_threads.emplace_back([&]() {
-		updateBlocks();
+		updateVoxels();
 	});
 }
 
@@ -18,7 +18,7 @@ World::~World() {
 	}
 }
 
-void World::setBlock(std::int64_t x, std::int64_t y, std::int64_t z, BlockType block) {
+void World::setVoxel(std::int64_t x, std::int64_t y, std::int64_t z, Voxel::Type voxel) {
 	int X = x, Y = y, Z = z;
 	const auto& pos = getSectorPos(x, z);
 
@@ -27,22 +27,22 @@ void World::setBlock(std::int64_t x, std::int64_t y, std::int64_t z, BlockType b
 		updateMeshes(pos, y / Segment::WIDTH);
 		updateMeshes(pos, (y + 1) / Segment::WIDTH);
 		updateMeshes(pos, (y - 1) / Segment::WIDTH);
-		std::tie(x, y, z) = getBlockPos(x, y, z);
-		m_sectors.setBlock(pos, x, y, z, block);
+		std::tie(x, y, z) = getVoxelPos(x, y, z);
+		m_sectors.setVoxel(pos, x, y, z, voxel);
 
 		addToUpdates(X, Y, Z);
 	}
 }
 
-BlockType World::getBlock(std::int64_t x, std::int64_t y, std::int64_t z) const {
+Voxel::Element World::getVoxel(std::int64_t x, std::int64_t y, std::int64_t z) const {
 	const auto& pos = getSectorPos(x, z);
 	
 	std::lock_guard<std::recursive_mutex> lock(m_mutex);
 	if (m_sectors.doesSectorExist(pos)) {
-		std::tie(x, y, z) = getBlockPos(x, y, z);
-		return m_sectors.getBlock(pos, x, y, z);
+		std::tie(x, y, z) = getVoxelPos(x, y, z);
+		return m_sectors.getVoxel(pos, x, y, z);
 	}
-	return BlockType::VOID;
+	return Voxel::Element();
 }
 
 void World::update(const Camera& camera) {
@@ -88,7 +88,7 @@ void World::makeSector() {
 	}
 }
 
-void World::updateBlocks() {
+void World::updateVoxels() {
 	while (m_running) {
 		std::unique_lock<std::recursive_mutex> lock(m_mutex);
 		for (auto itr = m_updateList.begin(); itr != m_updateList.end();) {
@@ -96,7 +96,7 @@ void World::updateBlocks() {
 			int y = itr->y;
 			int z = itr->z;
 
-			if (BlockCodex::getBlockData(getBlock(x, y, z)).updateHandler->update(*this, x, y, z)) {
+			if (getVoxel(x, y, z).getUpdateHandler()->update(*this, x, y, z)) {
 				itr = m_updateList.erase(itr);
 				break;
 			}
@@ -147,7 +147,7 @@ void World::updateMeshes(const VecXZ& pos, std::int16_t y) {
 
 void World::addToUpdates(int x, int y, int z) {
 	auto tryAdd = [&](int X, int Y, int Z) {
-		if (BlockCodex::getBlockData(getBlock(X, Y, Z)).updateHandler->isUpdatable()) {
+		if (getVoxel(X, Y, Z).getUpdateHandler()->isUpdatable()) {
 			m_updateList.insert({ X, Y, Z });
 		}
 	};
@@ -165,6 +165,6 @@ const VecXZ World::getSectorPos(std::int64_t x, std::int64_t z) const {
 	return {x / Segment::WIDTH, z / Segment::WIDTH};
 }
 
-const std::tuple<int, int, int> World::getBlockPos(std::int64_t x, std::int64_t y, std::int64_t z) const {
+const std::tuple<int, int, int> World::getVoxelPos(std::int64_t x, std::int64_t y, std::int64_t z) const {
 	return std::tuple<int, int, int>(abs(x) % Segment::WIDTH, y, abs(z) % Segment::WIDTH);
 }

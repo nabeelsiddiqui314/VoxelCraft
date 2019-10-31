@@ -10,11 +10,11 @@ Sector FlatGenerator::generateSector(const VecXZ& pos) {
 		for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
 			for (std::int16_t y = 0; y < m_height; y++) {
 				if (y <= m_height - 5)
-					sector.setBlock(x, y, z, BlockType::STONE);
+					sector.setVoxel(x, y, z, Voxel::Type::STONE);
 				else if (y <= m_height - 2)
-					sector.setBlock(x, y, z, BlockType::DIRT);
+					sector.setVoxel(x, y, z, Voxel::Type::DIRT);
 				else
-					sector.setBlock(x, y, z, BlockType::GRASS);
+					sector.setVoxel(x, y, z, Voxel::Type::GRASS);
 			}
 		}
 	}

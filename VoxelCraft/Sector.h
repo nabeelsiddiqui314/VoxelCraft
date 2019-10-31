@@ -6,8 +6,8 @@
 class Sector
 {
 public:
-	void setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
-	BlockType getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const;
+	void setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id);
+	Voxel::Element getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
 	void makeMesh(std::int16_t x, std::int16_t z,
 		const Sector* left, const Sector* right,

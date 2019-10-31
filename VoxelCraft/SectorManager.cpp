@@ -25,12 +25,12 @@ bool SectorManager::doesSectorExist(const VecXZ& pos) const {
 	return m_sectors.find(pos) != m_sectors.end();
 }
 
-void SectorManager::setBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, BlockType id) {
-	m_sectors[pos].setBlock(x, y, z, id);
+void SectorManager::setVoxel(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id) {
+	m_sectors[pos].setVoxel(x, y, z, id);
 }
 
-BlockType SectorManager::getBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const {
-	return m_sectors.at(pos).getBlock(x, y, z);
+Voxel::Element SectorManager::getVoxel(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const {
+	return m_sectors.at(pos).getVoxel(x, y, z);
 }
 
 void SectorManager::makeMesh(const VecXZ& pos) {

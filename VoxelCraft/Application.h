@@ -1,6 +1,6 @@
 #pragma once
 #include "MasterRenderer.h"
-#include "BlockCodex.h"
+#include "VoxelCodex.h"
 #include "StateManager.h"
 #include "Game.h"
 #include <SFML/Graphics.hpp>

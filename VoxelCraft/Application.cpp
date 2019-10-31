@@ -15,7 +15,7 @@ Application::Application() {
 	glEnable(GL_DEPTH_TEST);
 	m_renderer = std::make_unique<MasterRenderer>();
 
-	BlockCodex::init();
+	Voxel::Codex::init();
 	TextureAtlas::init(8);
 
 	m_stateManager.pushState(std::make_shared<Game>());

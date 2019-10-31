@@ -1,7 +1,6 @@
 #pragma once
 #include <array>
-#include "BlockTypes.h"
-#include "BlockCodex.h"
+#include "VoxelElement.h"
 #include "SegmentMeshMaker.h"
 #include "MasterRenderer.h"
 #include "SegmentModel.h"
@@ -11,8 +10,8 @@ class Segment
 public:
 	Segment();
 public:
-	void setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
-	BlockType getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const;
+	void setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id);
+	Voxel::Element getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
 	void makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
 		const Segment* sector,
@@ -36,7 +35,7 @@ public:
 public:
 	static constexpr std::int16_t WIDTH = 16;
 private: 
-	std::array<BlockType, WIDTH * WIDTH * WIDTH> m_blocks;
+	std::array<Voxel::Element, WIDTH * WIDTH * WIDTH> m_voxels;
 	std::int16_t m_opaqueCount;
 	std::int16_t m_voidCount;
 

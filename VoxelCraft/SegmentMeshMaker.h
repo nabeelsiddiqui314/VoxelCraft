@@ -1,6 +1,5 @@
 #pragma once
 #include "MeshGenerator.h"
-#include "BlockCodex.h"
 #include "SegmentModel.h"
 
 class Segment;
@@ -9,7 +8,7 @@ class SegmentMeshMaker
 {
 private:
 	enum {
-		BLOCK,
+		VOXEL,
 		TOP,
 		BOTTOM,
 		LEFT,

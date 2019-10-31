@@ -1,34 +1,37 @@
 #include "stdafx.h"
 #include "LiquidHandler.h"
 #include "World.h"
+#include "VoxelCodex.h"
 
-bool LiquidHandler::callUpdate(World& world, int x, int y, int z) {
-	auto liquid = world.getBlock(x, y, z);
+namespace Voxel {
+	bool LiquidHandler::callUpdate(World& world, int x, int y, int z) {
+		auto liquid = world.getVoxel(x, y, z).id;
 
-	auto tryAdd = [&](int Xoff, int Yoff, int Zoff) {
-		if (world.getBlock(Xoff, Yoff, Zoff) == BlockType::VOID) {
-			world.setBlock(Xoff, Yoff, Zoff, liquid);
-		}
-	};
+		auto tryAdd = [&](int Xoff, int Yoff, int Zoff) {
+			if (world.getVoxel(Xoff, Yoff, Zoff) == Type::VOID) {
+				world.setVoxel(Xoff, Yoff, Zoff, liquid);
+			}
+		};
 
-	auto trysideAdd = [&](int Xoff, int Zoff) {
-		if (world.getBlock(x, y - 1, z) != BlockType::VOID &&
-			world.getBlock(x, y - 1, z) != liquid) {
-			tryAdd(Xoff, y, Zoff);
-			tryAdd(Xoff, y - 1, Zoff);
-		}
-	};
+		auto trysideAdd = [&](int Xoff, int Zoff) {
+			if (world.getVoxel(x, y - 1, z) != Type::VOID &&
+				world.getVoxel(x, y - 1, z) != liquid) {
+				tryAdd(Xoff, y, Zoff);
+				tryAdd(Xoff, y - 1, Zoff);
+			}
+		};
 
-	trysideAdd(x + 1, z    );
-	trysideAdd(x - 1, z    );
-	trysideAdd(x,     z + 1);
-	trysideAdd(x,     z - 1);
+		trysideAdd(x + 1, z);
+		trysideAdd(x - 1, z);
+		trysideAdd(x, z + 1);
+		trysideAdd(x, z - 1);
 
-	tryAdd(x, y - 1, z);
+		tryAdd(x, y - 1, z);
 
-	return true;
-}
+		return true;
+	}
 
-int LiquidHandler::getCoolDownTime() const {
-	return 0;
+	int LiquidHandler::getCoolDownTime() const {
+		return 0;
+	}
 }

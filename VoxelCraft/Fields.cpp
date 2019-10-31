@@ -8,8 +8,8 @@ bool Fields::hasWater() const {
 	return true;
 }
 
-BlockType Fields::getDecorativeBlock() const {
-	return BlockType::ROSE;
+Voxel::Type Fields::getDecorativeVoxel() const {
+	return Voxel::Type::ROSE;
 }
 
 NoiseProperties Fields::getNoiseProperties() const {
@@ -24,8 +24,8 @@ NoiseProperties Fields::getNoiseProperties() const {
 
 std::vector<Composition::Layer> Fields::getLayers() const {
 	std::vector<Composition::Layer> layers;
-	layers.emplace_back(std::make_pair(BlockType::GRASS, 1));
-	layers.emplace_back(std::make_pair(BlockType::DIRT, 3));
-	layers.emplace_back(std::make_pair(BlockType::STONE, 0));
+	layers.emplace_back(std::make_pair(Voxel::Type::GRASS, 1));
+	layers.emplace_back(std::make_pair(Voxel::Type::DIRT, 3));
+	layers.emplace_back(std::make_pair(Voxel::Type::STONE, 0));
 	return layers;
 }

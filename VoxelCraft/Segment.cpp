@@ -2,26 +2,27 @@
 #include "Segment.h"
 
 Segment::Segment() : m_opaqueCount(0), m_voidCount(WIDTH * WIDTH * WIDTH) {
-	m_blocks.fill(BlockType::VOID);
 	m_box.dimensions = {Segment::WIDTH, Segment::WIDTH, Segment::WIDTH};
 }
 
-void Segment::setBlock(std::int16_t x, std::int16_t y, std::int16_t z, BlockType id) {
-	if (!BlockCodex::getBlockData(getBlock(x, y, z)).opaque && BlockCodex::getBlockData(id).opaque)
+void Segment::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id) {
+	Voxel::Element ID = id;
+
+	if (!getVoxel(x, y, z).getInfo().opaque && ID.getInfo().opaque)
 		m_opaqueCount++;
-	else if (BlockCodex::getBlockData(getBlock(x, y, z)).opaque && !BlockCodex::getBlockData(id).opaque)
+	else if (getVoxel(x, y, z).getInfo().opaque && !ID.getInfo().opaque)
 		m_opaqueCount--;
 
-	if (getBlock(x, y, z) != BlockType::VOID && id == BlockType::VOID)
+	if (getVoxel(x, y, z) != Voxel::Type::VOID && ID == Voxel::Type::VOID)
 		m_voidCount++;
-	else if (getBlock(x, y, z) == BlockType::VOID && id != BlockType::VOID)
+	else if (getVoxel(x, y, z) == Voxel::Type::VOID && ID != Voxel::Type::VOID)
 		m_voidCount--;
 
-	m_blocks[x + WIDTH * (y + WIDTH * z)] = id;
+	m_voxels[x + WIDTH * (y + WIDTH * z)] = ID;
 }
 
-BlockType Segment::getBlock(std::int16_t x, std::int16_t y, std::int16_t z) const {
-	return m_blocks[x + WIDTH * (y + WIDTH * z)];
+Voxel::Element Segment::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const {
+	return m_voxels[x + WIDTH * (y + WIDTH * z)];
 }
 
 void Segment::makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,

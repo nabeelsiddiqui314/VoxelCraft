@@ -17,8 +17,8 @@ public:
 
 	bool doesSectorExist(const VecXZ& pos) const;
 
-	void setBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, BlockType id);
-	BlockType getBlock(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const;
+	void setVoxel(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id);
+	Voxel::Element getVoxel(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const;
 
 	void makeMesh(const VecXZ& pos);
 	const Sector& getSectorAt(const VecXZ& pos) const;

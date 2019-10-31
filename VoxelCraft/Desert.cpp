@@ -9,8 +9,8 @@ bool Desert::hasWater() const {
 	return false;
 }
 
-BlockType Desert::getDecorativeBlock() const {
-	return BlockType::SHRUB;
+Voxel::Type Desert::getDecorativeVoxel() const {
+	return Voxel::Type::SHRUB;
 }
 
 NoiseProperties Desert::getNoiseProperties() const {
@@ -25,7 +25,7 @@ NoiseProperties Desert::getNoiseProperties() const {
 
 std::vector<Composition::Layer> Desert::getLayers() const {
 	std::vector<Composition::Layer> layers;
-	layers.emplace_back(std::make_pair(BlockType::SAND, 0));
+	layers.emplace_back(std::make_pair(Voxel::Type::SAND, 0));
 	return layers;
 }
 

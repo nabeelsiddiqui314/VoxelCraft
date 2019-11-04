@@ -1,5 +1,6 @@
 #pragma once
 #include "TypeRenderer.h"
+#include <SFML/System/Clock.hpp>
 
 class FloraRenderer : public TypeRenderer
 {

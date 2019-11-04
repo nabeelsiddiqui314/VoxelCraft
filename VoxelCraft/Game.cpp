@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Game.h"
 
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
+
 
 Game::Game() {
 	m_camera.updateWindowSize(1000, 600);

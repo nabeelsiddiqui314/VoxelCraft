@@ -3,7 +3,7 @@
 #include "VoxelCodex.h"
 #include "StateManager.h"
 #include "Game.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 class Application
 {

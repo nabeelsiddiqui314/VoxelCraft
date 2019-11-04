@@ -28,7 +28,7 @@ void World::setVoxel(std::int64_t x, std::int64_t y, std::int64_t z, Voxel::Type
 		updateMeshes(pos, (y + 1) / Segment::WIDTH);
 		updateMeshes(pos, (y - 1) / Segment::WIDTH);
 		std::tie(x, y, z) = getVoxelPos(x, y, z);
-		m_sectors.setVoxel(pos, x, y, z, voxel);
+		m_sectors.getSectorAt(pos).setVoxel(x, y, z, voxel);
 
 		addToUpdates(X, Y, Z);
 	}
@@ -40,7 +40,7 @@ Voxel::Element World::getVoxel(std::int64_t x, std::int64_t y, std::int64_t z) c
 	std::lock_guard<std::recursive_mutex> lock(m_mutex);
 	if (m_sectors.doesSectorExist(pos)) {
 		std::tie(x, y, z) = getVoxelPos(x, y, z);
-		return m_sectors.getVoxel(pos, x, y, z);
+		return m_sectors.getHashTable().at(pos).getVoxel(x, y, z);
 	}
 	return Voxel::Element();
 }
@@ -56,13 +56,11 @@ void World::update(const Camera& camera) {
 }
 
 void World::renderSector(MasterRenderer& renderer, const Frustum& frustum) {
-	for (std::int16_t x = m_camPosition.x - m_renderDistance; x <= m_camPosition.x + m_renderDistance; x++) {
-		for (std::int16_t z = m_camPosition.z - m_renderDistance; z <= m_camPosition.z + m_renderDistance; z++) {
-			std::lock_guard<std::recursive_mutex> lock(m_mutex);
-			if (!m_sectors.doesSectorExist({x,z}))
-				continue;
-			m_sectors.render({x,z}, renderer, frustum);
-		}
+	for (auto& sector : m_sectors.getHashTable()) {
+		std::lock_guard<std::recursive_mutex> lock(m_mutex);
+		if (!m_sectors.doesSectorExist(sector.first))
+			continue;
+		m_sectors.getSectorAt(sector.first).render(renderer, frustum);
 	}
 }
 
@@ -126,17 +124,17 @@ void World::makeEditedMeshes() {
 
 void World::updateMeshes(const VecXZ& pos, std::int16_t y) {
 	if (y > 0) {
-		m_sectors.regenMesh(pos, y - 1);
+		m_sectors.getSectorAt(pos).regenMesh(y - 1);
 	}
 	if (y < Sector::HEIGHT - 1) {
-		m_sectors.regenMesh(pos, y + 1);
+		m_sectors.getSectorAt(pos).regenMesh(y + 1);
 	}
 
-	m_sectors.regenMesh(pos, y);
-	m_sectors.regenMesh({ pos.x + 1, pos.z     }, y);
-	m_sectors.regenMesh({ pos.x    , pos.z + 1 }, y);
-	m_sectors.regenMesh({ pos.x - 1, pos.z     }, y);
-	m_sectors.regenMesh({ pos.x    , pos.z - 1 }, y);
+	m_sectors.getSectorAt(pos).regenMesh(y);
+	m_sectors.getSectorAt({ pos.x + 1, pos.z     }).regenMesh(y);
+	m_sectors.getSectorAt({ pos.x    , pos.z + 1 }).regenMesh(y);
+	m_sectors.getSectorAt({ pos.x - 1, pos.z     }).regenMesh(y);
+	m_sectors.getSectorAt({ pos.x    , pos.z - 1 }).regenMesh(y);
 
 	m_regenSectors.emplace(pos);
 	m_regenSectors.insert({pos.x + 1, pos.z     });

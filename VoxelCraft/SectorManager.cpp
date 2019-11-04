@@ -25,14 +25,6 @@ bool SectorManager::doesSectorExist(const VecXZ& pos) const {
 	return m_sectors.find(pos) != m_sectors.end();
 }
 
-void SectorManager::setVoxel(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id) {
-	m_sectors[pos].setVoxel(x, y, z, id);
-}
-
-Voxel::Element SectorManager::getVoxel(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const {
-	return m_sectors.at(pos).getVoxel(x, y, z);
-}
-
 void SectorManager::makeMesh(const VecXZ& pos) {
 	if (doesSectorExist({ pos.x - 1, pos.z }) && 
 		doesSectorExist({ pos.x + 1, pos.z }) && 
@@ -43,14 +35,10 @@ void SectorManager::makeMesh(const VecXZ& pos) {
 	}
 }
 
-const Sector& SectorManager::getSectorAt(const VecXZ& pos) const {
+const SectorManager::SectorHashtable& SectorManager::getHashTable() const {
+	return m_sectors;
+}
+
+Sector& SectorManager::getSectorAt(const VecXZ& pos) {
 	return m_sectors.at(pos);
-}
-
-void SectorManager::regenMesh(const VecXZ& pos, std::int16_t y) {
-	m_sectors[pos].regenMesh(y);
-}
-
-void SectorManager::render(const VecXZ& pos, MasterRenderer& renderer, const Frustum& frustum) {
-	m_sectors[pos].render(renderer, frustum);
 }

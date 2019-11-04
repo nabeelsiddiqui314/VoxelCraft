@@ -8,6 +8,8 @@
 
 class SectorManager
 {
+private:
+	typedef std::unordered_map<VecXZ, Sector> SectorHashtable;
 public:
 	SectorManager() = default;
 	~SectorManager();
@@ -17,15 +19,11 @@ public:
 
 	bool doesSectorExist(const VecXZ& pos) const;
 
-	void setVoxel(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id);
-	Voxel::Element getVoxel(const VecXZ& pos, std::int16_t x, std::int16_t y, std::int16_t z) const;
-
 	void makeMesh(const VecXZ& pos);
-	const Sector& getSectorAt(const VecXZ& pos) const;
-	void regenMesh(const VecXZ& pos, std::int16_t y);
 
-	void render(const VecXZ& pos, MasterRenderer& renderer, const Frustum& frustum);
+	const SectorHashtable& getHashTable() const;
+	Sector& getSectorAt(const VecXZ& pos);
 private:
-	std::unordered_map<VecXZ, Sector> m_sectors;
+	SectorHashtable m_sectors;
 };
 

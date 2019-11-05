@@ -35,7 +35,7 @@ void SectorManager::makeMesh(const VecXZ& pos) {
 	}
 }
 
-const SectorManager::SectorHashtable& SectorManager::getHashTable() const {
+const SectorManager::SectorHashtable& SectorManager::getSectors() const {
 	return m_sectors;
 }
 

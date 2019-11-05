@@ -40,7 +40,7 @@ Voxel::Element World::getVoxel(std::int64_t x, std::int64_t y, std::int64_t z) c
 	std::lock_guard<std::recursive_mutex> lock(m_mutex);
 	if (m_sectors.doesSectorExist(pos)) {
 		std::tie(x, y, z) = getVoxelPos(x, y, z);
-		return m_sectors.getHashTable().at(pos).getVoxel(x, y, z);
+		return m_sectors.getSectors().at(pos).getVoxel(x, y, z);
 	}
 	return Voxel::Element();
 }
@@ -56,7 +56,7 @@ void World::update(const Camera& camera) {
 }
 
 void World::renderSector(MasterRenderer& renderer, const Frustum& frustum) {
-	for (auto& sector : m_sectors.getHashTable()) {
+	for (auto& sector : m_sectors.getSectors()) {
 		std::lock_guard<std::recursive_mutex> lock(m_mutex);
 		if (!m_sectors.doesSectorExist(sector.first))
 			continue;

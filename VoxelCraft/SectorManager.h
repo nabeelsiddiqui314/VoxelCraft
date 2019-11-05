@@ -21,7 +21,7 @@ public:
 
 	void makeMesh(const VecXZ& pos);
 
-	const SectorHashtable& getHashTable() const;
+	const SectorHashtable& getSectors() const;
 	Sector& getSectorAt(const VecXZ& pos);
 private:
 	SectorHashtable m_sectors;

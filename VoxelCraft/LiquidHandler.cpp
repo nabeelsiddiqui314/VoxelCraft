@@ -5,7 +5,7 @@
 
 namespace Voxel {
 	bool LiquidHandler::callUpdate(World& world, int x, int y, int z) {
-		auto liquid = world.getVoxel(x, y, z).id;
+		auto liquid = world.getVoxel(x, y, z).getType();
 
 		auto tryAdd = [&](int Xoff, int Yoff, int Zoff) {
 			if (world.getVoxel(Xoff, Yoff, Zoff) == Type::VOID) {

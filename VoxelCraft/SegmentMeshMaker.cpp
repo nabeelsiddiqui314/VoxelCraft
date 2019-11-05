@@ -138,10 +138,10 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 	auto shouldAddBlob = [&](int voxel) {
 		if (vxl[VOXEL].getInfo().shaderType == Voxel::ShaderType::LIQUID) {
 			if (voxel == TOP) {
-				return vxl[VOXEL] != vxl[voxel].id; // for liquids dont cull opaque top sides.
+				return vxl[VOXEL] != vxl[voxel].getType(); // for liquids dont cull opaque top sides.
 			}
 		}
-		return !vxl[voxel].getInfo().opaque && vxl[VOXEL] != vxl[voxel].id;
+		return !vxl[voxel].getInfo().opaque && vxl[VOXEL] != vxl[voxel].getType();
 	};
 
 	for (std::int16_t x = 0; x < Segment::WIDTH; x++)

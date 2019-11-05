@@ -14,9 +14,10 @@ namespace Voxel {
 		bool operator==(const Type& rval) const;
 		bool operator!=(const Type& rval) const;
 
+		const Type getType() const;
 		const Info& getInfo() const;
 		const std::unique_ptr<UpdateHandler>& getUpdateHandler() const;
-	public:
-		Type id;
+	private:
+		Type m_type;
 	};
 }

@@ -17,6 +17,6 @@ namespace Voxel {
 	}
 
 	int GravityHandler::getCoolDownTime() const {
-		return 0;
+		return 10;
 	}
 }

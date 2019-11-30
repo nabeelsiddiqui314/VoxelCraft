@@ -23,10 +23,10 @@ namespace Voxel {
 	}
 
 	const Info& Element::getInfo() const {
-		return Codex::getVoxelData(m_type).info;
+		return Codex::getInstance().getVoxelData(m_type).info;
 	}
 
 	const std::unique_ptr<UpdateHandler>& Element::getUpdateHandler() const {
-		return Codex::getVoxelData(m_type).updateHandler;
+		return Codex::getInstance().getVoxelData(m_type).updateHandler;
 	}
 }

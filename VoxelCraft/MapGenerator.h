@@ -7,6 +7,6 @@ class MapGenerator
 public:
 	virtual ~MapGenerator() {}
 public:
-	virtual Sector generateSector(const VecXZ& pos) = 0;
+	virtual void generateSector(Sector& sector, const VecXZ& pos) = 0;
 };
 

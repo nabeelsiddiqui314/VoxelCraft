@@ -6,7 +6,7 @@ class FlatGenerator : public MapGenerator
 public:
 	FlatGenerator(std::int16_t height);
 public:
-	virtual Sector generateSector(const VecXZ& pos) override;
+	virtual void generateSector(Sector& sector, const VecXZ& pos) override;
 private:
 	const std::int16_t m_height;
 };

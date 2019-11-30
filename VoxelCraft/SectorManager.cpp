@@ -7,7 +7,6 @@ SectorManager::~SectorManager() {
 
 void SectorManager::loadSector(const VecXZ& pos, const Sector& sectors) {
 	m_sectors.emplace(std::make_pair(pos, sectors));
-	m_sectors[pos].makeBoxes(pos);
 }
 
 void SectorManager::unloadSector(const std::function<bool(const VecXZ& pos)>& cond) {
@@ -30,8 +29,7 @@ void SectorManager::makeMesh(const VecXZ& pos) {
 		doesSectorExist({ pos.x + 1, pos.z }) && 
 		doesSectorExist({ pos.x,     pos.z + 1}) &&
 		doesSectorExist({ pos.x,     pos.z - 1})) {
-		m_sectors[pos].makeMesh(pos.x, pos.z, &m_sectors[{pos.x - 1, pos.z}], &m_sectors[{pos.x + 1, pos.z}],
-			&m_sectors[{pos.x, pos.z + 1}], &m_sectors[{pos.x, pos.z - 1}]);
+		m_sectors[pos].makeMesh();
 	}
 }
 

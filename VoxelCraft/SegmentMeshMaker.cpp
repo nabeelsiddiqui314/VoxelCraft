@@ -64,19 +64,24 @@ const GLfloat SegmentMeshMaker::s_topLight = 1.0f;
 const GLfloat SegmentMeshMaker::s_sideLight = 0.6f;
 const GLfloat SegmentMeshMaker::s_bottomLight = 0.4f;
 
-SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
-	const Segment* segment,
-	const Segment* top, const Segment* bottom,
-	const Segment* left, const Segment* right,
-	const Segment* front, const Segment* back) {
+SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, const Segment& segment) {
 	MeshGenerator solidMesh(meshes.solid.mesh);
 	MeshGenerator liquidMesh(meshes.liquid.mesh);
 	MeshGenerator floraMesh(meshes.flora.mesh);
 
-	if (segment->isEmpty())
+	auto* top    = segment.getRelativeSegment( 0,  1,  0);
+	auto* bottom = segment.getRelativeSegment( 0, -1,  0);
+	auto* left   = segment.getRelativeSegment(-1,  0,  0);
+	auto* right  = segment.getRelativeSegment( 1,  0,  0);
+	auto* front  = segment.getRelativeSegment( 0,  0,  1);
+	auto* back   = segment.getRelativeSegment( 0,  0, -1);
+
+	auto& worldPos = segment.getWorldPosition();
+
+	if (segment.isEmpty())
 		return;
 	if (top && bottom) {
-		if (segment->isAllOpaque() && top->isAllOpaque() && bottom->isAllOpaque() &&
+		if (segment.isAllOpaque() && top->isAllOpaque() && bottom->isAllOpaque() &&
 			left->isAllOpaque() && right->isAllOpaque() && front->isAllOpaque() &&
 			back->isAllOpaque()) {
 			return;
@@ -86,30 +91,30 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 	std::array<Voxel::Element, 7> vxl;
 
 	auto setNeighbors = [&](std::int16_t x, std::int16_t y, std::int16_t z) {
-		vxl[VOXEL] = segment->getVoxel(x, y, z);
+		vxl[VOXEL] = segment.getVoxel(x, y, z);
 
 		// x
 		if (x - 1 < 0)
 			vxl[LEFT] = left->getVoxel(Segment::WIDTH - 1, y, z);
 		else
-			vxl[LEFT] = segment->getVoxel(x - 1, y, z);
+			vxl[LEFT] = segment.getVoxel(x - 1, y, z);
 
 		if (x + 1 >= Segment::WIDTH)
 			vxl[RIGHT] = right->getVoxel(0, y, z);
 		else
-			vxl[RIGHT] = segment->getVoxel(x + 1, y, z);
+			vxl[RIGHT] = segment.getVoxel(x + 1, y, z);
 
 		//z
 
 		if (z - 1 < 0)
 			vxl[BACK] = back->getVoxel(x, y, Segment::WIDTH - 1);
 		else
-			vxl[BACK] = segment->getVoxel(x, y, z - 1);
+			vxl[BACK] = segment.getVoxel(x, y, z - 1);
 
 		if (z + 1 >= Segment::WIDTH)
 			vxl[FRONT] = front->getVoxel(x, y, 0);
 		else
-			vxl[FRONT] = segment->getVoxel(x, y, z + 1);
+			vxl[FRONT] = segment.getVoxel(x, y, z + 1);
 
 		// y
 		if (y - 1 < 0) {
@@ -119,7 +124,7 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 				vxl[BOTTOM] = bottom->getVoxel(x, Segment::WIDTH - 1, z);
 		}
 		else
-			vxl[BOTTOM] = segment->getVoxel(x, y - 1, z);
+			vxl[BOTTOM] = segment.getVoxel(x, y - 1, z);
 
 		if (y + 1 >= Segment::WIDTH) {
 			if (top == nullptr)
@@ -128,7 +133,7 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 				vxl[TOP] = top->getVoxel(x, 0, z);
 		}
 		else
-			vxl[TOP] = segment->getVoxel(x, y + 1, z);
+			vxl[TOP] = segment.getVoxel(x, y + 1, z);
 	};
 
 	auto shouldAddCube = [&](int voxel) {
@@ -147,13 +152,13 @@ SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std:
 	for (std::int16_t x = 0; x < Segment::WIDTH; x++)
 	for (std::int16_t y = 0; y < Segment::WIDTH; y++)
 	for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
-		if (segment->getVoxel(x, y, z) == Voxel::Type::VOID)
+		if (segment.getVoxel(x, y, z) == Voxel::Type::VOID)
 			continue;
 		setNeighbors(x, y, z);
 
-		std::int16_t oX = x + originX;
-		std::int16_t oY = y + originY;
-		std::int16_t oZ = z + originZ;
+		std::int16_t oX = x + worldPos.x * Segment::WIDTH;
+		std::int16_t oY = y + worldPos.y * Segment::WIDTH;
+		std::int16_t oZ = z + worldPos.z * Segment::WIDTH;
 
 		MeshGenerator* currentMesh = nullptr;
 		switch (vxl[VOXEL].getInfo().shaderType) {

@@ -6,12 +6,14 @@
 class Sector
 {
 public:
+	Sector();
+public:
+	void fillSegments(int x, int z, SectorManager& sectors);
+
 	void setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id);
 	Voxel::Element getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
-	void makeMesh(std::int16_t x, std::int16_t z,
-		const Sector* left, const Sector* right,
-		const Sector* front, const Sector* back);
+	void makeMesh();
 	void regenMesh(std::int16_t y);
 	void cleanUp();
 
@@ -22,6 +24,6 @@ public:
 public:
 	static constexpr std::int16_t HEIGHT = 16;
 private:
-	std::array<Segment, HEIGHT> m_segments;
+	std::vector<Segment> m_segments;
 };
 

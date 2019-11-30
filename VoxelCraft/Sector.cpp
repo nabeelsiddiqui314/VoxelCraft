@@ -1,5 +1,16 @@
 #include "stdafx.h"
 #include "Sector.h"
+#include "SectorManager.h"
+
+Sector::Sector() {
+	m_segments.reserve(HEIGHT);
+}
+
+void Sector::fillSegments(int x, int z, SectorManager& sectors) {
+	for (std::size_t y = 0; y < HEIGHT; y++) {
+		m_segments.emplace_back(x, y, z, sectors);
+	}
+}
 
 void Sector::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id) {
 	m_segments[y / Segment::WIDTH].setVoxel(x, y % Segment::WIDTH, z, id);
@@ -9,26 +20,10 @@ Voxel::Element Sector::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) 
 	return m_segments[y / Segment::WIDTH].getVoxel(x, y % Segment::WIDTH, z);
 }
 
-void Sector::makeMesh(std::int16_t x, std::int16_t z,
-	const Sector* left, const Sector* right,
-	const Sector* front, const Sector* back) {
+void Sector::makeMesh() {
 	for (std::size_t y = HEIGHT; y-- > 0;) {
 		if (!m_segments[y].hasMeshGenerated()) {
- 			if (y > 0 && y < Sector::HEIGHT - 1) {
-				m_segments[y].makeMesh(x * Segment::WIDTH, y * Segment::WIDTH, z * Segment::WIDTH,
-					&getSegment(y), &getSegment(y + 1), &getSegment(y - 1), &left->getSegment(y), 
-					&right->getSegment(y), &front->getSegment(y), &back->getSegment(y));
-			}
-			else if (y > 0) {
-				m_segments[y].makeMesh(x * Segment::WIDTH, y * Segment::WIDTH, z * Segment::WIDTH,
-					&getSegment(y), nullptr, &getSegment(y - 1), &left->getSegment(y),
-					&right->getSegment(y), &front->getSegment(y), &back->getSegment(y));
-			}
-			else {
-				m_segments[y].makeMesh(x * Segment::WIDTH, y * Segment::WIDTH, z * Segment::WIDTH,
-					&getSegment(y), &getSegment(y + 1), nullptr, &left->getSegment(y),
-					&right->getSegment(y), &front->getSegment(y), &back->getSegment(y));
-			}
+			m_segments[y].makeMesh();
 		}
 	}
 }

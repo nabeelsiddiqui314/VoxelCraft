@@ -9,8 +9,7 @@ OverworldGenerator::OverworldGenerator()
 	p_currentSquare(nullptr)
       {}
 
-Sector OverworldGenerator::generateSector(const VecXZ& pos) {
-	Sector sector;
+void OverworldGenerator::generateSector(Sector& sector, const VecXZ& pos) {
 	std::int16_t height;
 
 	setSquares(pos.x, pos.z);
@@ -61,7 +60,6 @@ Sector OverworldGenerator::generateSector(const VecXZ& pos) {
 			}
 		}
 	}
-	return sector;
 }
 
 const Biome& OverworldGenerator::getBiome(float biomeValue) const {

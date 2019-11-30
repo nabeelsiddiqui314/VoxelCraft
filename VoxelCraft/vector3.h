@@ -5,6 +5,7 @@
 struct Vector3
 {
 	int x, y, z;
+	Vector3(int _x, int _y, int _z);
 };
 
 bool operator==(const Vector3& lhs, const Vector3& rhs);

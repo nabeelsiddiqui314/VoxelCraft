@@ -17,11 +17,7 @@ private:
 		BACK
 	};
 public:
-	SegmentMeshMaker(MeshTypes& meshes, std::int16_t originX, std::int16_t originY, std::int16_t originZ,
-		const Segment* sector,
-		const Segment* top, const Segment* bottom,
-		const Segment* left, const Segment* right,
-		const Segment* front, const Segment* back);
+	SegmentMeshMaker(MeshTypes& meshes, const Segment& segment);
 private:
 	static const std::array<GLfloat, 12> s_front;
 	static const std::array<GLfloat, 12> s_back;

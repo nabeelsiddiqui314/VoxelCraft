@@ -4,20 +4,22 @@
 #include "SegmentMeshMaker.h"
 #include "MasterRenderer.h"
 #include "SegmentModel.h"
+#include "vector3.h"
+
+class SectorManager;
 
 class Segment
 {
 public:
-	Segment();
+	Segment(int x, int y, int z, SectorManager& sectors);
 public:
 	void setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id);
 	Voxel::Element getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
-	void makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
-		const Segment* sector,
-		const Segment* top, const Segment* bottom,
-		const Segment* left, const Segment* right,
-		const Segment* front, const Segment* back);
+	void makeMesh();
+	const Segment* getRelativeSegment(int x, int y, int z) const;
+	const Vector3& getWorldPosition() const;
+
 	void regenMesh();
 	void loadModel();
 	void cleanUp();
@@ -40,6 +42,9 @@ private:
 	std::int16_t m_voidCount;
 
 	AABB m_box;
+
+	SectorManager& m_sectors;
+	Vector3 m_worldPosition;
 
 	MeshTypes m_meshTypes;
 	bool m_hasMeshGenerated = false;

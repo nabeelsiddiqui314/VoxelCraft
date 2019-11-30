@@ -1,7 +1,12 @@
 #include "stdafx.h"
 #include "Segment.h"
+#include "SectorManager.h"
 
-Segment::Segment() : m_opaqueCount(0), m_voidCount(WIDTH * WIDTH * WIDTH) {
+Segment::Segment(int x, int y, int z, SectorManager& sectors) 
+	: m_opaqueCount(0),
+	  m_voidCount(WIDTH * WIDTH * WIDTH),
+      m_sectors(sectors),
+      m_worldPosition(x, y, z) {
 	m_box.dimensions = {Segment::WIDTH, Segment::WIDTH, Segment::WIDTH};
 }
 
@@ -25,15 +30,27 @@ Voxel::Element Segment::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z)
 	return m_voxels[x + WIDTH * (y + WIDTH * z)];
 }
 
-void Segment::makeMesh(std::int16_t originX, std::int16_t originY, std::int16_t originZ,
-	const Segment* sector,
-	const Segment* top, const Segment* bottom,
-	const Segment* left, const Segment* right,
-	const Segment* front, const Segment* back) {
+void Segment::makeMesh() {
 	cleanUp();
-	SegmentMeshMaker(m_meshTypes, originX, originY, originZ, sector, top, bottom, left, right, front, back);
+	SegmentMeshMaker(m_meshTypes, *this);
 	m_hasMeshGenerated = true;
 	m_hasLoadedModel = false;
+}
+
+const Segment* Segment::getRelativeSegment(int x, int y, int z) const {
+	x += m_worldPosition.x;
+	y += m_worldPosition.y;
+	z += m_worldPosition.z;
+
+	if (y >= 0 && y < Sector::HEIGHT) {
+		return &m_sectors.getSectors().at({ x, z }).getSegment(y);
+	}
+	
+	return nullptr;
+}
+
+const Vector3& Segment::getWorldPosition() const {
+	return m_worldPosition;
 }
 
 void Segment::regenMesh() {

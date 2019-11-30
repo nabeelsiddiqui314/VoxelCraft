@@ -71,7 +71,11 @@ void World::makeSector() {
 				makeEditedMeshes();
 
 				if (!m_sectors.doesSectorExist({ x, z })) {
-					const auto sector = m_mapGenerator->generateSector({ x,z });
+					Sector sector;
+					sector.fillSegments(x, z, m_sectors);
+					sector.makeBoxes({ x, z });
+
+					m_mapGenerator->generateSector(sector, { x,z });
 					std::lock_guard<std::recursive_mutex> lock(m_mutex);
 					m_sectors.loadSector({ x,z }, sector);
 				}

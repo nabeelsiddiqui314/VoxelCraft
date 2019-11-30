@@ -64,7 +64,7 @@ const GLfloat SegmentMeshMaker::s_topLight = 1.0f;
 const GLfloat SegmentMeshMaker::s_sideLight = 0.6f;
 const GLfloat SegmentMeshMaker::s_bottomLight = 0.4f;
 
-SegmentMeshMaker::SegmentMeshMaker(MeshTypes& meshes, const Segment& segment) {
+void SegmentMeshMaker::makeMesh(MeshTypes& meshes, const Segment& segment) {
 	MeshGenerator solidMesh(meshes.solid.mesh);
 	MeshGenerator liquidMesh(meshes.liquid.mesh);
 	MeshGenerator floraMesh(meshes.flora.mesh);

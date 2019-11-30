@@ -17,7 +17,10 @@ private:
 		BACK
 	};
 public:
-	SegmentMeshMaker(MeshTypes& meshes, const Segment& segment);
+	SegmentMeshMaker() = delete;
+	~SegmentMeshMaker() = default;
+public:
+	static void makeMesh(MeshTypes& meshes, const Segment& segment);
 private:
 	static const std::array<GLfloat, 12> s_front;
 	static const std::array<GLfloat, 12> s_back;

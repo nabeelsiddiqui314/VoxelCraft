@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SegmentMeshMaker.h"
 #include "Segment.h"
+#include "SegmentBounds.h"
 
 // indices in 0, 1, 2, 0, 2, 3
 
@@ -91,49 +92,14 @@ void SegmentMeshMaker::makeMesh(MeshTypes& meshes, const Segment& segment) {
 	std::array<Voxel::Element, 7> vxl;
 
 	auto setNeighbors = [&](std::int16_t x, std::int16_t y, std::int16_t z) {
-		vxl[VOXEL] = segment.getVoxel(x, y, z);
+		vxl[VOXEL]  = segment.getVoxel(x, y, z);
 
-		// x
-		if (x - 1 < 0)
-			vxl[LEFT] = left->getVoxel(Segment::WIDTH - 1, y, z);
-		else
-			vxl[LEFT] = segment.getVoxel(x - 1, y, z);
-
-		if (x + 1 >= Segment::WIDTH)
-			vxl[RIGHT] = right->getVoxel(0, y, z);
-		else
-			vxl[RIGHT] = segment.getVoxel(x + 1, y, z);
-
-		//z
-
-		if (z - 1 < 0)
-			vxl[BACK] = back->getVoxel(x, y, Segment::WIDTH - 1);
-		else
-			vxl[BACK] = segment.getVoxel(x, y, z - 1);
-
-		if (z + 1 >= Segment::WIDTH)
-			vxl[FRONT] = front->getVoxel(x, y, 0);
-		else
-			vxl[FRONT] = segment.getVoxel(x, y, z + 1);
-
-		// y
-		if (y - 1 < 0) {
-			if (bottom == nullptr)
-				vxl[BOTTOM] = Voxel::Type::VOID;
-			else
-				vxl[BOTTOM] = bottom->getVoxel(x, Segment::WIDTH - 1, z);
-		}
-		else
-			vxl[BOTTOM] = segment.getVoxel(x, y - 1, z);
-
-		if (y + 1 >= Segment::WIDTH) {
-			if (top == nullptr)
-				vxl[TOP] = Voxel::Type::VOID;
-			else
-				vxl[TOP] = top->getVoxel(x, 0, z);
-		}
-		else
-			vxl[TOP] = segment.getVoxel(x, y + 1, z);
+		vxl[TOP]    = SegmentBounds::getInstance().getVoxel(segment, x    , y + 1,  z    );
+		vxl[BOTTOM] = SegmentBounds::getInstance().getVoxel(segment, x    , y - 1,  z    );
+		vxl[LEFT]   = SegmentBounds::getInstance().getVoxel(segment, x - 1, y    ,  z    );
+		vxl[RIGHT]  = SegmentBounds::getInstance().getVoxel(segment, x + 1, y    ,  z    );
+		vxl[FRONT]  = SegmentBounds::getInstance().getVoxel(segment, x    , y    ,  z + 1);
+		vxl[BACK]   = SegmentBounds::getInstance().getVoxel(segment, x    , y    ,  z - 1);
 	};
 
 	auto shouldAddCube = [&](int voxel) {

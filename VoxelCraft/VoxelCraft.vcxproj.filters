@@ -216,6 +216,9 @@
     <ClInclude Include="Oceans.h">
       <Filter>Header Files\Biomes</Filter>
     </ClInclude>
+    <ClInclude Include="SegmentBounds.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -349,6 +352,9 @@
     </ClCompile>
     <ClCompile Include="Oceans.cpp">
       <Filter>Source Files\Biomes</Filter>
+    </ClCompile>
+    <ClCompile Include="SegmentBounds.cpp">
+      <Filter>Source Files\Sector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

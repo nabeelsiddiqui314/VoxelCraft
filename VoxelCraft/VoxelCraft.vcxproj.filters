@@ -213,6 +213,9 @@
     <ClInclude Include="VoxelElement.h">
       <Filter>Header Files\Voxels</Filter>
     </ClInclude>
+    <ClInclude Include="Oceans.h">
+      <Filter>Header Files\Biomes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -343,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="VoxelElement.cpp">
       <Filter>Source Files\Voxels</Filter>
+    </ClCompile>
+    <ClCompile Include="Oceans.cpp">
+      <Filter>Source Files\Biomes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

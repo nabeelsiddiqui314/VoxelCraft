@@ -6,6 +6,7 @@ OverworldGenerator::OverworldGenerator()
 	m_biomeNoise(m_seed, { 1, 1, 1000, 2, 2 }),
 	m_fields(m_seed),
 	m_desert(m_seed),
+	m_oceans(m_seed),
 	p_currentSquare(nullptr)
       {}
 
@@ -65,6 +66,8 @@ void OverworldGenerator::generateSector(Sector& sector, const VecXZ& pos) {
 const Biome& OverworldGenerator::getBiome(float biomeValue) const {
 	if (biomeValue < 0.6f)
 		return m_fields;
+	else if (biomeValue < 0.9f)
+		return m_oceans;
 	else
 		return m_desert;
 }

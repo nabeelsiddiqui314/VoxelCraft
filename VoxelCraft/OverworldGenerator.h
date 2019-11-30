@@ -4,6 +4,7 @@
 #include "Biome.h"
 #include "Fields.h"
 #include "Desert.h"
+#include "Oceans.h"
 
 class OverworldGenerator : public MapGenerator
 {
@@ -28,6 +29,7 @@ private:
 
 	Fields m_fields;
 	Desert m_desert;
+	Oceans m_oceans;
 
 	LerpSqaure m_topLeft;
 	LerpSqaure m_topRight;

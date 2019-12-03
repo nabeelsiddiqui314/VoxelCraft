@@ -219,6 +219,9 @@
     <ClInclude Include="SegmentBounds.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
+    <ClInclude Include="ExplosiveHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -355,6 +358,9 @@
     </ClCompile>
     <ClCompile Include="SegmentBounds.cpp">
       <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosiveHandler.cpp">
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

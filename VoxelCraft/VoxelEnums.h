@@ -11,6 +11,7 @@ namespace Voxel {
 		WATER,
 		ROSE,
 		SHRUB,
+		TNT,
 
 		COUNT
 	};

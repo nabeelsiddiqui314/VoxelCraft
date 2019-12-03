@@ -36,6 +36,8 @@ public:
 	bool hasModelLoaded() const;
 public:
 	static constexpr std::int16_t WIDTH = 16;
+private:
+	bool isInBounds(int x, int y, int z) const;
 private: 
 	std::array<Voxel::Element, WIDTH * WIDTH * WIDTH> m_voxels;
 	std::int16_t m_opaqueCount;

@@ -11,6 +11,10 @@ Segment::Segment(int x, int y, int z, SectorManager& sectors)
 }
 
 void Segment::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id) {
+	if (!isInBounds(x, y, z)) {
+		return;
+	}
+
 	Voxel::Element ID = id;
 
 	if (!getVoxel(x, y, z).getInfo().opaque && ID.getInfo().opaque)
@@ -27,6 +31,10 @@ void Segment::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Ty
 }
 
 Voxel::Element Segment::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const {
+	if (!isInBounds(x, y, z)) {
+		return Voxel::Type::VOID;
+	}
+
 	return m_voxels[x + WIDTH * (y + WIDTH * z)];
 }
 
@@ -109,4 +117,12 @@ bool Segment::hasMeshGenerated() const {
 
 bool Segment::hasModelLoaded() const {
 	return m_hasLoadedModel;
+}
+
+bool Segment::isInBounds(int x, int y, int z) const {
+	auto isOrdinateInBounds = [&](int o) {
+		return o >= 0 && o < WIDTH;
+	};
+
+	return isOrdinateInBounds(x) && isOrdinateInBounds(y) && isOrdinateInBounds(z);
 }

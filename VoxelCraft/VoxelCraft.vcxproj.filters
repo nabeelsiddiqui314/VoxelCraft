@@ -220,7 +220,7 @@
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
     <ClInclude Include="ExplosiveHandler.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

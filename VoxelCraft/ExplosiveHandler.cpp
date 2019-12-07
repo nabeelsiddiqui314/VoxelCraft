@@ -20,6 +20,7 @@ bool Voxel::ExplosiveHandler::callUpdate(World& world, int x, int y, int z) {
 		auto tryPropogate = [&](int x, int y, int z) {
 			if (world.getVoxel(pos.x + x, pos.y + y, pos.z + z).getType() != Type::VOID) {
 				destroyQueue.emplace(pos.x + x, pos.y + y, pos.z + z);
+				count++;
 			}
 		};
 
@@ -30,7 +31,6 @@ bool Voxel::ExplosiveHandler::callUpdate(World& world, int x, int y, int z) {
 			tryPropogate( 0, -1,  0);
 			tryPropogate( 0,  0,  1);
 			tryPropogate( 0,  0, -1);
-			count++;
 		}
 	}
 	return true;

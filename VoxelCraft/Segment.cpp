@@ -10,6 +10,10 @@ Segment::Segment(int x, int y, int z, SectorManager& sectors)
 	m_box.dimensions = {Segment::WIDTH, Segment::WIDTH, Segment::WIDTH};
 }
 
+void Segment::setNaturalLight(int x, int y, int z, int luminocity) {
+	m_voxels[x + WIDTH * (y + WIDTH * z)].setNaturalLight(luminocity);
+}
+
 void Segment::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id) {
 	if (!isInBounds(x, y, z)) {
 		return;
@@ -45,6 +49,18 @@ void Segment::makeMesh() {
 	m_hasLoadedModel = false;
 }
 
+Segment* Segment::getRelativeSegment(int x, int y, int z) {
+	x += m_worldPosition.x;
+	y += m_worldPosition.y;
+	z += m_worldPosition.z;
+
+	if (y >= 0 && y < Sector::HEIGHT) {
+		return &m_sectors.getSectorAt({x, z}).getSegment(y);
+	}
+
+	return nullptr;
+}
+
 const Segment* Segment::getRelativeSegment(int x, int y, int z) const {
 	x += m_worldPosition.x;
 	y += m_worldPosition.y;
@@ -53,7 +69,7 @@ const Segment* Segment::getRelativeSegment(int x, int y, int z) const {
 	if (y >= 0 && y < Sector::HEIGHT) {
 		return &m_sectors.getSectors().at({ x, z }).getSegment(y);
 	}
-	
+
 	return nullptr;
 }
 

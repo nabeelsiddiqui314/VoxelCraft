@@ -18,6 +18,7 @@ public:
 	void cleanUp();
 
 	const Segment& getSegment(std::uint8_t index) const;
+	Segment& getSegment(std::uint8_t index);
 
 	void makeBoxes(const VecXZ& pos);
 	void render(MasterRenderer& renderer, const Frustum& frustum);

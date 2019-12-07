@@ -13,10 +13,13 @@ class Segment
 public:
 	Segment(int x, int y, int z, SectorManager& sectors);
 public:
+	void setNaturalLight(int x, int y, int z, int luminocity);
+
 	void setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id);
 	Voxel::Element getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const;
 
 	void makeMesh();
+	Segment* getRelativeSegment(int x, int y, int z);
 	const Segment* getRelativeSegment(int x, int y, int z) const;
 	const Vector3& getWorldPosition() const;
 

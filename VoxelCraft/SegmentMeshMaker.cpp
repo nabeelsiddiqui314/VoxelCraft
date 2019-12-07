@@ -5,56 +5,56 @@
 
 // indices in 0, 1, 2, 0, 2, 3
 
-const std::array<GLfloat, 12> SegmentMeshMaker::s_front = {
+SegmentMeshMaker::Face SegmentMeshMaker::s_front = {
 	0, 0, 0,
 	1, 0, 0,
 	1, 1, 0,
 	0, 1, 0
 };
 
-const std::array<GLfloat, 12> SegmentMeshMaker::s_back = {
+SegmentMeshMaker::Face SegmentMeshMaker::s_back = {
 	1, 0, -1,
 	0, 0, -1,
 	0, 1, -1,
 	1, 1, -1
 };
 
-const std::array<GLfloat, 12> SegmentMeshMaker::s_left = {
+SegmentMeshMaker::Face SegmentMeshMaker::s_left = {
 	0, 0, -1,
 	0, 0,  0,
 	0, 1,  0,
 	0, 1, -1
 };
 
-const std::array<GLfloat, 12> SegmentMeshMaker::s_right = {
+SegmentMeshMaker::Face SegmentMeshMaker::s_right = {
 	1, 0,  0,
 	1, 0, -1,
 	1, 1, -1,
 	1, 1,  0
 };
 
-const std::array<GLfloat, 12> SegmentMeshMaker::s_top = {
+SegmentMeshMaker::Face SegmentMeshMaker::s_top = {
 	0, 1,  0,
 	1, 1,  0,
 	1, 1, -1,
 	0, 1, -1
 };
 
-const std::array<GLfloat, 12> SegmentMeshMaker::s_bottom = {
+SegmentMeshMaker::Face SegmentMeshMaker::s_bottom = {
 	0, 0, -1,
 	1, 0, -1,
 	1, 0,  0,
 	0, 0,  0
 };
 
-const std::array<GLfloat, 12> SegmentMeshMaker::s_crossA = {
+SegmentMeshMaker::Face SegmentMeshMaker::s_crossA = {
 	0, 0, -1,
 	1, 0,  0,
 	1, 1,  0,
 	0, 1, -1
 };
 
-const std::array<GLfloat, 12> SegmentMeshMaker::s_crossB = {
+SegmentMeshMaker::Face SegmentMeshMaker::s_crossB = {
 	1, 0, -1,
 	0, 0,  0,
 	0, 1,  0,
@@ -89,7 +89,7 @@ void SegmentMeshMaker::makeMesh(MeshTypes& meshes, const Segment& segment) {
 		}
 	}
 
-	std::array<Voxel::Element, 7> vxl;
+	Neighbors vxl;
 
 	auto setNeighbors = [&](std::int16_t x, std::int16_t y, std::int16_t z) {
 		vxl[VOXEL]  = segment.getVoxel(x, y, z);
@@ -100,10 +100,6 @@ void SegmentMeshMaker::makeMesh(MeshTypes& meshes, const Segment& segment) {
 		vxl[RIGHT]  = SegmentBounds::getInstance().getVoxel(segment, x + 1, y    ,  z    );
 		vxl[FRONT]  = SegmentBounds::getInstance().getVoxel(segment, x    , y    ,  z + 1);
 		vxl[BACK]   = SegmentBounds::getInstance().getVoxel(segment, x    , y    ,  z - 1);
-	};
-
-	auto shouldAddCube = [&](int voxel) {
-		return !vxl[voxel].getInfo().opaque;
 	};
 
 	auto shouldAddBlob = [&](int voxel) {
@@ -141,47 +137,65 @@ void SegmentMeshMaker::makeMesh(MeshTypes& meshes, const Segment& segment) {
 
 		switch (vxl[VOXEL].getInfo().shape) {
 		case Voxel::Shape::CUBE:
-			if (shouldAddCube(TOP))
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_top, s_topLight);
-
-			if (shouldAddCube(BOTTOM))
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texBottom, s_bottom, s_bottomLight);
-
-			if (shouldAddCube(LEFT))
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_left, s_sideLight);
-
-			if (shouldAddCube(RIGHT))
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_right, s_sideLight);
-
-			if (shouldAddCube(FRONT))
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_front, s_sideLight);
-
-			if (shouldAddCube(BACK))
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_back, s_sideLight);
+			for (int i = 1; i < 7; i++) {
+				if (!vxl[i].getInfo().opaque) {
+					addCubeFace(currentMesh, vxl, oX, oY, oZ, i);
+				}
+			}
 			break;
 		case Voxel::Shape::BLOB:
-			if (shouldAddBlob(TOP))
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_top, s_topLight);
-
-			if (shouldAddBlob(BOTTOM))
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texBottom, s_bottom, s_bottomLight);
-												 
-			if (shouldAddBlob(LEFT))			 
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_left, s_sideLight);
-												 
-			if (shouldAddBlob(RIGHT))			 
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_right, s_sideLight);
-												 
-			if (shouldAddBlob(FRONT))			 
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_front, s_sideLight);
-												 
-			if (shouldAddBlob(BACK))			 
-				currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texSide, s_back, s_sideLight);
+			for (int i = 1; i < 7; i++) {
+				if (shouldAddBlob(i)) {
+					addCubeFace(currentMesh, vxl, oX, oY, oZ, i);
+				}
+			}
 			break;
 		case Voxel::Shape::CROSS:
-			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossA, s_topLight);
-			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossB, s_topLight);
+			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossA, (float)vxl[RIGHT].getNaturalLight() * s_sideLight);
+			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossB, (float)vxl[LEFT].getNaturalLight() * s_sideLight);
 			break;
 		}
 	}
+}
+
+void SegmentMeshMaker::addCubeFace(MeshGenerator* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor) {
+	auto& voxel = neighbors[VOXEL];
+	Face* face = nullptr;
+	int texture = 0;
+	float lightMultiplier = 0.0f;
+
+	switch (neighbor) {
+	case TOP:
+		face = &s_top;
+		texture = voxel.getInfo().texTop;
+		lightMultiplier = s_topLight;
+		break;
+	case BOTTOM:
+		face = &s_bottom;
+		texture = voxel.getInfo().texBottom;
+		lightMultiplier = s_bottomLight;
+		break;
+	case LEFT:
+		face = &s_left;
+		texture = voxel.getInfo().texSide;
+		lightMultiplier = s_sideLight;
+		break;
+	case RIGHT:
+		face = &s_right;
+		texture = voxel.getInfo().texSide;
+		lightMultiplier = s_sideLight;
+		break;
+	case FRONT:
+		face = &s_front;
+		texture = voxel.getInfo().texSide;
+		lightMultiplier = s_sideLight;
+		break;
+	case BACK:
+		face = &s_back;
+		texture = voxel.getInfo().texSide;
+		lightMultiplier = s_sideLight;
+		break;
+	}
+
+	mesh->addFace(x, y, z, texture, *face, (float)voxel.getNaturalLight() * lightMultiplier);
 }

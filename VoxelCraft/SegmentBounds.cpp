@@ -6,7 +6,15 @@ SegmentBounds& SegmentBounds::getInstance() {
 	return instance;
 }
 
-const Segment* SegmentBounds::getSegment(const Segment& segment, int x, int y, int z) const {
+Segment* SegmentBounds::getSegment(Segment& segment, int x, int y, int z) {
+	int dx = getOffsetOrdinate(x);
+	int dy = getOffsetOrdinate(y);
+	int dz = getOffsetOrdinate(z);
+
+	return segment.getRelativeSegment(dx, dy, dz);
+}
+
+const Segment* SegmentBounds::getConstSegment(const Segment& segment, int x, int y, int z) const {
 	int dx = getOffsetOrdinate(x);
 	int dy = getOffsetOrdinate(y);
 	int dz = getOffsetOrdinate(z);
@@ -15,7 +23,7 @@ const Segment* SegmentBounds::getSegment(const Segment& segment, int x, int y, i
 }
 
 Voxel::Element SegmentBounds::getVoxel(const Segment& segment, int x, int y, int z) const {
-	auto* segmentPtr = getSegment(segment, x, y, z);
+	auto* segmentPtr = getConstSegment(segment, x, y, z);
 
 	if (!segmentPtr) {
 		return Voxel::Type::VOID;

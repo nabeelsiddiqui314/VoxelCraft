@@ -14,6 +14,7 @@ namespace Voxel {
 		Shape shape;
 		ShaderType shaderType;
 		bool opaque;
+		std::uint8_t luminocity;
 
 		Info()
 		  : texTop(0),
@@ -21,16 +22,18 @@ namespace Voxel {
 			texBottom(0),
 			shape(Shape::CUBE),
 			shaderType(ShaderType::SOLID),
-			opaque(false) {}
+			opaque(false),
+			luminocity(0) {}
 
 		Info(int _texTop, int _texSide, int _texBottom,
-			Shape _shape, ShaderType _shaderType, bool _opaque)
+			Shape _shape, ShaderType _shaderType, bool _opaque, std::uint8_t _luminocity)
 		   : texTop(_texTop),
 			 texSide(_texSide),
 			 texBottom(_texBottom),
 			 shape(_shape),
 			 shaderType(_shaderType),
-			 opaque(_opaque) {}
+			 opaque(_opaque),
+			 luminocity(_luminocity) {}
 	};
 
 	struct Data {

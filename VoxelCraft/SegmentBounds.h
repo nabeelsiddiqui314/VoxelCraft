@@ -9,7 +9,8 @@ private:
 public:
 	static SegmentBounds& getInstance();
 public:
-	const Segment* getSegment(const Segment& segment, int x, int y, int z) const;
+	Segment* getSegment(Segment& segment, int x, int y, int z);
+	const Segment* getConstSegment(const Segment& segment, int x, int y, int z) const;
 	Voxel::Element getVoxel(const Segment& segment, int x, int y, int z) const;
 private:
 	int getOffsetOrdinate(int local) const;

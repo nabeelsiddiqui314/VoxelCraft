@@ -14,10 +14,15 @@ namespace Voxel {
 		bool operator==(const Type& rval) const;
 		bool operator!=(const Type& rval) const;
 
+		void setNaturalLight(std::uint8_t luminocity);
+
 		const Type getType() const;
+		std::uint8_t getNaturalLight() const;
+
 		const Info& getInfo() const;
 		const std::unique_ptr<UpdateHandler>& getUpdateHandler() const;
 	private:
 		Type m_type;
+		std::uint8_t m_naturalLight;
 	};
 }

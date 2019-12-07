@@ -43,6 +43,10 @@ const Segment& Sector::getSegment(std::uint8_t index) const {
 	return m_segments[index];
 }
 
+Segment& Sector::getSegment(std::uint8_t index) {
+	return m_segments[index];
+}
+
 void Sector::makeBoxes(const VecXZ& pos) {
 	for (std::size_t y = 0; y < Sector::HEIGHT; y++) {
 		m_segments[y].setBoxPosition(glm::vec3(pos.x * Segment::WIDTH, y * Segment::WIDTH, pos.z * Segment::WIDTH));

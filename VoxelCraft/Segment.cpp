@@ -32,6 +32,10 @@ void Segment::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Ty
 		m_voidCount--;
 
 	m_voxels[x + WIDTH * (y + WIDTH * z)] = ID;
+
+	if (ID.getInfo().luminocity > 0) {
+		m_lightcomputer.addLight(x, y, z, this);
+	}
 }
 
 Voxel::Element Segment::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const {
@@ -43,6 +47,7 @@ Voxel::Element Segment::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z)
 }
 
 void Segment::makeMesh() {
+	m_lightcomputer.propogate();
 	cleanUp();
 	SegmentMeshMaker::makeMesh(m_meshTypes, *this);
 	m_hasMeshGenerated = true;

@@ -223,7 +223,7 @@
       <Filter>Header Files\Voxels</Filter>
     </ClInclude>
     <ClInclude Include="LightingComputer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Sector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -366,7 +366,7 @@
       <Filter>Source Files\Voxels</Filter>
     </ClCompile>
     <ClCompile Include="LightingComputer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Sector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

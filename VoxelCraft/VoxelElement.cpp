@@ -2,9 +2,9 @@
 #include "VoxelElement.h"
 
 namespace Voxel {
-	Element::Element() : m_type(Type::VOID), m_naturalLight(16) {}
+	Element::Element() : m_type(Type::VOID), m_naturalLight(2) {}
 
-	Element::Element(Type type) : m_type(type), m_naturalLight(16) {}
+	Element::Element(Type type) : m_type(type), m_naturalLight(2) {}
 
 	void Element::operator=(const Type& rval) {
 		m_type = rval;

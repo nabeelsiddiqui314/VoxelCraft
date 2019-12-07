@@ -3,11 +3,10 @@
 #include "Segment.h"
 #include "SegmentBounds.h"
 
-void LightingComputer::addLight(int x, int y, int z, int luminocity, Segment* segment) {
-	segment->setNaturalLight(x, y, z, luminocity);
-	segment->regenMesh();
+void LightingComputer::addLight(int x, int y, int z, Segment* segment) {
 	Vector3 pos = {x, y, z};
 	m_lightQueue.emplace(pos, segment);
+	segment->setNaturalLight(x, y, z, segment->getVoxel(x, y, z).getInfo().luminocity);
 }
 
 void LightingComputer::propogate() {
@@ -27,7 +26,16 @@ void LightingComputer::propogate() {
 
 			if (!SegmentBounds::getInstance().getVoxel(*segment, X, Y, Z).getInfo().opaque &&
 				SegmentBounds::getInstance().getVoxel(*segment, X, Y, Z).getNaturalLight() <= luminocity - 2) {
-				addLight(X, Y, Z, luminocity - 1, SegmentBounds::getInstance().getSegment(*segment, X, Y, Z));
+
+				int ox = adjustOrdinate(X);
+				int oy = adjustOrdinate(Y);
+				int oz = adjustOrdinate(Z);
+
+				auto lightSegment = SegmentBounds::getInstance().getSegment(*segment, X, Y, Z);
+
+				addLight(ox, oy, oz, lightSegment);
+				lightSegment->setNaturalLight(ox, oy, oz, luminocity - 1);
+				segment->regenMesh();
 			}
 		};
 
@@ -38,4 +46,14 @@ void LightingComputer::propogate() {
 		spreadLight( 0,  0,  1);
 		spreadLight( 0,  0, -1);
 	}
+}
+
+int LightingComputer::adjustOrdinate(int ordinate) {
+	if (ordinate < 0) {
+		return Segment::WIDTH - abs(ordinate);
+	}
+	else if (ordinate >= Segment::WIDTH) {
+		return ordinate % Segment::WIDTH;
+	}
+	return ordinate;
 }

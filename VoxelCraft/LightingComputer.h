@@ -18,8 +18,10 @@ public:
 	LightingComputer() = default;
 	~LightingComputer() = default;
 public:
-	void addLight(int x, int y, int z, int luminocity, Segment* segment);
+	void addLight(int x, int y, int z, Segment* segment);
 	void propogate();
+private:
+	int adjustOrdinate(int ordinate);
 private:
 	std::queue<LightVoxel> m_lightQueue;
 };

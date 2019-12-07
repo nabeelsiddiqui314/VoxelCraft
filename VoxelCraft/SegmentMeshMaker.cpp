@@ -160,6 +160,7 @@ void SegmentMeshMaker::makeMesh(MeshTypes& meshes, const Segment& segment) {
 
 void SegmentMeshMaker::addCubeFace(MeshGenerator* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor) {
 	auto& voxel = neighbors[VOXEL];
+	auto& neighborVoxel = neighbors[neighbor];
 	Face* face = nullptr;
 	int texture = 0;
 	float lightMultiplier = 0.0f;
@@ -197,5 +198,5 @@ void SegmentMeshMaker::addCubeFace(MeshGenerator* mesh, const Neighbors& neighbo
 		break;
 	}
 
-	mesh->addFace(x, y, z, texture, *face, (float)voxel.getNaturalLight() * lightMultiplier);
+	mesh->addFace(x, y, z, texture, *face, (float)neighborVoxel.getNaturalLight() * lightMultiplier);
 }

@@ -5,6 +5,7 @@
 #include "MasterRenderer.h"
 #include "SegmentModel.h"
 #include "vector3.h"
+#include "LightingComputer.h"
 
 class SectorManager;
 
@@ -50,6 +51,7 @@ private:
 
 	SectorManager& m_sectors;
 	Vector3 m_worldPosition;
+	LightingComputer m_lightcomputer;
 
 	MeshTypes m_meshTypes;
 	bool m_hasMeshGenerated = false;

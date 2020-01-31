@@ -31,9 +31,12 @@ void Segment::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Ty
 	else if (getVoxel(x, y, z) == Voxel::Type::VOID && ID != Voxel::Type::VOID)
 		m_voidCount--;
 
-	m_voxels[x + WIDTH * (y + WIDTH * z)] = ID;
+	m_voxels[x + WIDTH * (y + WIDTH * z)] = id;
 
-	if (ID.getInfo().luminocity > 0) {
+	if (ID.getType() == Voxel::Type::VOID && getVoxel(x, y, z).getNaturalLight() > 0) {
+		m_lightcomputer.removeLight(x, y, z, this, getVoxel(x, y, z).getNaturalLight());
+	}
+	else if (ID.getInfo().luminocity > 0) {
 		m_lightcomputer.addLight(x, y, z, this);
 	}
 }

@@ -10,6 +10,6 @@ uniform lowp vec4 u_alphaMultiplier;
 uniform vec3 u_skyColor;
 
 void main() {
-	color = texture(u_texture, v_texCoords) * u_alphaMultiplier * vec4(v_lighting, 1.0);
+	color = texture(u_texture, v_texCoords) * u_alphaMultiplier * vec4(v_lighting + 0.2, 1.0);
 	//color = mix(vec4(u_skyColor, 1.0), color, v_visibility);
 }

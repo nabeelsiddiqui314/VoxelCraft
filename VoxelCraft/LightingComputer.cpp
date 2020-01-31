@@ -9,11 +9,22 @@ void LightingComputer::addLight(int x, int y, int z, Segment* segment) {
 	segment->setNaturalLight(x, y, z, segment->getVoxel(x, y, z).getInfo().luminocity);
 }
 
+void LightingComputer::removeLight(int x, int y, int z, Segment* segment, int lightLevel) {
+	Vector3 pos = { x, y, z };
+	m_lightRemovalQueue.emplace(pos, segment, lightLevel);
+	segment->setNaturalLight(x, y, z, 0);
+}
+
 void LightingComputer::propogate() {
+	propogateRemove();
+	propogateAdd();
+}
+
+void LightingComputer::propogateAdd() {
 	while (!m_lightQueue.empty()) {
-		auto& lightVoxel = m_lightQueue.front();
-		auto pos = lightVoxel.pos;
-		auto segment = lightVoxel.parent;
+		auto& lightNode = m_lightQueue.front();
+		auto pos = lightNode.pos;
+		auto segment = lightNode.parent;
 
 		m_lightQueue.pop();
 
@@ -35,7 +46,7 @@ void LightingComputer::propogate() {
 
 				addLight(ox, oy, oz, lightSegment);
 				lightSegment->setNaturalLight(ox, oy, oz, luminocity - 1);
-				segment->regenMesh();
+				lightSegment->regenMesh();
 			}
 		};
 
@@ -45,6 +56,48 @@ void LightingComputer::propogate() {
 		spreadLight( 1,  0,  0);
 		spreadLight( 0,  0,  1);
 		spreadLight( 0,  0, -1);
+	}
+}
+
+void LightingComputer::propogateRemove() {
+	while (!m_lightRemovalQueue.empty()) {
+		auto& removalNode = m_lightRemovalQueue.front();
+		auto pos = removalNode.pos;
+		auto segment = removalNode.parent;
+		int lightLevel = removalNode.lvl;
+
+		m_lightRemovalQueue.pop();
+
+		auto spreadRemoval = [&](int X, int Y, int Z) {
+			X += pos.x;
+			Y += pos.y;
+			Z += pos.z;
+
+			int ox = adjustOrdinate(X);
+			int oy = adjustOrdinate(Y);
+			int oz = adjustOrdinate(Z);
+
+			auto lightSegment = SegmentBounds::getInstance().getSegment(*segment, X, Y, Z);
+
+			int neighborLevel = SegmentBounds::getInstance().getVoxel(*segment, X, Y, Z).getNaturalLight();
+
+			if (neighborLevel != 0 && neighborLevel < lightLevel) {
+				removeLight(ox, oy, oz, lightSegment, neighborLevel);
+				lightSegment->regenMesh();
+			}
+			else if (neighborLevel >= lightLevel) {
+				Vector3 pos = { ox, oy, oz };
+				m_lightQueue.emplace(pos, lightSegment);
+			}
+
+		};
+
+		spreadRemoval( 0,  1,  0);
+		spreadRemoval( 0, -1,  0);
+		spreadRemoval(-1,  0,  0);
+		spreadRemoval( 1,  0,  0);
+		spreadRemoval( 0,  0,  1);
+		spreadRemoval( 0,  0, -1);
 	}
 }
 

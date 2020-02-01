@@ -162,6 +162,7 @@
     <ClInclude Include="ExplosiveHandler.h" />
     <ClInclude Include="LightingComputer.h" />
     <ClInclude Include="Oceans.h" />
+    <ClInclude Include="Safe_Queue.h" />
     <ClInclude Include="SegmentBounds.h" />
     <ClInclude Include="VoxelElement.h" />
     <ClInclude Include="VoxelUpdateHandler.h" />

@@ -225,6 +225,9 @@
     <ClInclude Include="LightingComputer.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
+    <ClInclude Include="Safe_Queue.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

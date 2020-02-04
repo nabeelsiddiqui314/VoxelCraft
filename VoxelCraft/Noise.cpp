@@ -4,9 +4,8 @@
 Noise::Noise(const std::uint32_t seed, const NoiseProperties& properties)
 	: m_seed(seed),
       m_properties(properties),
-	  m_mt(m_rd()),
-      m_random(-1, 1) {
-	  m_mt.seed(m_seed); 
+      m_random(-1,1) {
+
 }
 
 float Noise::getNoiseAt(float x, float z) const {
@@ -33,10 +32,12 @@ float Noise::getBasicNoise(float x, float z) const {
 	float zf = z - zi;
 
 	auto edgeVec = [&](int xOff, int zOff){
-		m_mt.seed((xi + xOff) * 298773213 + (zi + zOff) * 907879988 + m_seed);
+		m_random.seed((xi + xOff) * 298773213 + (zi + zOff) * 907879988 + m_seed);
 		float vx, vz;
-		vx = m_random(m_mt);
-		vz = m_random(m_mt);
+		vx = m_random.random();
+		vz = m_random.random();
+
+
 
 		return vec({ vx, vz });
 	};

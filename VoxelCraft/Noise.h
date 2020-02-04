@@ -1,5 +1,7 @@
 #pragma once
-#include <random>
+#include "FastRandom.h"
+#include <cstdint>
+#include <cmath>
 
 struct NoiseProperties {
 	float octaves;
@@ -28,7 +30,5 @@ private:
 	const std::uint32_t m_seed;
 	NoiseProperties m_properties;
 
-	std::random_device m_rd;
-	mutable std::mt19937 m_mt;
-	std::uniform_int_distribution<int> m_random;
+	mutable FastRandom m_random;
 };

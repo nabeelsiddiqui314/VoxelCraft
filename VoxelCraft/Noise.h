@@ -29,6 +29,4 @@ private:
 private:
 	const std::uint32_t m_seed;
 	NoiseProperties m_properties;
-
-	mutable FastRandom m_random;
 };

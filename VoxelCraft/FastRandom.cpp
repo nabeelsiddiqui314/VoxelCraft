@@ -2,15 +2,18 @@
 #include "FastRandom.h"
 
 
-FastRandom::FastRandom(int min, int max) : m_seed(0), m_min(min), m_max(max) {}
+FastRandom::FastRandom() : m_seed(0) {}
+
+FastRandom& FastRandom::get() {
+	static thread_local FastRandom instance;
+	return instance;
+}
 
 void FastRandom::seed(int seed) {
 	m_seed = seed;
 }
 
 int FastRandom::random() {
-	m_seed = 214013*m_seed + 2531011;
-	int random =  (m_seed>>16)&0x7FFF;
-
-	return m_min + (random % (m_max - m_min + 1));
+	m_seed = 214013 * m_seed + 2531011;
+	return  (m_seed >> 16) & 0x7FFF;
 }

@@ -2,15 +2,17 @@
 
 class FastRandom
 {
+private:
+	FastRandom();
 public:
-	FastRandom(int min, int max);
+	FastRandom(FastRandom&) = delete;
 	~FastRandom() = default;
+public:
+	static FastRandom& get();
 public:
 	void seed(int seed);
 	int random();
 private:
 	int m_seed;
-	int m_min;
-	int m_max;
 };
 

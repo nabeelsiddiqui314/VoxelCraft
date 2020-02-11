@@ -35,8 +35,11 @@ void OverworldGenerator::generateSector(Sector& sector, const VecXZ& pos) {
 				if (y == height) {
 					auto decorativeVoxel = biome.getDecorativeVoxel();
 					if (decorativeVoxel != Voxel::Type::VOID) {
-						srand(m_seed + pos.x * 2312321 * x * pos.z * 898009 * z);
-						int r = rand() % 1000;
+						auto& random = FastRandom::get();
+
+						random.seed(m_seed + pos.x * 2312321 * x * pos.z * 898009 * z);
+						int r = random.random() % 1000;
+
 						if (r > 990) {
 							sector.setVoxel(x, y, z, decorativeVoxel);
 						}

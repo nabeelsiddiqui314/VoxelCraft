@@ -5,7 +5,7 @@
 FastRandom::FastRandom() : m_seed(0) {}
 
 FastRandom& FastRandom::get() {
-	static thread_local FastRandom instance;
+	static FastRandom instance;
 	return instance;
 }
 

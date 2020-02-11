@@ -2,7 +2,7 @@
 #include <queue>
 #include <mutex>
 
-template <typename T, std::size_t Capacity>
+template <typename T>
 class Blocking_Queue {
 public:
 	void pop(T& popped_data) {

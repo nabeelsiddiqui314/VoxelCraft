@@ -160,7 +160,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Biome.h" />
     <ClInclude Include="ExplosiveHandler.h" />
-	<ClInclude Include="FastRandom.h" />
+    <ClInclude Include="FastRandom.h" />
     <ClInclude Include="LightingComputer.h" />
     <ClInclude Include="Oceans.h" />
     <ClInclude Include="Blocking_Queue.h" />
@@ -219,7 +219,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Biome.cpp" />
     <ClCompile Include="ExplosiveHandler.cpp" />
-	<ClCompile Include="FastRandom.cpp" />
+    <ClCompile Include="FastRandom.cpp" />
     <ClCompile Include="LightingComputer.cpp" />
     <ClCompile Include="Oceans.cpp" />
     <ClCompile Include="SegmentBounds.cpp" />
@@ -272,11 +272,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="shaders\flora.frag" />
     <None Include="shaders\flora.vert" />
-    <None Include="shaders\solid.frag" />
+    <None Include="shaders\voxel.frag" />
     <None Include="shaders\solid.vert" />
-    <None Include="shaders\water.frag" />
     <None Include="shaders\water.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

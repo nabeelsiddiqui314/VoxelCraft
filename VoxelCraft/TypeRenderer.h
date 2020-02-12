@@ -7,7 +7,7 @@
 class TypeRenderer
 {
 public:
-	TypeRenderer(const std::string& shader);
+	TypeRenderer(const std::string& vert, const std::string& frag);
 public:
 	void addModel(const Model* model);
 	virtual void render(const Camera& camera) = 0;

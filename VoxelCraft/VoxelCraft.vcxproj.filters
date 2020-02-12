@@ -231,6 +231,9 @@
     <ClInclude Include="Blocking_Queue.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="SectorGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -374,28 +377,22 @@
     <ClCompile Include="LightingComputer.cpp">
       <Filter>Source Files\Sector</Filter>
     </ClCompile>
-	<ClCompile Include="FastRandom.cpp">
+    <ClCompile Include="FastRandom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="shaders\solid.frag">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="shaders\solid.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\water.frag">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shaders\water.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shaders\flora.frag">
+    <None Include="shaders\flora.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shaders\flora.vert">
+    <None Include="shaders\voxel.frag">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

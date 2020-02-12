@@ -2,8 +2,8 @@
 #include "TypeRenderer.h"
 
 
-TypeRenderer::TypeRenderer(const std::string& shader) {
-	p_shader.loadShader(std::string("shaders/" + shader + ".vert").c_str(), std::string("shaders/" + shader + ".frag").c_str());
+TypeRenderer::TypeRenderer(const std::string& vert, const std::string& frag) {
+	p_shader.loadShader(std::string("shaders/" + vert + ".vert").c_str(), std::string("shaders/" + frag + ".frag").c_str());
 	p_shader.useProgram();
 	p_shader.setUniform1i("u_texture", 0);
 }
@@ -13,7 +13,6 @@ void TypeRenderer::addModel(const Model* model) {
 }
 
 void TypeRenderer::handleCameraTransform(const Camera& camera) {
-	p_shader.useProgram();
 	p_shader.setUniformMat4("u_view", camera.getViewMatrix());
 	p_shader.setUniformMat4("u_projection", camera.getProjMatrix());
 	p_shader.setUniform1f("u_density", 0.005f);

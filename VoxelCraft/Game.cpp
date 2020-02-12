@@ -57,7 +57,7 @@ void Game::editVoxels() {
 		for (int i = 0; i < 10; i++) {
 			if (m_world.getVoxel(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != Voxel::Type::VOID &&
 				m_world.getVoxel(ray.getDestination().x, ray.getDestination().y, ray.getDestination().z) != Voxel::Type::WATER) {
-				m_world.setVoxel(lastVoxel.x, lastVoxel.y, lastVoxel.z, Voxel::Type::SHRUB);
+				m_world.setVoxel(lastVoxel.x, lastVoxel.y, lastVoxel.z, Voxel::Type::LANTERN);
 				break;
 			}
 			else {

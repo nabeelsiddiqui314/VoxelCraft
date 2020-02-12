@@ -12,6 +12,7 @@ namespace Voxel {
 		ROSE,
 		SHRUB,
 		TNT,
+		LANTERN,
 
 		COUNT
 	};

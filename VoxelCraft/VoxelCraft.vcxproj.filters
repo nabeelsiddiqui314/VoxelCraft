@@ -225,7 +225,10 @@
     <ClInclude Include="LightingComputer.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
-    <ClInclude Include="Safe_Queue.h">
+    <ClInclude Include="FastRandom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Blocking_Queue.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
@@ -370,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="LightingComputer.cpp">
       <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+	<ClCompile Include="FastRandom.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

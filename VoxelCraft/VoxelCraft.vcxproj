@@ -160,9 +160,11 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Biome.h" />
     <ClInclude Include="ExplosiveHandler.h" />
+	<ClInclude Include="FastRandom.h" />
     <ClInclude Include="LightingComputer.h" />
     <ClInclude Include="Oceans.h" />
-    <ClInclude Include="Safe_Queue.h" />
+    <ClInclude Include="Blocking_Queue.h" />
+    <ClInclude Include="SectorGenerator.h" />
     <ClInclude Include="SegmentBounds.h" />
     <ClInclude Include="VoxelElement.h" />
     <ClInclude Include="VoxelUpdateHandler.h" />
@@ -217,6 +219,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Biome.cpp" />
     <ClCompile Include="ExplosiveHandler.cpp" />
+	<ClCompile Include="FastRandom.cpp" />
     <ClCompile Include="LightingComputer.cpp" />
     <ClCompile Include="Oceans.cpp" />
     <ClCompile Include="SegmentBounds.cpp" />

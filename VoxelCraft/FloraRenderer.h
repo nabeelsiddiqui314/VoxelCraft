@@ -7,7 +7,7 @@ class FloraRenderer : public TypeRenderer
 public:
 	FloraRenderer();
 public:
-	void render(const Camera& camera) override;
+	void render(const Camera& camera, float worldtTime) override;
 private:
 	sf::Clock m_time;
 };

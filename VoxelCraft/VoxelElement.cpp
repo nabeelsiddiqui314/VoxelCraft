@@ -30,6 +30,10 @@ namespace Voxel {
 		return m_naturalLight;
 	}
 
+	std::uint8_t Element::getSkyExposure() const {
+		return 15; // temporary
+	}
+
 	const Info& Element::getInfo() const {
 		return Codex::getInstance().getVoxelData(m_type).info;
 	}

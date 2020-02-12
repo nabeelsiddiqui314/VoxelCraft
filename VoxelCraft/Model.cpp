@@ -15,7 +15,8 @@ void Model::addMesh(const Mesh& mesh) {
 
 	addVBO(3, mesh.vertices);
 	addVBO(2, mesh.textureCoords);
-	addVBO(1, mesh.lightFactorData);
+	addVBO(1, mesh.naturalLight);
+	addVBO(1, mesh.skyExposure);
 	addIBO(mesh.indices);
 }
 

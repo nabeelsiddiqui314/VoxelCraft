@@ -12,12 +12,15 @@ void TypeRenderer::addModel(const Model* model) {
 	m_models.emplace_back(model);
 }
 
-void TypeRenderer::handleCameraTransform(const Camera& camera) {
+void TypeRenderer::updateShader(const Camera& camera, float worldTime) {
 	p_shader.setUniformMat4("u_view", camera.getViewMatrix());
 	p_shader.setUniformMat4("u_projection", camera.getProjMatrix());
 	p_shader.setUniform1f("u_density", 0.005f);
 	p_shader.setUniform1f("u_gradient", 6.0f);
-	p_shader.setUniform3f("u_skyColor", { 0.59f, 0.74f, 0.87f });
+
+	p_shader.setUniform1f("u_worldTime", worldTime);
+	p_shader.setUniform3f("u_skyColor", glm::vec3(0.59f, 0.74f, 0.87f) * worldTime);
+	p_shader.setUniform1f("u_gamma", 1.0f/1.2f);
 }
 
 void TypeRenderer::drawModels() {

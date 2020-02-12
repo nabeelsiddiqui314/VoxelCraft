@@ -18,6 +18,7 @@ namespace Voxel {
 
 		const Type getType() const;
 		std::uint8_t getNaturalLight() const;
+		std::uint8_t getSkyExposure() const;
 
 		const Info& getInfo() const;
 		const std::unique_ptr<UpdateHandler>& getUpdateHandler() const;

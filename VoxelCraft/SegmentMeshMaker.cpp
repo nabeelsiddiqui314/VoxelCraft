@@ -151,8 +151,8 @@ void SegmentMeshMaker::makeMesh(MeshTypes& meshes, const Segment& segment) {
 			}
 			break;
 		case Voxel::Shape::CROSS:
-			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossA, (float)vxl[RIGHT].getNaturalLight() * s_sideLight);
-			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossB, (float)vxl[LEFT].getNaturalLight() * s_sideLight);
+			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossA, (float)(vxl[RIGHT].getNaturalLight() + 1) * s_sideLight, vxl[RIGHT].getSkyExposure() + 1);
+			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossB, (float)(vxl[RIGHT].getNaturalLight() + 1) * s_sideLight, vxl[RIGHT].getSkyExposure() + 1);
 			break;
 		}
 	}
@@ -198,5 +198,5 @@ void SegmentMeshMaker::addCubeFace(MeshGenerator* mesh, const Neighbors& neighbo
 		break;
 	}
 
-	mesh->addFace(x, y, z, texture, *face, (float)neighborVoxel.getNaturalLight() * lightMultiplier);
+	mesh->addFace(x, y, z, texture, *face, (float)(neighborVoxel.getNaturalLight() + 1) * lightMultiplier, neighborVoxel.getSkyExposure() + 1);
 }

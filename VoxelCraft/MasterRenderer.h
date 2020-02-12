@@ -18,5 +18,6 @@ private:
 	std::unique_ptr<TypeRenderer> m_solidRenderer;
 	std::unique_ptr<TypeRenderer> m_waterRenderer;
 	std::unique_ptr<TypeRenderer> m_floraRenderer;
+	sf::Clock m_worldClock;
 };
 

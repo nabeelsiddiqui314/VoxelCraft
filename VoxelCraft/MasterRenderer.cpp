@@ -19,10 +19,14 @@ void MasterRenderer::addSector(const MeshTypes& models) {
 }
 
 void MasterRenderer::renderSector(const Camera& camera) {
-	glClearColor(0.59f, 0.74f, 0.87f, 1);
+	float time = std::max(sin((float)m_worldClock.getElapsedTime().asSeconds() / 5.0f), 0.02f);
+
+	auto skyColor = glm::vec3(0.59f, 0.74f, 0.87f) * time;
+
+	glClearColor(skyColor.x, skyColor.y, skyColor.z, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	m_solidRenderer->render(camera);
-	m_waterRenderer->render(camera);
-	m_floraRenderer->render(camera);
+	m_solidRenderer->render(camera, time);
+	m_waterRenderer->render(camera, time);
+	m_floraRenderer->render(camera, time);
 }

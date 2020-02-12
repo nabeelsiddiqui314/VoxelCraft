@@ -7,7 +7,7 @@ class WaterRenderer : public TypeRenderer
 public:
 	WaterRenderer();
 public:
-	void render(const Camera& camera) override;
+	void render(const Camera& camera, float worldtTime) override;
 private:
 	sf::Clock c;
 };

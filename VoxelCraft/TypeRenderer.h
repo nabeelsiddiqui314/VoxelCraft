@@ -3,6 +3,7 @@
 #include "Model.h"
 #include "Shader.h"
 #include "TextureAtlas.h"
+#include <SFML/System/Clock.hpp>
 
 class TypeRenderer
 {
@@ -10,9 +11,9 @@ public:
 	TypeRenderer(const std::string& vert, const std::string& frag);
 public:
 	void addModel(const Model* model);
-	virtual void render(const Camera& camera) = 0;
+	virtual void render(const Camera& camera, float worldTime) = 0;
 protected:
-	void handleCameraTransform(const Camera& camera);
+	void updateShader(const Camera& camera, float worldTime);
 	void drawModels();
 protected:
 	Shader p_shader;

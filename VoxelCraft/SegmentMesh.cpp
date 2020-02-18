@@ -1,9 +1,9 @@
 #include "stdafx.h"
-#include "MeshGenerator.h"
+#include "SegmentMesh.h"
 
-MeshGenerator::MeshGenerator(Mesh& mesh) : m_mesh(mesh) {}
+SegmentMesh::SegmentMesh(Mesh& mesh) : m_mesh(mesh) {}
 
-void MeshGenerator::addFace(std::int16_t x, std::int16_t y, std::int16_t z, int textureIndex, const std::array<GLfloat, 12>& face, GLfloat natLight, GLfloat skyExposure) {
+void SegmentMesh::addFace(std::int16_t x, std::int16_t y, std::int16_t z, int textureIndex, const std::array<GLfloat, 12>& face, GLfloat natLight, GLfloat skyExposure) {
 	int faceIndex = 0;
 	for (int i = 0; i < 4; i++) {
 		m_mesh.vertices.emplace_back(x + face[faceIndex++]);

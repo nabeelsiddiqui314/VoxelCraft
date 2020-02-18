@@ -3,10 +3,10 @@
 #include "Mesh.h"
 #include <array>
 
-class MeshGenerator
+class SegmentMesh
 {
 public:
-	MeshGenerator(Mesh& mesh);
+	SegmentMesh(Mesh& mesh);
 	void addFace(std::int16_t x, std::int16_t y, std::int16_t z, int textureIndex, const std::array<GLfloat, 12>& face, GLfloat natLight, GLfloat skyExposure);
 private:
 	Mesh& m_mesh;

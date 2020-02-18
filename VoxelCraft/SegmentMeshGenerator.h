@@ -1,5 +1,5 @@
 #pragma once
-#include "MeshGenerator.h"
+#include "SegmentMesh.h"
 #include "SegmentModel.h"
 #include "VoxelElement.h"
 

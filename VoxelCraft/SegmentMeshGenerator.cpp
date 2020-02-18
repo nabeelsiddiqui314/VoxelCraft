@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "SegmentMeshMaker.h"
+#include "SegmentMeshGenerator.h"
 #include "Segment.h"
 #include "SegmentBounds.h"
 #include "CubeFaceMeshes.h"
@@ -16,12 +16,12 @@ enum {
 	BACK
 };
 
-void addCubeFace(MeshGenerator* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor);
+void addCubeFace(SegmentMesh* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor);
 
 void generateMesh(MeshTypes& meshes, const Segment& segment) {
-	MeshGenerator solidMesh(meshes.solid.mesh);
-	MeshGenerator liquidMesh(meshes.liquid.mesh);
-	MeshGenerator floraMesh(meshes.flora.mesh);
+	SegmentMesh solidMesh(meshes.solid.mesh);
+	SegmentMesh liquidMesh(meshes.liquid.mesh);
+	SegmentMesh floraMesh(meshes.flora.mesh);
 
 	auto* top    = segment.getRelativeSegment( 0,  1,  0);
 	auto* bottom = segment.getRelativeSegment( 0, -1,  0);
@@ -75,7 +75,7 @@ void generateMesh(MeshTypes& meshes, const Segment& segment) {
 		std::int16_t oY = y + worldPos.y * Segment::WIDTH;
 		std::int16_t oZ = z + worldPos.z * Segment::WIDTH;
 
-		MeshGenerator* currentMesh = nullptr;
+		SegmentMesh* currentMesh = nullptr;
 		switch (vxl[VOXEL].getInfo().shaderType) {
 		case Voxel::ShaderType::SOLID:
 			currentMesh = &solidMesh;
@@ -111,7 +111,7 @@ void generateMesh(MeshTypes& meshes, const Segment& segment) {
 	}
 }
 
-void addCubeFace(MeshGenerator* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor) {
+void addCubeFace(SegmentMesh* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor) {
 	auto& voxel = neighbors[VOXEL];
 	auto& neighborVoxel = neighbors[neighbor];
 	CubeFace* face = nullptr;

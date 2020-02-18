@@ -1,7 +1,7 @@
 #pragma once
 #include <array>
 #include "VoxelElement.h"
-#include "SegmentMeshMaker.h"
+#include "SegmentMeshGenerator.h"
 #include "MasterRenderer.h"
 #include "SegmentModel.h"
 #include "vector3.h"

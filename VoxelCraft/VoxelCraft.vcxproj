@@ -167,6 +167,7 @@
     <ClInclude Include="SectorGenerator.h" />
     <ClInclude Include="SegmentBounds.h" />
     <ClInclude Include="VoxelElement.h" />
+    <ClInclude Include="CubeFaceMeshes.h" />
     <ClInclude Include="VoxelUpdateHandler.h" />
     <ClInclude Include="FloraRenderer.h" />
     <ClInclude Include="GravityHandler.h" />

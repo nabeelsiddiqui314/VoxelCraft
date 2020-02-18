@@ -52,7 +52,7 @@ Voxel::Element Segment::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z)
 void Segment::makeMesh() {
 	m_lightcomputer.propogate();
 	cleanUp();
-	SegmentMeshMaker::makeMesh(m_meshTypes, *this);
+	generateMesh(m_meshTypes, *this);
 	m_hasMeshGenerated = true;
 	m_hasLoadedModel = false;
 }

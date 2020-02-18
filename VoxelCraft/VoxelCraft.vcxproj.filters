@@ -234,6 +234,9 @@
     <ClInclude Include="SectorGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CubeFaceMeshes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

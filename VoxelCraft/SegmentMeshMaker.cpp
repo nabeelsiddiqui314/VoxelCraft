@@ -2,70 +2,23 @@
 #include "SegmentMeshMaker.h"
 #include "Segment.h"
 #include "SegmentBounds.h"
+#include "CubeFaceMeshes.h"
 
-// indices in 0, 1, 2, 0, 2, 3
+typedef std::array<Voxel::Element, 7> Neighbors;
 
-SegmentMeshMaker::Face SegmentMeshMaker::s_front = {
-	0, 0, 0,
-	1, 0, 0,
-	1, 1, 0,
-	0, 1, 0
+enum {
+	VOXEL,
+	TOP,
+	BOTTOM,
+	LEFT,
+	RIGHT,
+	FRONT,
+	BACK
 };
 
-SegmentMeshMaker::Face SegmentMeshMaker::s_back = {
-	1, 0, -1,
-	0, 0, -1,
-	0, 1, -1,
-	1, 1, -1
-};
+void addCubeFace(MeshGenerator* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor);
 
-SegmentMeshMaker::Face SegmentMeshMaker::s_left = {
-	0, 0, -1,
-	0, 0,  0,
-	0, 1,  0,
-	0, 1, -1
-};
-
-SegmentMeshMaker::Face SegmentMeshMaker::s_right = {
-	1, 0,  0,
-	1, 0, -1,
-	1, 1, -1,
-	1, 1,  0
-};
-
-SegmentMeshMaker::Face SegmentMeshMaker::s_top = {
-	0, 1,  0,
-	1, 1,  0,
-	1, 1, -1,
-	0, 1, -1
-};
-
-SegmentMeshMaker::Face SegmentMeshMaker::s_bottom = {
-	0, 0, -1,
-	1, 0, -1,
-	1, 0,  0,
-	0, 0,  0
-};
-
-SegmentMeshMaker::Face SegmentMeshMaker::s_crossA = {
-	0, 0, -1,
-	1, 0,  0,
-	1, 1,  0,
-	0, 1, -1
-};
-
-SegmentMeshMaker::Face SegmentMeshMaker::s_crossB = {
-	1, 0, -1,
-	0, 0,  0,
-	0, 1,  0,
-	1, 1, -1
-};
-
-const GLfloat SegmentMeshMaker::s_topLight = 1.0f;
-const GLfloat SegmentMeshMaker::s_sideLight = 0.6f;
-const GLfloat SegmentMeshMaker::s_bottomLight = 0.4f;
-
-void SegmentMeshMaker::makeMesh(MeshTypes& meshes, const Segment& segment) {
+void generateMesh(MeshTypes& meshes, const Segment& segment) {
 	MeshGenerator solidMesh(meshes.solid.mesh);
 	MeshGenerator liquidMesh(meshes.liquid.mesh);
 	MeshGenerator floraMesh(meshes.flora.mesh);
@@ -151,52 +104,45 @@ void SegmentMeshMaker::makeMesh(MeshTypes& meshes, const Segment& segment) {
 			}
 			break;
 		case Voxel::Shape::CROSS:
-			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossA, (float)(vxl[RIGHT].getNaturalLight() + 1) * s_sideLight, vxl[RIGHT].getSkyExposure() + 1);
-			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, s_crossB, (float)(vxl[RIGHT].getNaturalLight() + 1) * s_sideLight, vxl[RIGHT].getSkyExposure() + 1);
+			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, MeshFace::crossA.mesh, (float)(vxl[RIGHT].getNaturalLight() + 1) * MeshFace::right.light, vxl[RIGHT].getSkyExposure() + 1);
+			currentMesh->addFace(oX, oY, oZ, vxl[VOXEL].getInfo().texTop, MeshFace::crossB.mesh, (float)(vxl[RIGHT].getNaturalLight() + 1) * MeshFace::right.light, vxl[RIGHT].getSkyExposure() + 1);
 			break;
 		}
 	}
 }
 
-void SegmentMeshMaker::addCubeFace(MeshGenerator* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor) {
+void addCubeFace(MeshGenerator* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor) {
 	auto& voxel = neighbors[VOXEL];
 	auto& neighborVoxel = neighbors[neighbor];
-	Face* face = nullptr;
+	CubeFace* face = nullptr;
 	int texture = 0;
-	float lightMultiplier = 0.0f;
 
 	switch (neighbor) {
 	case TOP:
-		face = &s_top;
+		face = &MeshFace::top;
 		texture = voxel.getInfo().texTop;
-		lightMultiplier = s_topLight;
 		break;
 	case BOTTOM:
-		face = &s_bottom;
+		face = &MeshFace::bottom;
 		texture = voxel.getInfo().texBottom;
-		lightMultiplier = s_bottomLight;
 		break;
 	case LEFT:
-		face = &s_left;
+		face = &MeshFace::left;
 		texture = voxel.getInfo().texSide;
-		lightMultiplier = s_sideLight;
 		break;
 	case RIGHT:
-		face = &s_right;
+		face = &MeshFace::right;
 		texture = voxel.getInfo().texSide;
-		lightMultiplier = s_sideLight;
 		break;
 	case FRONT:
-		face = &s_front;
+		face = &MeshFace::front;
 		texture = voxel.getInfo().texSide;
-		lightMultiplier = s_sideLight;
 		break;
 	case BACK:
-		face = &s_back;
+		face = &MeshFace::back;
 		texture = voxel.getInfo().texSide;
-		lightMultiplier = s_sideLight;
 		break;
 	}
 
-	mesh->addFace(x, y, z, texture, *face, (float)(neighborVoxel.getNaturalLight() + 1) * lightMultiplier, neighborVoxel.getSkyExposure() + 1);
+	mesh->addFace(x, y, z, texture, face->mesh, (float)(neighborVoxel.getNaturalLight() + 1) * face->light, neighborVoxel.getSkyExposure() + 1);
 }

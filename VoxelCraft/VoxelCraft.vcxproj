@@ -84,7 +84,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -102,7 +102,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -117,7 +117,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -139,7 +139,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -157,122 +157,113 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Biome.h" />
-    <ClInclude Include="ExplosiveHandler.h" />
-    <ClInclude Include="FastRandom.h" />
-    <ClInclude Include="LightingComputer.h" />
-    <ClInclude Include="Oceans.h" />
-    <ClInclude Include="Blocking_Queue.h" />
-    <ClInclude Include="SectorGenerator.h" />
-    <ClInclude Include="SegmentBounds.h" />
-    <ClInclude Include="VoxelElement.h" />
-    <ClInclude Include="CubeFaceMeshes.h" />
-    <ClInclude Include="VoxelUpdateHandler.h" />
-    <ClInclude Include="FloraRenderer.h" />
-    <ClInclude Include="GravityHandler.h" />
-    <ClInclude Include="GroundFloraHandler.h" />
-    <ClInclude Include="LiquidHandler.h" />
-    <ClInclude Include="NonUpdatable.h" />
-    <ClInclude Include="VoxelCodex.h" />
-    <ClInclude Include="VoxelData.h" />
-    <ClInclude Include="AABB.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="SectorManager.h" />
-    <ClInclude Include="Composition.h" />
-    <ClInclude Include="Desert.h" />
-    <ClInclude Include="Fields.h" />
-    <ClInclude Include="Frustum.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Noise.h" />
-    <ClInclude Include="NonCopyable.h" />
-    <ClInclude Include="Plane.h" />
-    <ClInclude Include="Raycast.h" />
-    <ClInclude Include="SegmentMeshGenerator.h" />
-    <ClInclude Include="Sector.h" />
-    <ClInclude Include="FlatGenerator.h" />
-    <ClInclude Include="MapGenerator.h" />
-    <ClInclude Include="MasterRenderer.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="SegmentMesh.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="OverworldGenerator.h" />
-    <ClInclude Include="Segment.h" />
-    <ClInclude Include="SegmentModel.h" />
-    <ClInclude Include="SolidRenderer.h" />
-    <ClInclude Include="RenderData.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="State.h" />
-    <ClInclude Include="StateManager.h" />
-    <ClInclude Include="stbi.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureAtlas.h" />
-    <ClInclude Include="TypeRenderer.h" />
-    <ClInclude Include="vector3.h" />
-    <ClInclude Include="vecXZ.h" />
-    <ClInclude Include="VoxelEnums.h" />
-    <ClInclude Include="WaterRenderer.h" />
-    <ClInclude Include="World.h" />
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\World\Generation\Biome\Biome.h" />
+    <ClInclude Include="src\World\Voxel\VoxelType\ExplosiveHandler.h" />
+    <ClInclude Include="src\Math\FastRandom.h" />
+    <ClInclude Include="src\World\Segment\LightingComputer.h" />
+    <ClInclude Include="src\World\Generation\Biome\Oceans.h" />
+    <ClInclude Include="src\CppUtil\Blocking_Queue.h" />
+    <ClInclude Include="src\World\Segment\SegmentBounds.h" />
+    <ClInclude Include="src\World\Voxel\VoxelElement.h" />
+    <ClInclude Include="src\World\Segment\CubeFaceMeshes.h" />
+    <ClInclude Include="src\World\Voxel\VoxelType\VoxelUpdateHandler.h" />
+    <ClInclude Include="src\Renderer\FloraRenderer.h" />
+    <ClInclude Include="src\World\Voxel\VoxelType\GravityHandler.h" />
+    <ClInclude Include="src\World\Voxel\VoxelType\GroundFloraHandler.h" />
+    <ClInclude Include="src\World\Voxel\VoxelType\LiquidHandler.h" />
+    <ClInclude Include="src\World\Voxel\VoxelType\NonUpdatable.h" />
+    <ClInclude Include="src\World\Voxel\VoxelCodex.h" />
+    <ClInclude Include="src\World\Voxel\VoxelData.h" />
+    <ClInclude Include="src\Math\AABB.h" />
+    <ClInclude Include="src\OGL\Util\Camera.h" />
+    <ClInclude Include="src\World\Segment\SectorManager.h" />
+    <ClInclude Include="src\World\Generation\Biome\Composition.h" />
+    <ClInclude Include="src\World\Generation\Biome\Desert.h" />
+    <ClInclude Include="src\World\Generation\Biome\Fields.h" />
+    <ClInclude Include="src\Math\Frustum.h" />
+    <ClInclude Include="src\State\Game.h" />
+    <ClInclude Include="src\Math\Noise.h" />
+    <ClInclude Include="src\CppUtil\NonCopyable.h" />
+    <ClInclude Include="src\Math\Plane.h" />
+    <ClInclude Include="src\Math\Raycast.h" />
+    <ClInclude Include="src\World\Segment\SegmentMeshGenerator.h" />
+    <ClInclude Include="src\World\Segment\Sector.h" />
+    <ClInclude Include="src\World\Generation\Map\FlatGenerator.h" />
+    <ClInclude Include="src\World\Generation\Map\MapGenerator.h" />
+    <ClInclude Include="src\Renderer\MasterRenderer.h" />
+    <ClInclude Include="src\OGL\Core\Mesh.h" />
+    <ClInclude Include="src\World\Segment\SegmentMesh.h" />
+    <ClInclude Include="src\OGL\Core\Model.h" />
+    <ClInclude Include="src\World\Generation\Map\OverworldGenerator.h" />
+    <ClInclude Include="src\World\Segment\Segment.h" />
+    <ClInclude Include="src\World\Segment\SegmentModel.h" />
+    <ClInclude Include="src\Renderer\SolidRenderer.h" />
+    <ClInclude Include="src\OGL\Core\RenderData.h" />
+    <ClInclude Include="src\OGL\Core\Shader.h" />
+    <ClInclude Include="src\State\State.h" />
+    <ClInclude Include="src\State\StateManager.h" />
+    <ClInclude Include="src\OGL\Core\stbi.h" />
+    <ClInclude Include="src\OGL\Core\Texture.h" />
+    <ClInclude Include="src\OGL\Util\TextureAtlas.h" />
+    <ClInclude Include="src\Renderer\TypeRenderer.h" />
+    <ClInclude Include="src\Math\vector3.h" />
+    <ClInclude Include="src\Math\vecXZ.h" />
+    <ClInclude Include="src\World\Voxel\VoxelEnums.h" />
+    <ClInclude Include="src\Renderer\WaterRenderer.h" />
+    <ClInclude Include="src\World\World.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Biome.cpp" />
-    <ClCompile Include="ExplosiveHandler.cpp" />
-    <ClCompile Include="FastRandom.cpp" />
-    <ClCompile Include="LightingComputer.cpp" />
-    <ClCompile Include="Oceans.cpp" />
-    <ClCompile Include="SegmentBounds.cpp" />
-    <ClCompile Include="VoxelElement.cpp" />
-    <ClCompile Include="VoxelCodex.cpp" />
-    <ClCompile Include="UpdateHandler.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="SectorManager.cpp" />
-    <ClCompile Include="Composition.cpp" />
-    <ClCompile Include="Desert.cpp" />
-    <ClCompile Include="Fields.cpp" />
-    <ClCompile Include="FloraRenderer.cpp" />
-    <ClCompile Include="Frustum.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GravityHandler.cpp" />
-    <ClCompile Include="GroundFloraHandler.cpp" />
-    <ClCompile Include="LiquidHandler.cpp" />
-    <ClCompile Include="Noise.cpp" />
-    <ClCompile Include="NonUpdatable.cpp" />
-    <ClCompile Include="Plane.cpp" />
-    <ClCompile Include="RayCast.cpp" />
-    <ClCompile Include="SegmentMeshGenerator.cpp" />
-    <ClCompile Include="Sector.cpp" />
-    <ClCompile Include="FlatGenerator.cpp" />
-    <ClCompile Include="MapGenerator.cpp" />
-    <ClCompile Include="MasterRenderer.cpp" />
-    <ClCompile Include="SegmentMesh.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="OverworldGenerator.cpp" />
-    <ClCompile Include="Segment.cpp" />
-    <ClCompile Include="SegmentModel.cpp" />
-    <ClCompile Include="SolidRenderer.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="StateManager.cpp" />
-    <ClCompile Include="stbi.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TextureAtlas.cpp" />
-    <ClCompile Include="TypeRenderer.cpp" />
-    <ClCompile Include="vector3.cpp" />
-    <ClCompile Include="vecXZ.cpp" />
-    <ClCompile Include="VoxelCraft.cpp" />
-    <ClCompile Include="WaterRenderer.cpp" />
-    <ClCompile Include="World.cpp" />
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\World\Generation\Biome\Biome.cpp" />
+    <ClCompile Include="src\World\Voxel\VoxelType\ExplosiveHandler.cpp" />
+    <ClCompile Include="src\Math\FastRandom.cpp" />
+    <ClCompile Include="src\World\Segment\LightingComputer.cpp" />
+    <ClCompile Include="src\World\Generation\Biome\Oceans.cpp" />
+    <ClCompile Include="src\World\Segment\SegmentBounds.cpp" />
+    <ClCompile Include="src\World\Voxel\VoxelElement.cpp" />
+    <ClCompile Include="src\World\Voxel\VoxelCodex.cpp" />
+    <ClCompile Include="src\World\Voxel\VoxelType\VoxelUpdateHandler.cpp" />
+    <ClCompile Include="src\OGL\Util\Camera.cpp" />
+    <ClCompile Include="src\World\Segment\SectorManager.cpp" />
+    <ClCompile Include="src\World\Generation\Biome\Composition.cpp" />
+    <ClCompile Include="src\World\Generation\Biome\Desert.cpp" />
+    <ClCompile Include="src\World\Generation\Biome\Fields.cpp" />
+    <ClCompile Include="src\Renderer\FloraRenderer.cpp" />
+    <ClCompile Include="src\Math\Frustum.cpp" />
+    <ClCompile Include="src\State\Game.cpp" />
+    <ClCompile Include="src\World\Voxel\VoxelType\GravityHandler.cpp" />
+    <ClCompile Include="src\World\Voxel\VoxelType\GroundFloraHandler.cpp" />
+    <ClCompile Include="src\World\Voxel\VoxelType\LiquidHandler.cpp" />
+    <ClCompile Include="src\Math\Noise.cpp" />
+    <ClCompile Include="src\World\Voxel\VoxelType\NonUpdatable.cpp" />
+    <ClCompile Include="src\Math\Plane.cpp" />
+    <ClCompile Include="src\Math\RayCast.cpp" />
+    <ClCompile Include="src\World\Segment\SegmentMeshGenerator.cpp" />
+    <ClCompile Include="src\World\Segment\Sector.cpp" />
+    <ClCompile Include="src\World\Generation\Map\FlatGenerator.cpp" />
+    <ClCompile Include="src\World\Generation\Map\MapGenerator.cpp" />
+    <ClCompile Include="src\Renderer\MasterRenderer.cpp" />
+    <ClCompile Include="src\World\Segment\SegmentMesh.cpp" />
+    <ClCompile Include="src\OGL\Core\Model.cpp" />
+    <ClCompile Include="src\World\Generation\Map\OverworldGenerator.cpp" />
+    <ClCompile Include="src\World\Segment\Segment.cpp" />
+    <ClCompile Include="src\World\Segment\SegmentModel.cpp" />
+    <ClCompile Include="src\Renderer\SolidRenderer.cpp" />
+    <ClCompile Include="src\OGL\Core\Shader.cpp" />
+    <ClCompile Include="src\State\StateManager.cpp" />
+    <ClCompile Include="src\OGL\Core\stbi.cpp" />
+    <ClCompile Include="src\OGL\Core\Texture.cpp" />
+    <ClCompile Include="src\OGL\Util\TextureAtlas.cpp" />
+    <ClCompile Include="src\Renderer\TypeRenderer.cpp" />
+    <ClCompile Include="src\Math\vector3.cpp" />
+    <ClCompile Include="src\Math\vecXZ.cpp" />
+    <ClCompile Include="src\VoxelCraft.cpp" />
+    <ClCompile Include="src\Renderer\WaterRenderer.cpp" />
+    <ClCompile Include="src\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="src\packages.config" />
     <None Include="shaders\flora.vert" />
     <None Include="shaders\voxel.frag" />
     <None Include="shaders\solid.vert" />

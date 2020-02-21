@@ -63,329 +63,316 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="src\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="src\World\Segment\CubeFaceMeshes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stbi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vecXZ.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Segment.h">
+    <ClInclude Include="src\World\Segment\Sector.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
-    <ClInclude Include="SegmentModel.h">
+    <ClInclude Include="src\World\Segment\SectorManager.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
-    <ClInclude Include="MasterRenderer.h">
+    <ClInclude Include="src\World\Segment\Segment.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\SegmentBounds.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\SegmentMesh.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\SegmentMeshGenerator.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\SegmentModel.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Voxel\VoxelCodex.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Voxel\VoxelData.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Voxel\VoxelElement.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Voxel\VoxelEnums.h">
+      <Filter>Header Files\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\World.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\LightingComputer.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Noise.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\FastRandom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Raycast.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\vecXZ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Plane.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\AABB.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Frustum.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OGL\Core\Mesh.h">
+      <Filter>Header Files\GLstuff</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OGL\Core\Model.h">
+      <Filter>Header Files\GLstuff</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OGL\Core\Shader.h">
+      <Filter>Header Files\GLstuff</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OGL\Core\Texture.h">
+      <Filter>Header Files\GLstuff</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OGL\Util\Camera.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OGL\Util\TextureAtlas.h">
+      <Filter>Header Files\GLstuff</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CppUtil\NonCopyable.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CppUtil\Blocking_Queue.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OGL\Core\RenderData.h">
+      <Filter>Header Files\GLstuff</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OGL\Core\stbi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\FloraRenderer.h">
       <Filter>Header Files\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="SolidRenderer.h">
+    <ClInclude Include="src\Renderer\MasterRenderer.h">
       <Filter>Header Files\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="TypeRenderer.h">
+    <ClInclude Include="src\Renderer\SolidRenderer.h">
       <Filter>Header Files\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="WaterRenderer.h">
+    <ClInclude Include="src\Renderer\TypeRenderer.h">
       <Filter>Header Files\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files\GLstuff</Filter>
+    <ClInclude Include="src\Renderer\WaterRenderer.h">
+      <Filter>Header Files\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files\GLstuff</Filter>
+    <ClInclude Include="src\World\Generation\Biome\Biome.h">
+      <Filter>Header Files\Biomes</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files\GLstuff</Filter>
+    <ClInclude Include="src\World\Generation\Biome\Desert.h">
+      <Filter>Header Files\Biomes</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files\GLstuff</Filter>
+    <ClInclude Include="src\World\Generation\Biome\Fields.h">
+      <Filter>Header Files\Biomes</Filter>
     </ClInclude>
-    <ClInclude Include="RenderData.h">
-      <Filter>Header Files\GLstuff</Filter>
+    <ClInclude Include="src\World\Generation\Biome\Oceans.h">
+      <Filter>Header Files\Biomes</Filter>
     </ClInclude>
-    <ClInclude Include="TextureAtlas.h">
-      <Filter>Header Files\GLstuff</Filter>
-    </ClInclude>
-    <ClInclude Include="MapGenerator.h">
+    <ClInclude Include="src\World\Generation\Map\FlatGenerator.h">
       <Filter>Header Files\MapGen</Filter>
     </ClInclude>
-    <ClInclude Include="OverworldGenerator.h">
+    <ClInclude Include="src\World\Generation\Map\OverworldGenerator.h">
       <Filter>Header Files\MapGen</Filter>
     </ClInclude>
-    <ClInclude Include="FlatGenerator.h">
+    <ClInclude Include="src\World\Generation\Map\MapGenerator.h">
       <Filter>Header Files\MapGen</Filter>
     </ClInclude>
-    <ClInclude Include="Noise.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="Biome.h">
+    <ClInclude Include="src\World\Generation\Biome\Composition.h">
       <Filter>Header Files\Biomes</Filter>
     </ClInclude>
-    <ClInclude Include="Composition.h">
-      <Filter>Header Files\Biomes</Filter>
+    <ClInclude Include="src\World\Voxel\VoxelType\ExplosiveHandler.h">
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
-    <ClInclude Include="Fields.h">
-      <Filter>Header Files\Biomes</Filter>
+    <ClInclude Include="src\World\Voxel\VoxelType\GravityHandler.h">
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
-    <ClInclude Include="Desert.h">
-      <Filter>Header Files\Biomes</Filter>
+    <ClInclude Include="src\World\Voxel\VoxelType\GroundFloraHandler.h">
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
-    <ClInclude Include="Frustum.h">
-      <Filter>Header Files\Util</Filter>
+    <ClInclude Include="src\World\Voxel\VoxelType\LiquidHandler.h">
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
-    <ClInclude Include="Plane.h">
-      <Filter>Header Files\Util</Filter>
+    <ClInclude Include="src\World\Voxel\VoxelType\NonUpdatable.h">
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
-    <ClInclude Include="AABB.h">
-      <Filter>Header Files\Util</Filter>
+    <ClInclude Include="src\World\Voxel\VoxelType\VoxelUpdateHandler.h">
+      <Filter>Header Files\Voxels</Filter>
     </ClInclude>
-    <ClInclude Include="Raycast.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
+    <ClInclude Include="src\State\Game.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="NonCopyable.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="src\State\State.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="StateManager.h">
+    <ClInclude Include="src\State\StateManager.h">
       <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="FloraRenderer.h">
-      <Filter>Header Files\Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="GroundFloraHandler.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LiquidHandler.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="SectorManager.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="Sector.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxelEnums.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxelUpdateHandler.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="GravityHandler.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxelData.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxelCodex.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="NonUpdatable.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxelElement.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="Oceans.h">
-      <Filter>Header Files\Biomes</Filter>
-    </ClInclude>
-    <ClInclude Include="SegmentBounds.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="ExplosiveHandler.h">
-      <Filter>Header Files\Voxels</Filter>
-    </ClInclude>
-    <ClInclude Include="LightingComputer.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="FastRandom.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Blocking_Queue.h">
-      <Filter>Header Files\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="SectorGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeFaceMeshes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SegmentMesh.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="SegmentMeshGenerator.h">
-      <Filter>Header Files\Sector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="src\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VoxelCraft.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stbi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vecXZ.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Segment.cpp">
+    <ClCompile Include="src\World\Segment\Sector.cpp">
       <Filter>Source Files\Sector</Filter>
     </ClCompile>
-    <ClCompile Include="SegmentModel.cpp">
+    <ClCompile Include="src\World\Segment\SectorManager.cpp">
       <Filter>Source Files\Sector</Filter>
     </ClCompile>
-    <ClCompile Include="World.cpp">
+    <ClCompile Include="src\World\Segment\Segment.cpp">
       <Filter>Source Files\Sector</Filter>
     </ClCompile>
-    <ClCompile Include="FlatGenerator.cpp">
+    <ClCompile Include="src\World\Segment\SegmentBounds.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\SegmentMesh.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\SegmentMeshGenerator.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\SegmentModel.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Voxel\VoxelCodex.cpp">
+      <Filter>Source Files\Voxels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Voxel\VoxelElement.cpp">
+      <Filter>Source Files\Voxels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\World.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\LightingComputer.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Noise.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\FastRandom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\RayCast.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\vector3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\vecXZ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Plane.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Frustum.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OGL\Core\Model.cpp">
+      <Filter>Source Files\GLstuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OGL\Core\Shader.cpp">
+      <Filter>Source Files\GLstuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OGL\Core\Texture.cpp">
+      <Filter>Source Files\GLstuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OGL\Util\Camera.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OGL\Util\TextureAtlas.cpp">
+      <Filter>Source Files\GLstuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VoxelCraft.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OGL\Core\stbi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\FloraRenderer.cpp">
+      <Filter>Source Files\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\MasterRenderer.cpp">
+      <Filter>Source Files\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\SolidRenderer.cpp">
+      <Filter>Source Files\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\TypeRenderer.cpp">
+      <Filter>Source Files\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\WaterRenderer.cpp">
+      <Filter>Source Files\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Generation\Biome\Biome.cpp">
+      <Filter>Source Files\Biomes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Generation\Biome\Desert.cpp">
+      <Filter>Source Files\Biomes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Generation\Biome\Fields.cpp">
+      <Filter>Source Files\Biomes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Generation\Biome\Oceans.cpp">
+      <Filter>Source Files\Biomes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Generation\Map\FlatGenerator.cpp">
       <Filter>Source Files\MapGen</Filter>
     </ClCompile>
-    <ClCompile Include="OverworldGenerator.cpp">
+    <ClCompile Include="src\World\Generation\Map\OverworldGenerator.cpp">
       <Filter>Source Files\MapGen</Filter>
     </ClCompile>
-    <ClCompile Include="MapGenerator.cpp">
+    <ClCompile Include="src\World\Generation\Map\MapGenerator.cpp">
       <Filter>Source Files\MapGen</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files\GLstuff</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureAtlas.cpp">
-      <Filter>Source Files\GLstuff</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Source Files\GLstuff</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files\GLstuff</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeRenderer.cpp">
-      <Filter>Source Files\Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="WaterRenderer.cpp">
-      <Filter>Source Files\Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="MasterRenderer.cpp">
-      <Filter>Source Files\Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="SolidRenderer.cpp">
-      <Filter>Source Files\Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Noise.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Biome.cpp">
+    <ClCompile Include="src\World\Generation\Biome\Composition.cpp">
       <Filter>Source Files\Biomes</Filter>
     </ClCompile>
-    <ClCompile Include="Composition.cpp">
-      <Filter>Source Files\Biomes</Filter>
+    <ClCompile Include="src\World\Voxel\VoxelType\ExplosiveHandler.cpp">
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
-    <ClCompile Include="Fields.cpp">
-      <Filter>Source Files\Biomes</Filter>
+    <ClCompile Include="src\World\Voxel\VoxelType\GravityHandler.cpp">
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
-    <ClCompile Include="Desert.cpp">
-      <Filter>Source Files\Biomes</Filter>
+    <ClCompile Include="src\World\Voxel\VoxelType\GroundFloraHandler.cpp">
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
-    <ClCompile Include="Frustum.cpp">
-      <Filter>Source Files\Util</Filter>
+    <ClCompile Include="src\World\Voxel\VoxelType\LiquidHandler.cpp">
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
-    <ClCompile Include="Plane.cpp">
-      <Filter>Source Files\Util</Filter>
+    <ClCompile Include="src\World\Voxel\VoxelType\NonUpdatable.cpp">
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
-    <ClCompile Include="RayCast.cpp">
-      <Filter>Source Files\Util</Filter>
+    <ClCompile Include="src\World\Voxel\VoxelType\VoxelUpdateHandler.cpp">
+      <Filter>Source Files\Voxels</Filter>
     </ClCompile>
-    <ClCompile Include="StateManager.cpp">
+    <ClCompile Include="src\State\Game.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="src\State\StateManager.cpp">
       <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="FloraRenderer.cpp">
-      <Filter>Source Files\Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="GroundFloraHandler.cpp">
-      <Filter>Source Files\Voxels</Filter>
-    </ClCompile>
-    <ClCompile Include="vector3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LiquidHandler.cpp">
-      <Filter>Source Files\Voxels</Filter>
-    </ClCompile>
-    <ClCompile Include="NonUpdatable.cpp">
-      <Filter>Source Files\Voxels</Filter>
-    </ClCompile>
-    <ClCompile Include="SectorManager.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
-    <ClCompile Include="Sector.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
-    <ClCompile Include="VoxelCodex.cpp">
-      <Filter>Source Files\Voxels</Filter>
-    </ClCompile>
-    <ClCompile Include="UpdateHandler.cpp">
-      <Filter>Source Files\Voxels</Filter>
-    </ClCompile>
-    <ClCompile Include="GravityHandler.cpp">
-      <Filter>Source Files\Voxels</Filter>
-    </ClCompile>
-    <ClCompile Include="VoxelElement.cpp">
-      <Filter>Source Files\Voxels</Filter>
-    </ClCompile>
-    <ClCompile Include="Oceans.cpp">
-      <Filter>Source Files\Biomes</Filter>
-    </ClCompile>
-    <ClCompile Include="SegmentBounds.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
-    <ClCompile Include="ExplosiveHandler.cpp">
-      <Filter>Source Files\Voxels</Filter>
-    </ClCompile>
-    <ClCompile Include="LightingComputer.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
-    <ClCompile Include="FastRandom.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SegmentMesh.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
-    <ClCompile Include="SegmentMeshGenerator.cpp">
-      <Filter>Source Files\Sector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="shaders\solid.vert">
       <Filter>Resource Files</Filter>
     </None>
@@ -398,5 +385,6 @@
     <None Include="shaders\voxel.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="src\packages.config" />
   </ItemGroup>
 </Project>

@@ -16,8 +16,8 @@ public:
 	World();
 	~World();
 public:
-	void setVoxel(std::int64_t x, std::int64_t y, std::int64_t z, Voxel::Type voxel);
-	Voxel::Element getVoxel(std::int64_t x, std::int64_t y, std::int64_t z) const;
+	void setVoxel(int x, int y, int z, Voxel::Type voxel);
+	Voxel::Element getVoxel(int x, int y, int z) const;
 
 	void update(const Camera& camera);
 	void renderSector(MasterRenderer& renderer, const Frustum& frustum);
@@ -29,8 +29,8 @@ private:
 	void updateMeshes(const VecXZ& pos, std::int16_t y);
 	void addToUpdates(int x, int y, int z);
 
-	const VecXZ getSectorPos(std::int64_t x, std::int64_t z) const;
-	const std::tuple<int, int, int> getVoxelPos(std::int64_t x, std::int64_t y, std::int64_t z) const;
+	const VecXZ getSectorPos(int x, int z) const;
+	const std::tuple<int, int, int> getVoxelPos(int x, int y, int z) const;
 private:
 	SectorManager m_sectors;
 	std::unordered_set<VecXZ> m_regenSectors;

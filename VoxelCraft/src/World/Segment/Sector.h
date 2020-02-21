@@ -13,11 +13,11 @@ public:
 public:
 	void fillSegments(int x, int z, SectorManager& sectors);
 
-	void setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id);
-	Voxel::Element getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const;
+	void setVoxel(int x, int y, int z, Voxel::Type id);
+	Voxel::Element getVoxel(int x, int y, int z) const;
 
 	void makeMesh();
-	void regenMesh(std::int16_t y);
+	void regenMesh(int y);
 	void cleanUp();
 
 	const Segment& getSegment(std::uint8_t index) const;

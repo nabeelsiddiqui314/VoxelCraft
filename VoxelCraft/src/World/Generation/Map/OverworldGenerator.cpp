@@ -15,12 +15,12 @@ OverworldGenerator::OverworldGenerator()
       {}
 
 void OverworldGenerator::generateSector(Sector& sector, const VecXZ& pos) {
-	std::int16_t height;
+	int height;
 
 	setSquares(pos.x, pos.z);
 
-	for (std::int16_t x = 0; x < Segment::WIDTH; x++) 
-	for (std::int16_t z = 0; z < Segment::WIDTH; z++) {
+	for (int x = 0; x < Segment::WIDTH; x++) 
+	for (int z = 0; z < Segment::WIDTH; z++) {
 		float biomeValue = m_biomeNoise.getNoiseAt(x + pos.x * Segment::WIDTH, z + pos.z * Segment::WIDTH);
 		const auto& biome = getBiome(biomeValue);
 

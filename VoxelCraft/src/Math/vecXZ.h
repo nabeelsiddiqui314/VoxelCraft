@@ -3,7 +3,7 @@
 #include <functional>
 
 struct VecXZ {
-	std::int64_t x, z;
+	int x, z;
 };
 
 bool operator==(const VecXZ& lhs, const VecXZ& rhs);
@@ -13,7 +13,7 @@ namespace std {
 	template<>
 	struct hash<VecXZ> {
 		size_t operator()(const VecXZ& vec) const {
-			std::hash<std::int64_t> hasher;
+			std::hash<decltype(vec.x)> hasher;
 			auto hashx = hasher(vec.x);
 			auto hashz = hasher(vec.z);
 

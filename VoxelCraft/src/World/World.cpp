@@ -19,7 +19,7 @@ World::~World() {
 	}
 }
 
-void World::setVoxel(std::int64_t x, std::int64_t y, std::int64_t z, Voxel::Type voxel) {
+void World::setVoxel(int x, int y, int z, Voxel::Type voxel) {
 	int X = x, Y = y, Z = z;
 	const auto& pos = getSectorPos(x, z);
 
@@ -35,7 +35,7 @@ void World::setVoxel(std::int64_t x, std::int64_t y, std::int64_t z, Voxel::Type
 	}
 }
 
-Voxel::Element World::getVoxel(std::int64_t x, std::int64_t y, std::int64_t z) const {
+Voxel::Element World::getVoxel(int x, int y, int z) const {
 	const auto& pos = getSectorPos(x, z);
 	
 	std::lock_guard<std::recursive_mutex> lock(m_mutex);
@@ -67,8 +67,8 @@ void World::renderSector(MasterRenderer& renderer, const Frustum& frustum) {
 
 void World::makeSector() {
 	while (m_running) {
-		for (std::int16_t x = m_camPosition.x - m_currentRadius; x <= m_camPosition.x + m_currentRadius; x++) {
-			for (std::int16_t z = m_camPosition.z - m_currentRadius; z <= m_camPosition.z + m_currentRadius; z++) {
+		for (int x = m_camPosition.x - m_currentRadius; x <= m_camPosition.x + m_currentRadius; x++) {
+			for (int z = m_camPosition.z - m_currentRadius; z <= m_camPosition.z + m_currentRadius; z++) {
 				makeEditedMeshes();
 
 				if (!m_sectors.doesSectorExist({ x, z })) {
@@ -164,10 +164,10 @@ void World::addToUpdates(int x, int y, int z) {
 	tryAdd(x,     y,     z - 1);
 }
 
-const VecXZ World::getSectorPos(std::int64_t x, std::int64_t z) const {
+const VecXZ World::getSectorPos(int x, int z) const {
 	return {x / Segment::WIDTH, z / Segment::WIDTH};
 }
 
-const std::tuple<int, int, int> World::getVoxelPos(std::int64_t x, std::int64_t y, std::int64_t z) const {
+const std::tuple<int, int, int> World::getVoxelPos(int x, int y, int z) const {
 	return std::tuple<int, int, int>(abs(x) % Segment::WIDTH, y, abs(z) % Segment::WIDTH);
 }

@@ -13,11 +13,11 @@ void Sector::fillSegments(int x, int z, SectorManager& sectors) {
 	}
 }
 
-void Sector::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id) {
+void Sector::setVoxel(int x, int y, int z, Voxel::Type id) {
 	m_segments[y / Segment::WIDTH].setVoxel(x, y % Segment::WIDTH, z, id);
 }
 
-Voxel::Element Sector::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const {
+Voxel::Element Sector::getVoxel(int x, int y, int z) const {
 	return m_segments[y / Segment::WIDTH].getVoxel(x, y % Segment::WIDTH, z);
 }
 
@@ -29,7 +29,7 @@ void Sector::makeMesh() {
 	}
 }
 
-void Sector::regenMesh(std::int16_t y) {
+void Sector::regenMesh(int y) {
 	if(m_segments[y].hasMeshGenerated())
 		m_segments[y].regenMesh();
 }

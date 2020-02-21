@@ -16,7 +16,7 @@ void Segment::setNaturalLight(int x, int y, int z, int luminocity) {
 	m_voxels[x + WIDTH * (y + WIDTH * z)].setNaturalLight(luminocity);
 }
 
-void Segment::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Type id) {
+void Segment::setVoxel(int x, int y, int z, Voxel::Type id) {
 	if (!isInBounds(x, y, z)) {
 		return;
 	}
@@ -43,7 +43,7 @@ void Segment::setVoxel(std::int16_t x, std::int16_t y, std::int16_t z, Voxel::Ty
 	}
 }
 
-Voxel::Element Segment::getVoxel(std::int16_t x, std::int16_t y, std::int16_t z) const {
+Voxel::Element Segment::getVoxel(int x, int y, int z) const {
 	if (!isInBounds(x, y, z)) {
 		return Voxel::Type::VOID;
 	}

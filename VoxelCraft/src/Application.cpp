@@ -17,7 +17,7 @@ Application::Application() {
 
 	TextureAtlas::init(8);
 
-	m_stateManager.pushState(std::make_shared<Game>());
+	m_stateManager.pushState<Game>();
 
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 }

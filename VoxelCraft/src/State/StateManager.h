@@ -10,7 +10,11 @@ public:
 	StateManager() = default;
 	~StateManager() = default;
 public:
-	void pushState(const StatePtr& state);
+	template <typename T, typename... Args>
+	void pushState(Args&&... args) {
+		m_states.push(std::make_shared<T>(std::forward<Args>(args)...));
+	}
+
 	void popState();
 
 	const StatePtr& getCurrentState() const;

@@ -1,6 +1,5 @@
 #include "LightingComputer.h"
 #include "Segment.h"
-#include "SegmentBounds.h"
 
 void LightingComputer::addLight(int x, int y, int z, Segment* segment) {
 	Vector3 pos = {x, y, z};
@@ -34,18 +33,11 @@ void LightingComputer::propogateAdd() {
 			Y += pos.y;
 			Z += pos.z;
 
-			if (!SegmentBounds::getInstance().getVoxel(*segment, X, Y, Z).getInfo().opaque &&
-				SegmentBounds::getInstance().getVoxel(*segment, X, Y, Z).getNaturalLight() <= luminocity - 2) {
+			if (!segment->getVoxel(X, Y, Z).getInfo().opaque &&
+				segment->getVoxel(X, Y, Z).getNaturalLight() <= luminocity - 2) {
 
-				int ox = adjustOrdinate(X);
-				int oy = adjustOrdinate(Y);
-				int oz = adjustOrdinate(Z);
-
-				auto lightSegment = SegmentBounds::getInstance().getSegment(*segment, X, Y, Z);
-
-				addLight(ox, oy, oz, lightSegment);
-				lightSegment->setNaturalLight(ox, oy, oz, luminocity - 1);
-				lightSegment->regenMesh();
+				addLight(X, Y, Z, segment);
+				segment->setNaturalLight(X, Y, Z, luminocity - 1);
 			}
 		};
 
@@ -72,21 +64,14 @@ void LightingComputer::propogateRemove() {
 			Y += pos.y;
 			Z += pos.z;
 
-			int ox = adjustOrdinate(X);
-			int oy = adjustOrdinate(Y);
-			int oz = adjustOrdinate(Z);
-
-			auto lightSegment = SegmentBounds::getInstance().getSegment(*segment, X, Y, Z);
-
-			int neighborLevel = SegmentBounds::getInstance().getVoxel(*segment, X, Y, Z).getNaturalLight();
+			int neighborLevel = segment->getVoxel(X, Y, Z).getNaturalLight();
 
 			if (neighborLevel != 0 && neighborLevel < lightLevel) {
-				removeLight(ox, oy, oz, lightSegment, neighborLevel);
-				lightSegment->regenMesh();
+				removeLight(X, Y, Z, segment, neighborLevel);
 			}
 			else if (neighborLevel >= lightLevel) {
-				Vector3 pos = { ox, oy, oz };
-				m_lightQueue.emplace(pos, lightSegment);
+				Vector3 pos = { X, Y, Z };
+				m_lightQueue.emplace(pos, segment);
 			}
 
 		};
@@ -98,14 +83,4 @@ void LightingComputer::propogateRemove() {
 		spreadRemoval( 0,  0,  1);
 		spreadRemoval( 0,  0, -1);
 	}
-}
-
-int LightingComputer::adjustOrdinate(int ordinate) {
-	if (ordinate < 0) {
-		return Segment::WIDTH - abs(ordinate);
-	}
-	else if (ordinate >= Segment::WIDTH) {
-		return ordinate % Segment::WIDTH;
-	}
-	return ordinate;
 }

@@ -1,13 +1,12 @@
 #pragma once
 
-class Sector;
-struct VecXZ;
+class SegmentStack;
 
 class MapGenerator
 {
 public:
 	virtual ~MapGenerator() {}
 public:
-	virtual void generateSector(Sector& sector, const VecXZ& pos) = 0;
+	virtual void generateStack(SegmentStack& stack, int x, int z) = 0;
 };
 

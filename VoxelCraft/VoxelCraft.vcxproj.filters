@@ -69,25 +69,10 @@
     <ClInclude Include="src\World\Segment\CubeFaceMeshes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Segment\Sector.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Segment\SectorManager.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
     <ClInclude Include="src\World\Segment\Segment.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Segment\SegmentBounds.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
     <ClInclude Include="src\World\Segment\SegmentMesh.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Segment\SegmentMeshGenerator.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Segment\SegmentModel.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Voxel\VoxelCodex.h">
@@ -118,9 +103,6 @@
       <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Math\vecXZ.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Plane.h">
@@ -228,30 +210,45 @@
     <ClInclude Include="src\State\StateManager.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
+    <ClInclude Include="src\World\Segment\SegmentStack.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\RenderableSegment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\SegmentModels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\SegmentManager.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\Generation\SegmentGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\Generation\IConcurrentTask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\Generation\SegmentMeshGenerator.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\Generation\SegmentGenerationTask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\Generation\SegmentMeshingTask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\Generation\ITaskProduct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\Segment\Sector.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
-    <ClCompile Include="src\World\Segment\SectorManager.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
     <ClCompile Include="src\World\Segment\Segment.cpp">
       <Filter>Source Files\Sector</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\Segment\SegmentBounds.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
     <ClCompile Include="src\World\Segment\SegmentMesh.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
-    <ClCompile Include="src\World\Segment\SegmentMeshGenerator.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
-    <ClCompile Include="src\World\Segment\SegmentModel.cpp">
       <Filter>Source Files\Sector</Filter>
     </ClCompile>
     <ClCompile Include="src\World\Voxel\VoxelCodex.cpp">
@@ -276,9 +273,6 @@
       <Filter>Source Files\Util</Filter>
     </ClCompile>
     <ClCompile Include="src\Math\vector3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\vecXZ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Math\Plane.cpp">
@@ -370,6 +364,27 @@
     </ClCompile>
     <ClCompile Include="src\State\StateManager.cpp">
       <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\SegmentStack.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\RenderableSegment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\SegmentManager.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\Generation\SegmentGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\Generation\SegmentMeshGenerator.cpp">
+      <Filter>Source Files\Sector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\Generation\SegmentGenerationTask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\Generation\SegmentMeshingTask.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

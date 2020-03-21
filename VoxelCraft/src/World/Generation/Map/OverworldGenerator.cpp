@@ -1,8 +1,7 @@
 #include "OverworldGenerator.h"
 #include <cstdint>
-#include "../../../Math/vecXZ.h"
 #include "../../../Math/FastRandom.h"
-#include "../../Segment/Sector.h"
+#include "../../Segment/SegmentStack.h"
 #include "../../Generation/Biome/Biome.h"
 
 OverworldGenerator::OverworldGenerator()
@@ -14,14 +13,14 @@ OverworldGenerator::OverworldGenerator()
 	p_currentSquare(nullptr)
       {}
 
-void OverworldGenerator::generateSector(Sector& sector, const VecXZ& pos) {
+void OverworldGenerator::generateStack(SegmentStack& stack, int x, int z) {
 	int height;
 
-	setSquares(pos.x, pos.z);
+	setSquares(x, z);
 
 	for (int x = 0; x < Segment::WIDTH; x++) 
 	for (int z = 0; z < Segment::WIDTH; z++) {
-		float biomeValue = m_biomeNoise.getNoiseAt(x + pos.x * Segment::WIDTH, z + pos.z * Segment::WIDTH);
+		float biomeValue = m_biomeNoise.getNoiseAt(x + x * Segment::WIDTH, z + z * Segment::WIDTH);
 		const auto& biome = getBiome(biomeValue);
 
 		setCurrentSqare(x, z);
@@ -29,40 +28,40 @@ void OverworldGenerator::generateSector(Sector& sector, const VecXZ& pos) {
 			height = getLerpedHeight(x, z);
 		}
 		else {
-			height = biome.getHeightAt(x + pos.x * Segment::WIDTH, z + pos.z * Segment::WIDTH);
+			height = biome.getHeightAt(x + x * Segment::WIDTH, z + z * Segment::WIDTH);
 		}
 		height = biome.applyFunctionTo(height);
 
 		int depth = 0;
-		for (int y = Sector::HEIGHT * Segment::WIDTH; y-- > 0;) {
+		for (int y = SegmentStack::HEIGHT * Segment::WIDTH; y-- > 0;) {
 			if (y <= height) {
 				if (y == height) {
 					auto decorativeVoxel = biome.getDecorativeVoxel();
 					if (decorativeVoxel != Voxel::Type::VOID) {
 						auto& random = FastRandom::get();
 
-						random.seed(m_seed + pos.x * 2312321 * x * pos.z * 898009 * z);
+						random.seed(m_seed + x * 2312321 * x * z * 898009 * z);
 						int r = random.random() % 1000;
 
 						if (r > 990) {
-							sector.setVoxel(x, y, z, decorativeVoxel);
+							stack.setVoxel(x, y, z, decorativeVoxel);
 						}
 						depth = -1;
 					}
 				}
 				else {
-					sector.setVoxel(x, y, z, biome.getComposition().getVoxelAt(depth));
+					stack.setVoxel(x, y, z, biome.getComposition().getVoxelAt(depth));
 				}
 				depth++;
 			}
 			if (biome.hasWater()) {
-				if (y <= Sector::HEIGHT * Segment::WIDTH / 4) {
-					if (sector.getVoxel(x, y, z) == Voxel::Type::VOID) {
-						if (y <= Sector::HEIGHT * Segment::WIDTH / 4 - 3)
-							sector.setVoxel(x, y, z, Voxel::Type::WATER);
+				if (y <= SegmentStack::HEIGHT * Segment::WIDTH / 4) {
+					if (stack.getVoxel(x, y, z) == Voxel::Type::VOID) {
+						if (y <= SegmentStack::HEIGHT * Segment::WIDTH / 4 - 3)
+							stack.setVoxel(x, y, z, Voxel::Type::WATER);
 					}
 					else {
-						sector.setVoxel(x, y, z, Voxel::Type::SAND);
+						stack.setVoxel(x, y, z, Voxel::Type::SAND);
 					}
 				}
 			}
@@ -87,7 +86,7 @@ float OverworldGenerator::biLerp(float x, float z, float x1min, float x1max, flo
 
 void OverworldGenerator::setSquares(int x, int z) {
 	static const int width = Segment::WIDTH / 2;
-	static const float sectorHeight = Segment::WIDTH * Sector::HEIGHT;
+	static const float sectorHeight = Segment::WIDTH * SegmentStack::HEIGHT;
 
 	int cx = x * Segment::WIDTH;
 	int cz = z * Segment::WIDTH;
@@ -134,7 +133,7 @@ void OverworldGenerator::setCurrentSqare(int x, int z) {
 }
 
 float OverworldGenerator::getLerpedHeight(float x, float z) {
-	static const float sectorHeight = Segment::WIDTH * Sector::HEIGHT;
+	static const float sectorHeight = Segment::WIDTH * SegmentStack::HEIGHT;
 	static const int width = Segment::WIDTH / 2;
 
 	x = (int)x % width;

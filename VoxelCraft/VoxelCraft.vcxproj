@@ -157,14 +157,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\World\Segment\Generation\ITaskProduct.h" />
+    <ClInclude Include="src\World\Segment\Generation\SegmentMeshingTask.h" />
+    <ClInclude Include="src\World\Segment\Generation\SegmentGenerationTask.h" />
+    <ClInclude Include="src\World\Segment\Generation\IConcurrentTask.h" />
+    <ClInclude Include="src\World\Segment\Generation\SegmentGenerator.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\World\Generation\Biome\Biome.h" />
+    <ClInclude Include="src\World\Segment\RenderableSegment.h" />
+    <ClInclude Include="src\World\Segment\SegmentModels.h" />
     <ClInclude Include="src\World\Voxel\VoxelType\ExplosiveHandler.h" />
     <ClInclude Include="src\Math\FastRandom.h" />
     <ClInclude Include="src\World\Segment\LightingComputer.h" />
     <ClInclude Include="src\World\Generation\Biome\Oceans.h" />
     <ClInclude Include="src\CppUtil\Blocking_Queue.h" />
-    <ClInclude Include="src\World\Segment\SegmentBounds.h" />
     <ClInclude Include="src\World\Voxel\VoxelElement.h" />
     <ClInclude Include="src\World\Segment\CubeFaceMeshes.h" />
     <ClInclude Include="src\World\Voxel\VoxelType\VoxelUpdateHandler.h" />
@@ -177,7 +183,7 @@
     <ClInclude Include="src\World\Voxel\VoxelData.h" />
     <ClInclude Include="src\Math\AABB.h" />
     <ClInclude Include="src\OGL\Util\Camera.h" />
-    <ClInclude Include="src\World\Segment\SectorManager.h" />
+    <ClInclude Include="src\World\Segment\SegmentManager.h" />
     <ClInclude Include="src\World\Generation\Biome\Composition.h" />
     <ClInclude Include="src\World\Generation\Biome\Desert.h" />
     <ClInclude Include="src\World\Generation\Biome\Fields.h" />
@@ -187,8 +193,8 @@
     <ClInclude Include="src\CppUtil\NonCopyable.h" />
     <ClInclude Include="src\Math\Plane.h" />
     <ClInclude Include="src\Math\Raycast.h" />
-    <ClInclude Include="src\World\Segment\SegmentMeshGenerator.h" />
-    <ClInclude Include="src\World\Segment\Sector.h" />
+    <ClInclude Include="src\World\Segment\Generation\SegmentMeshGenerator.h" />
+    <ClInclude Include="src\World\Segment\SegmentStack.h" />
     <ClInclude Include="src\World\Generation\Map\FlatGenerator.h" />
     <ClInclude Include="src\World\Generation\Map\MapGenerator.h" />
     <ClInclude Include="src\Renderer\MasterRenderer.h" />
@@ -197,7 +203,6 @@
     <ClInclude Include="src\OGL\Core\Model.h" />
     <ClInclude Include="src\World\Generation\Map\OverworldGenerator.h" />
     <ClInclude Include="src\World\Segment\Segment.h" />
-    <ClInclude Include="src\World\Segment\SegmentModel.h" />
     <ClInclude Include="src\Renderer\SolidRenderer.h" />
     <ClInclude Include="src\OGL\Core\RenderData.h" />
     <ClInclude Include="src\OGL\Core\Shader.h" />
@@ -208,24 +213,26 @@
     <ClInclude Include="src\OGL\Util\TextureAtlas.h" />
     <ClInclude Include="src\Renderer\TypeRenderer.h" />
     <ClInclude Include="src\Math\vector3.h" />
-    <ClInclude Include="src\Math\vecXZ.h" />
     <ClInclude Include="src\World\Voxel\VoxelEnums.h" />
     <ClInclude Include="src\Renderer\WaterRenderer.h" />
     <ClInclude Include="src\World\World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\World\Segment\Generation\SegmentMeshingTask.cpp" />
+    <ClCompile Include="src\World\Segment\Generation\SegmentGenerationTask.cpp" />
+    <ClCompile Include="src\World\Segment\Generation\SegmentGenerator.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Biome.cpp" />
+    <ClCompile Include="src\World\Segment\RenderableSegment.cpp" />
     <ClCompile Include="src\World\Voxel\VoxelType\ExplosiveHandler.cpp" />
     <ClCompile Include="src\Math\FastRandom.cpp" />
     <ClCompile Include="src\World\Segment\LightingComputer.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Oceans.cpp" />
-    <ClCompile Include="src\World\Segment\SegmentBounds.cpp" />
     <ClCompile Include="src\World\Voxel\VoxelElement.cpp" />
     <ClCompile Include="src\World\Voxel\VoxelCodex.cpp" />
     <ClCompile Include="src\World\Voxel\VoxelType\VoxelUpdateHandler.cpp" />
     <ClCompile Include="src\OGL\Util\Camera.cpp" />
-    <ClCompile Include="src\World\Segment\SectorManager.cpp" />
+    <ClCompile Include="src\World\Segment\SegmentManager.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Composition.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Desert.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Fields.cpp" />
@@ -239,8 +246,8 @@
     <ClCompile Include="src\World\Voxel\VoxelType\NonUpdatable.cpp" />
     <ClCompile Include="src\Math\Plane.cpp" />
     <ClCompile Include="src\Math\RayCast.cpp" />
-    <ClCompile Include="src\World\Segment\SegmentMeshGenerator.cpp" />
-    <ClCompile Include="src\World\Segment\Sector.cpp" />
+    <ClCompile Include="src\World\Segment\Generation\SegmentMeshGenerator.cpp" />
+    <ClCompile Include="src\World\Segment\SegmentStack.cpp" />
     <ClCompile Include="src\World\Generation\Map\FlatGenerator.cpp" />
     <ClCompile Include="src\World\Generation\Map\MapGenerator.cpp" />
     <ClCompile Include="src\Renderer\MasterRenderer.cpp" />
@@ -248,7 +255,6 @@
     <ClCompile Include="src\OGL\Core\Model.cpp" />
     <ClCompile Include="src\World\Generation\Map\OverworldGenerator.cpp" />
     <ClCompile Include="src\World\Segment\Segment.cpp" />
-    <ClCompile Include="src\World\Segment\SegmentModel.cpp" />
     <ClCompile Include="src\Renderer\SolidRenderer.cpp" />
     <ClCompile Include="src\OGL\Core\Shader.cpp" />
     <ClCompile Include="src\State\StateManager.cpp" />
@@ -257,7 +263,6 @@
     <ClCompile Include="src\OGL\Util\TextureAtlas.cpp" />
     <ClCompile Include="src\Renderer\TypeRenderer.cpp" />
     <ClCompile Include="src\Math\vector3.cpp" />
-    <ClCompile Include="src\Math\vecXZ.cpp" />
     <ClCompile Include="src\VoxelCraft.cpp" />
     <ClCompile Include="src\Renderer\WaterRenderer.cpp" />
     <ClCompile Include="src\World\World.cpp" />

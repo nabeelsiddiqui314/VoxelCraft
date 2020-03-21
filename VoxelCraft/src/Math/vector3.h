@@ -5,6 +5,7 @@
 struct Vector3
 {
 	int x, y, z;
+	Vector3() = default;
 	Vector3(int _x, int _y, int _z);
 };
 

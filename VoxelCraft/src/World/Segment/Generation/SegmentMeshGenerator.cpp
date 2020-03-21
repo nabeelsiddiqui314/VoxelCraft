@@ -1,8 +1,7 @@
 #include "SegmentMeshGenerator.h"
-#include "Segment.h"
-#include "SegmentBounds.h"
-#include "CubeFaceMeshes.h"
-#include "SegmentMesh.h"
+#include "../Segment.h"
+#include "../CubeFaceMeshes.h"
+#include "../SegmentModels.h"
 
 typedef std::array<Voxel::Element, 7> Neighbors;
 
@@ -18,27 +17,26 @@ enum {
 
 void addCubeFace(SegmentMesh* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor);
 
-void generateMesh(MeshTypes& meshes, const Segment& segment) {
-	SegmentMesh solidMesh(meshes.solid.mesh);
-	SegmentMesh liquidMesh(meshes.liquid.mesh);
-	SegmentMesh floraMesh(meshes.flora.mesh);
+SegmentMeshes generateMesh(const Segment& segment) {
+	SegmentMeshes meshes;
 
-	auto* top    = segment.getRelativeSegment( 0,  1,  0);
-	auto* bottom = segment.getRelativeSegment( 0, -1,  0);
-	auto* left   = segment.getRelativeSegment(-1,  0,  0);
-	auto* right  = segment.getRelativeSegment( 1,  0,  0);
-	auto* front  = segment.getRelativeSegment( 0,  0,  1);
-	auto* back   = segment.getRelativeSegment( 0,  0, -1);
+	auto* top    = segment.getNeighborSegment(Segment::Neighbor::TOP);
+	auto* bottom = segment.getNeighborSegment(Segment::Neighbor::BOTTOM);
+	auto* left   = segment.getNeighborSegment(Segment::Neighbor::LEFT);
+	auto* right  = segment.getNeighborSegment(Segment::Neighbor::RIGHT);
+	auto* front  = segment.getNeighborSegment(Segment::Neighbor::FRONT);
+	auto* back   = segment.getNeighborSegment(Segment::Neighbor::BACK);
 
 	auto& worldPos = segment.getWorldPosition();
 
 	if (segment.isEmpty())
-		return;
+		return meshes;
+
 	if (top && bottom) {
 		if (segment.isAllOpaque() && top->isAllOpaque() && bottom->isAllOpaque() &&
 			left->isAllOpaque() && right->isAllOpaque() && front->isAllOpaque() &&
 			back->isAllOpaque()) {
-			return;
+			return meshes;
 		}
 	}
 
@@ -47,12 +45,12 @@ void generateMesh(MeshTypes& meshes, const Segment& segment) {
 	auto setNeighbors = [&](std::int16_t x, std::int16_t y, std::int16_t z) {
 		vxl[VOXEL]  = segment.getVoxel(x, y, z);
 
-		vxl[TOP]    = SegmentBounds::getInstance().getVoxel(segment, x    , y + 1,  z    );
-		vxl[BOTTOM] = SegmentBounds::getInstance().getVoxel(segment, x    , y - 1,  z    );
-		vxl[LEFT]   = SegmentBounds::getInstance().getVoxel(segment, x - 1, y    ,  z    );
-		vxl[RIGHT]  = SegmentBounds::getInstance().getVoxel(segment, x + 1, y    ,  z    );
-		vxl[FRONT]  = SegmentBounds::getInstance().getVoxel(segment, x    , y    ,  z + 1);
-		vxl[BACK]   = SegmentBounds::getInstance().getVoxel(segment, x    , y    ,  z - 1);
+		vxl[TOP]    = segment.getVoxel( x    , y + 1,  z    );
+		vxl[BOTTOM] = segment.getVoxel( x    , y - 1,  z    );
+		vxl[LEFT]   = segment.getVoxel( x - 1, y    ,  z    );
+		vxl[RIGHT]  = segment.getVoxel( x + 1, y    ,  z    );
+		vxl[FRONT]  = segment.getVoxel( x    , y    ,  z + 1);
+		vxl[BACK]   = segment.getVoxel( x    , y    ,  z - 1);
 	};
 
 	auto shouldAddBlob = [&](int voxel) {
@@ -78,13 +76,13 @@ void generateMesh(MeshTypes& meshes, const Segment& segment) {
 		SegmentMesh* currentMesh = nullptr;
 		switch (vxl[VOXEL].getInfo().shaderType) {
 		case Voxel::ShaderType::SOLID:
-			currentMesh = &solidMesh;
+			currentMesh = &meshes.solid;
 			break;
 		case Voxel::ShaderType::LIQUID:
-			currentMesh = &liquidMesh;
+			currentMesh = &meshes.liquid;
 			break;
 		case Voxel::ShaderType::FLORA:
-			currentMesh = &floraMesh;
+			currentMesh = &meshes.flora;
 			break;
 		}
 
@@ -109,6 +107,8 @@ void generateMesh(MeshTypes& meshes, const Segment& segment) {
 			break;
 		}
 	}
+
+	return meshes;
 }
 
 void addCubeFace(SegmentMesh* mesh, const Neighbors& neighbors, int x, int y, int z, int neighbor) {

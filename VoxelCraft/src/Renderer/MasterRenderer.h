@@ -5,15 +5,15 @@
 #include "TypeRenderer.h"
 
 class Camera;
-struct MeshTypes;
+struct SegmentModels;
 
 class MasterRenderer
 {
 public:
 	MasterRenderer();
 public:
-	void addSector(const MeshTypes& models);
-	void renderSector(const Camera& camera);
+	void addSegment(const SegmentModels& models);
+	void renderSegments(const Camera& camera);
 private:
 	std::unique_ptr<TypeRenderer> m_solidRenderer;
 	std::unique_ptr<TypeRenderer> m_waterRenderer;

@@ -1,18 +1,22 @@
 #include "Segment.h"
-#include "SectorManager.h"
-#include "SegmentMeshGenerator.h"
+#include "SegmentStack.h"
 #include "../../Renderer/MasterRenderer.h"
-#include "../../Math/VecXZ.h"
 
-Segment::Segment(int x, int y, int z, SectorManager& sectors) 
+Segment::Segment(int x, int y, int z)
 	: m_opaqueCount(0),
 	  m_voidCount(WIDTH * WIDTH * WIDTH),
-      m_sectors(sectors),
       m_worldPosition(x, y, z) {
-	m_box.dimensions = {Segment::WIDTH, Segment::WIDTH, Segment::WIDTH};
+	m_neighbors.fill(nullptr);
 }
 
 void Segment::setNaturalLight(int x, int y, int z, int luminocity) {
+	if (!isInBounds(x, y, z)) {
+		auto neighborPos = getNeighborPosition(x, y, z);
+		if (neighborPos.parent) {
+			neighborPos.parent->setNaturalLight(neighborPos.x, neighborPos.y, neighborPos.z, luminocity);
+		}
+	}
+
 	m_voxels[x + WIDTH * (y + WIDTH * z)].setNaturalLight(luminocity);
 }
 
@@ -45,88 +49,26 @@ void Segment::setVoxel(int x, int y, int z, Voxel::Type id) {
 
 Voxel::Element Segment::getVoxel(int x, int y, int z) const {
 	if (!isInBounds(x, y, z)) {
+		auto neighborPos = getNeighborPosition(x, y, z);
+		if (neighborPos.parent) {
+			return neighborPos.parent->getVoxel(neighborPos.x, neighborPos.y, neighborPos.z);
+		}
 		return Voxel::Type::VOID;
 	}
 
 	return m_voxels[x + WIDTH * (y + WIDTH * z)];
 }
 
-void Segment::makeMesh() {
-	m_lightcomputer.propogate();
-	cleanUp();
-	generateMesh(m_meshTypes, *this);
-	m_hasMeshGenerated = true;
-	m_hasLoadedModel = false;
-}
-
-Segment* Segment::getRelativeSegment(int x, int y, int z) {
-	x += m_worldPosition.x;
-	y += m_worldPosition.y;
-	z += m_worldPosition.z;
-
-	if (y >= 0 && y < Sector::HEIGHT) {
-		return &m_sectors.getSectorAt({x, z}).getSegment(y);
-	}
-
-	return nullptr;
-}
-
-const Segment* Segment::getRelativeSegment(int x, int y, int z) const {
-	x += m_worldPosition.x;
-	y += m_worldPosition.y;
-	z += m_worldPosition.z;
-
-	if (y >= 0 && y < Sector::HEIGHT) {
-		return &m_sectors.getSectors().at({ x, z }).getSegment(y);
-	}
-
-	return nullptr;
-}
-
 const Vector3& Segment::getWorldPosition() const {
 	return m_worldPosition;
 }
 
-void Segment::regenMesh() {
-	m_hasLoadedModel = true;
-	m_hasMeshGenerated = false;
+void Segment::setNeighborSegment(const Neighbor& neighborPos, Segment* segment) {
+	m_neighbors[neighbor(neighborPos)] = segment;
 }
 
-void Segment::loadModel() {
-	cleanBuffers();
-	m_meshTypes.solid.loadMeshToModel();
-	m_meshTypes.liquid.loadMeshToModel();
-	m_meshTypes.flora.loadMeshToModel();
-	m_hasLoadedModel = true;
-}
-
-void Segment::cleanUp() {
-	m_meshTypes.solid.cleanUp();
-	m_meshTypes.liquid.cleanUp();
-	m_meshTypes.flora.cleanUp();
-}
-
-void Segment::cleanBuffers() {
-	if(m_meshTypes.solid.model.hasData())
-		m_meshTypes.solid.model.deleteBuffers();
-
-	if(m_meshTypes.liquid.model.hasData())
-		m_meshTypes.liquid.model.deleteBuffers();
-
-	if (m_meshTypes.flora.model.hasData())
-		m_meshTypes.flora.model.deleteBuffers();
-}
-
-void Segment::render(MasterRenderer& renderer) {
-	renderer.addSector(m_meshTypes);
-}
-
-void Segment::setBoxPosition(const glm::vec3& pos) {
-	m_box.position = pos;
-}
-
-const AABB& Segment::getBox() const {
-	return m_box;
+const Segment* Segment::getNeighborSegment(const Neighbor& neighborPos) const {
+	return m_neighbors[neighbor(neighborPos)];
 }
 
 bool Segment::isAllOpaque() const {
@@ -137,18 +79,55 @@ bool Segment::isEmpty() const {
 	return m_voidCount == WIDTH * WIDTH * WIDTH;
 }
 
-bool Segment::hasMeshGenerated() const {
-	return m_hasMeshGenerated;
-}
-
-bool Segment::hasModelLoaded() const {
-	return m_hasLoadedModel;
-}
-
 bool Segment::isInBounds(int x, int y, int z) const {
 	auto isOrdinateInBounds = [&](int o) {
 		return o >= 0 && o < WIDTH;
 	};
 
 	return isOrdinateInBounds(x) && isOrdinateInBounds(y) && isOrdinateInBounds(z);
+}
+
+std::uint8_t Segment::neighbor(const Neighbor& neighbor) const {
+	return static_cast<std::uint8_t>(neighbor);
+}
+
+Segment::NeighborPosition Segment::getNeighborPosition(int x, int y, int z) const {
+	if (x < 0) {
+		if (m_neighbors[neighbor(Neighbor::LEFT)]) {
+			x += Segment::WIDTH;
+			return { x, y, z, m_neighbors[neighbor(Neighbor::LEFT)] };
+		}
+	}
+	else if (x >= Segment::WIDTH) {
+		if (m_neighbors[neighbor(Neighbor::RIGHT)]) {
+			x = x - Segment::WIDTH;
+			return { x, y, z, m_neighbors[neighbor(Neighbor::RIGHT)] };
+		}
+	}
+
+	if (y < 0) {
+		if (m_neighbors[neighbor(Neighbor::BOTTOM)]) {
+			y += Segment::WIDTH;
+			return { x, y, z, m_neighbors[neighbor(Neighbor::BOTTOM)] };
+		}
+	}
+	else if (y >= Segment::WIDTH) {
+		if (m_neighbors[neighbor(Neighbor::TOP)]) {
+			y = y - Segment::WIDTH;
+			return { x, y, z, m_neighbors[neighbor(Neighbor::BOTTOM)] };
+		}
+	}
+
+	if (z < 0) {
+		if (m_neighbors[neighbor(Neighbor::BACK)]) {
+			z += Segment::WIDTH;
+			return { x, y, z, m_neighbors[neighbor(Neighbor::BACK)] };
+		}
+	}
+	else if (z >= Segment::WIDTH) {
+		if (m_neighbors[neighbor(Neighbor::FRONT)]) {
+			z = z - Segment::WIDTH;
+			return { x, y, z, m_neighbors[neighbor(Neighbor::FRONT)] };
+		}
+	}
 }

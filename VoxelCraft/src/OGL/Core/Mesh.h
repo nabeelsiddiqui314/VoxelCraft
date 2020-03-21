@@ -8,4 +8,12 @@ struct Mesh {
 	std::vector<GLuint> indices;
 	std::vector<GLfloat> naturalLight;
 	std::vector<GLfloat> skyExposure;
+
+	void cleanUp() {
+		vertices.clear();
+		indices.clear();
+		textureCoords.clear();
+		naturalLight.clear();
+		skyExposure.clear();
+	}
 };

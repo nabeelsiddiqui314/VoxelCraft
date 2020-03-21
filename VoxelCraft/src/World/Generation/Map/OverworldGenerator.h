@@ -15,7 +15,7 @@ private:
 public:
 	OverworldGenerator();
 public:
-	virtual void generateSector(Sector& sector, const VecXZ& pos) override;
+	virtual void generateStack(SegmentStack& stack, int x, int z) override;
 private:
 	const Biome& getBiome(float biomeValue) const;
 	float biLerp(float x, float z, float x1min, float x1max, float x2min, float x2max);

@@ -41,7 +41,7 @@ void Game::update(float dt) {
 
 void Game::render(MasterRenderer& renderer) {
 	m_world.renderSector(renderer, m_camera.getFrustum());
-	renderer.renderSector(m_camera);
+	renderer.renderSegments(m_camera);
 }
 
 void Game::editVoxels() {

@@ -1,5 +1,5 @@
 #include "MasterRenderer.h"
-#include "../World/Segment/SegmentModel.h"
+#include "../World/Segment/SegmentModels.h"
 #include "TypeRenderer.h"
 #include "SolidRenderer.h"
 #include "WaterRenderer.h"
@@ -12,18 +12,18 @@ MasterRenderer::MasterRenderer() {
 	m_floraRenderer = std::make_unique<FloraRenderer>();
 }
 
-void MasterRenderer::addSector(const MeshTypes& models) {
-	if (models.solid.model.getRenderData().VAO != 0)
-		m_solidRenderer->addModel(&models.solid.model);
+void MasterRenderer::addSegment(const SegmentModels& models) {
+	if (models.solid.getRenderData().VAO != 0)
+		m_solidRenderer->addModel(&models.solid);
 
-	if (models.liquid.model.getRenderData().VAO != 0)
-		m_waterRenderer->addModel(&models.liquid.model);
+	if (models.liquid.getRenderData().VAO != 0)
+		m_waterRenderer->addModel(&models.liquid);
 
-	if (models.flora.model.getRenderData().VAO != 0)
-		m_floraRenderer->addModel(&models.flora.model);
+	if (models.flora.getRenderData().VAO != 0)
+		m_floraRenderer->addModel(&models.flora);
 }
 
-void MasterRenderer::renderSector(const Camera& camera) {
+void MasterRenderer::renderSegments(const Camera& camera) {
 	float time = std::max(0.5f + sin((float)m_worldClock.getElapsedTime().asSeconds() / 5.0f) / 2.0f, 0.02f);
 
 	auto skyColor = glm::vec3(0.59f, 0.74f, 0.87f) * time;

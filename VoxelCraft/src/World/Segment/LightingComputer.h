@@ -33,7 +33,6 @@ public:
 private:
 	void propogateAdd();
 	void propogateRemove();
-	int adjustOrdinate(int ordinate);
 private:
 	std::queue<LightNode> m_lightQueue;
 	std::queue<LightRemovalNode> m_lightRemovalQueue;

@@ -1,6 +1,5 @@
 #include "LightingComputer.h"
 #include "Segment.h"
-#include "SegmentBounds.h"
 
 void LightingComputer::addLight(int x, int y, int z, Segment* segment) {
 	Vector3 pos = {x, y, z};
@@ -34,18 +33,17 @@ void LightingComputer::propogateAdd() {
 			Y += pos.y;
 			Z += pos.z;
 
-			if (!SegmentBounds::getInstance().getVoxel(*segment, X, Y, Z).getInfo().opaque &&
-				SegmentBounds::getInstance().getVoxel(*segment, X, Y, Z).getNaturalLight() <= luminocity - 2) {
+			if (!segment->getVoxelFromNeighborhood(X, Y, Z).getInfo().opaque &&
+				segment->getVoxelFromNeighborhood(X, Y, Z).getNaturalLight() <= luminocity - 2) {
 
 				int ox = adjustOrdinate(X);
 				int oy = adjustOrdinate(Y);
 				int oz = adjustOrdinate(Z);
 
-				auto lightSegment = SegmentBounds::getInstance().getSegment(*segment, X, Y, Z);
+				auto lightSegment = segment; // todo: should get Neighbor Segment
 
 				addLight(ox, oy, oz, lightSegment);
 				lightSegment->setNaturalLight(ox, oy, oz, luminocity - 1);
-				lightSegment->regenMesh();
 			}
 		};
 
@@ -76,13 +74,12 @@ void LightingComputer::propogateRemove() {
 			int oy = adjustOrdinate(Y);
 			int oz = adjustOrdinate(Z);
 
-			auto lightSegment = SegmentBounds::getInstance().getSegment(*segment, X, Y, Z);
+			auto lightSegment = segment; // todo: should get Neighbor Segment
 
-			int neighborLevel = SegmentBounds::getInstance().getVoxel(*segment, X, Y, Z).getNaturalLight();
+			int neighborLevel = segment->getVoxelFromNeighborhood(X, Y, Z).getNaturalLight();
 
 			if (neighborLevel != 0 && neighborLevel < lightLevel) {
 				removeLight(ox, oy, oz, lightSegment, neighborLevel);
-				lightSegment->regenMesh();
 			}
 			else if (neighborLevel >= lightLevel) {
 				Vector3 pos = { ox, oy, oz };

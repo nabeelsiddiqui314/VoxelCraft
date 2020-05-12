@@ -2,44 +2,33 @@
 #include <array>
 #include "../Voxel/VoxelCodex.h"
 #include "../Voxel/VoxelElement.h"
-#include "../../Math/AABB.h"
-#include "../../Math/vector3.h"
 #include "LightingComputer.h"
-#include "SegmentModel.h"
-
-struct VecXZ;
-class MasterRenderer;
-class SectorManager;
 
 class Segment
 {
 public:
-	Segment(int x, int y, int z, SectorManager& sectors);
+	enum class NeighborPosition {
+		TOP,
+		BOTTTOM,
+		LEFT,
+		RIGHT,
+		FRONT,
+		BACK
+	};
+public:
+	Segment();
 public:
 	void setNaturalLight(int x, int y, int z, int luminocity);
 
 	void setVoxel(int x, int y, int z, Voxel::Type id);
 	Voxel::Element getVoxel(int x, int y, int z) const;
+	Voxel::Element getVoxelFromNeighborhood(int x, int y, int z) const;
 
-	void makeMesh();
-	Segment* getRelativeSegment(int x, int y, int z);
-	const Segment* getRelativeSegment(int x, int y, int z) const;
-	const Vector3& getWorldPosition() const;
-
-	void regenMesh();
-	void loadModel();
-	void cleanUp();
-	void cleanBuffers();
-
-	void render(MasterRenderer& renderer);
-
-	void setBoxPosition(const glm::vec3& pos);
-	const AABB& getBox() const;
+	void setNeighbor(std::shared_ptr<Segment> neighbor, const NeighborPosition& pos);
+	std::shared_ptr<Segment> getNeighbor(const NeighborPosition& pos) const;
 
 	bool isAllOpaque() const;
 	bool isEmpty() const;
-	bool hasMeshGenerated() const;
-	bool hasModelLoaded() const;
 public:
 	static constexpr std::int16_t WIDTH = 16;
 private:
@@ -49,14 +38,8 @@ private:
 	std::int16_t m_opaqueCount;
 	std::int16_t m_voidCount;
 
-	AABB m_box;
+	std::array<std::weak_ptr<Segment>, 6> m_neighbors;
 
-	SectorManager& m_sectors;
-	Vector3 m_worldPosition;
 	LightingComputer m_lightcomputer;
-
-	MeshTypes m_meshTypes;
-	bool m_hasMeshGenerated = false;
-	bool m_hasLoadedModel = false;
 };
 

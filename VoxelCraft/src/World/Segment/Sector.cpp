@@ -1,16 +1,9 @@
 #include "Sector.h"
-#include "SectorManager.h"
 #include "../../Math/vecXZ.h"
 #include "../../Math/Frustum.h"
 
 Sector::Sector() {
 	m_segments.reserve(HEIGHT);
-}
-
-void Sector::fillSegments(int x, int z, SectorManager& sectors) {
-	for (std::size_t y = 0; y < HEIGHT; y++) {
-		m_segments.emplace_back(x, y, z, sectors);
-	}
 }
 
 void Sector::setVoxel(int x, int y, int z, Voxel::Type id) {
@@ -22,22 +15,15 @@ Voxel::Element Sector::getVoxel(int x, int y, int z) const {
 }
 
 void Sector::makeMesh() {
-	for (std::size_t y = HEIGHT; y-- > 0;) {
-		if (!m_segments[y].hasMeshGenerated()) {
-			m_segments[y].makeMesh();
-		}
-	}
+	
 }
 
 void Sector::regenMesh(int y) {
-	if(m_segments[y].hasMeshGenerated())
-		m_segments[y].regenMesh();
+	
 }
 
 void Sector::cleanUp() {
-	for (auto& segment : m_segments) {
-		segment.cleanBuffers();
-	}
+
 }
 
 const Segment& Sector::getSegment(std::uint8_t index) const {
@@ -48,23 +34,8 @@ Segment& Sector::getSegment(std::uint8_t index) {
 	return m_segments[index];
 }
 
-void Sector::makeBoxes(const VecXZ& pos) {
-	for (std::size_t y = 0; y < Sector::HEIGHT; y++) {
-		m_segments[y].setBoxPosition(glm::vec3(pos.x * Segment::WIDTH, y * Segment::WIDTH, pos.z * Segment::WIDTH));
-	}
-}
-
 void Sector::render(MasterRenderer& renderer, const Frustum& frustum) {
 	for (auto& segment : m_segments) {
-		if (segment.isEmpty())
-			continue;
-
-		if (segment.hasMeshGenerated() && !segment.hasModelLoaded()) {
-			segment.loadModel();
-		}
-		if (segment.hasModelLoaded()) {
-			if(frustum.isBoxInFrustum(segment.getBox()))
-				segment.render(renderer);
-		}
+		
 	}
 }

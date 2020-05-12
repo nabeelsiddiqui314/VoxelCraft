@@ -72,13 +72,7 @@
     <ClInclude Include="src\World\Segment\Sector.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Segment\SectorManager.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
     <ClInclude Include="src\World\Segment\Segment.h">
-      <Filter>Header Files\Sector</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Segment\SegmentBounds.h">
       <Filter>Header Files\Sector</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Segment\SegmentMesh.h">
@@ -228,6 +222,12 @@
     <ClInclude Include="src\State\StateManager.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
+    <ClInclude Include="src\World\Segment\RenderableSegment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Segment\SegmentManager.h">
+      <Filter>Header Files\Sector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -236,13 +236,7 @@
     <ClCompile Include="src\World\Segment\Sector.cpp">
       <Filter>Source Files\Sector</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\Segment\SectorManager.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
     <ClCompile Include="src\World\Segment\Segment.cpp">
-      <Filter>Source Files\Sector</Filter>
-    </ClCompile>
-    <ClCompile Include="src\World\Segment\SegmentBounds.cpp">
       <Filter>Source Files\Sector</Filter>
     </ClCompile>
     <ClCompile Include="src\World\Segment\SegmentMesh.cpp">
@@ -370,6 +364,12 @@
     </ClCompile>
     <ClCompile Include="src\State\StateManager.cpp">
       <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\RenderableSegment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Segment\SegmentManager.cpp">
+      <Filter>Source Files\Sector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #include "ExplosiveHandler.h"
 #include "../../World.h"
 #include <queue>
+#include "../../../Math/vector3.h"
 
 Voxel::ExplosiveHandler::ExplosiveHandler(int blocks)
  : m_numBlocks(blocks) {}

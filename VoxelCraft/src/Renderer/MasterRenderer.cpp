@@ -24,7 +24,7 @@ void MasterRenderer::addSector(const MeshTypes& models) {
 }
 
 void MasterRenderer::renderSector(const Camera& camera) {
-	float time = std::max(0.5f + sin((float)m_worldClock.getElapsedTime().asSeconds() / 5.0f) / 2.0f, 0.02f);
+	float time = 1.0f;// std::max(0.5f + sin((float)m_worldClock.getElapsedTime().asSeconds() / 5.0f) / 2.0f, 0.02f);
 
 	auto skyColor = glm::vec3(0.59f, 0.74f, 0.87f) * time;
 

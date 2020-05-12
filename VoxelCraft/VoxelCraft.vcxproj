@@ -159,12 +159,12 @@
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\World\Generation\Biome\Biome.h" />
+    <ClInclude Include="src\World\Segment\RenderableSegment.h" />
     <ClInclude Include="src\World\Voxel\VoxelType\ExplosiveHandler.h" />
     <ClInclude Include="src\Math\FastRandom.h" />
     <ClInclude Include="src\World\Segment\LightingComputer.h" />
     <ClInclude Include="src\World\Generation\Biome\Oceans.h" />
     <ClInclude Include="src\CppUtil\Blocking_Queue.h" />
-    <ClInclude Include="src\World\Segment\SegmentBounds.h" />
     <ClInclude Include="src\World\Voxel\VoxelElement.h" />
     <ClInclude Include="src\World\Segment\CubeFaceMeshes.h" />
     <ClInclude Include="src\World\Voxel\VoxelType\VoxelUpdateHandler.h" />
@@ -177,7 +177,7 @@
     <ClInclude Include="src\World\Voxel\VoxelData.h" />
     <ClInclude Include="src\Math\AABB.h" />
     <ClInclude Include="src\OGL\Util\Camera.h" />
-    <ClInclude Include="src\World\Segment\SectorManager.h" />
+    <ClInclude Include="src\World\Segment\SegmentManager.h" />
     <ClInclude Include="src\World\Generation\Biome\Composition.h" />
     <ClInclude Include="src\World\Generation\Biome\Desert.h" />
     <ClInclude Include="src\World\Generation\Biome\Fields.h" />
@@ -216,16 +216,16 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Biome.cpp" />
+    <ClCompile Include="src\World\Segment\RenderableSegment.cpp" />
     <ClCompile Include="src\World\Voxel\VoxelType\ExplosiveHandler.cpp" />
     <ClCompile Include="src\Math\FastRandom.cpp" />
     <ClCompile Include="src\World\Segment\LightingComputer.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Oceans.cpp" />
-    <ClCompile Include="src\World\Segment\SegmentBounds.cpp" />
     <ClCompile Include="src\World\Voxel\VoxelElement.cpp" />
     <ClCompile Include="src\World\Voxel\VoxelCodex.cpp" />
     <ClCompile Include="src\World\Voxel\VoxelType\VoxelUpdateHandler.cpp" />
     <ClCompile Include="src\OGL\Util\Camera.cpp" />
-    <ClCompile Include="src\World\Segment\SectorManager.cpp" />
+    <ClCompile Include="src\World\Segment\SegmentManager.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Composition.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Desert.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Fields.cpp" />

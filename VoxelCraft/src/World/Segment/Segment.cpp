@@ -1,16 +1,11 @@
 #include "Segment.h"
-#include "SectorManager.h"
 #include "SegmentMeshGenerator.h"
 #include "../../Renderer/MasterRenderer.h"
 #include "../../Math/VecXZ.h"
 
-Segment::Segment(int x, int y, int z, SectorManager& sectors) 
+Segment::Segment() 
 	: m_opaqueCount(0),
-	  m_voidCount(WIDTH * WIDTH * WIDTH),
-      m_sectors(sectors),
-      m_worldPosition(x, y, z) {
-	m_box.dimensions = {Segment::WIDTH, Segment::WIDTH, Segment::WIDTH};
-}
+	  m_voidCount(WIDTH * WIDTH * WIDTH) {}
 
 void Segment::setNaturalLight(int x, int y, int z, int luminocity) {
 	m_voxels[x + WIDTH * (y + WIDTH * z)].setNaturalLight(luminocity);
@@ -51,82 +46,44 @@ Voxel::Element Segment::getVoxel(int x, int y, int z) const {
 	return m_voxels[x + WIDTH * (y + WIDTH * z)];
 }
 
-void Segment::makeMesh() {
-	m_lightcomputer.propogate();
-	cleanUp();
-	generateMesh(m_meshTypes, *this);
-	m_hasMeshGenerated = true;
-	m_hasLoadedModel = false;
-}
+Voxel::Element Segment::getVoxelFromNeighborhood(int x, int y, int z) const {
+	NeighborPosition neighborPos;
+	bool isVoxelFromNeighbor = false;
 
-Segment* Segment::getRelativeSegment(int x, int y, int z) {
-	x += m_worldPosition.x;
-	y += m_worldPosition.y;
-	z += m_worldPosition.z;
+	auto checkAxis = [&](int& axis, const NeighborPosition& lowerBound, const NeighborPosition& upperBound) {
+		if (axis < 0) {
+			axis += Segment::WIDTH;
+			neighborPos = lowerBound;
+			isVoxelFromNeighbor = true;
+		}
+		else if (axis > Segment::WIDTH - 1) {
+			axis -= Segment::WIDTH;
+			neighborPos = upperBound;
+			isVoxelFromNeighbor = true;
+		}
+	};
 
-	if (y >= 0 && y < Sector::HEIGHT) {
-		return &m_sectors.getSectorAt({x, z}).getSegment(y);
+	checkAxis(x, NeighborPosition::LEFT, NeighborPosition::RIGHT);
+	checkAxis(y, NeighborPosition::BOTTTOM, NeighborPosition::TOP);
+	checkAxis(z, NeighborPosition::BACK, NeighborPosition::FRONT);
+
+	if (!isVoxelFromNeighbor) {
+		return getVoxel(x, y, z);
 	}
 
-	return nullptr;
-}
-
-const Segment* Segment::getRelativeSegment(int x, int y, int z) const {
-	x += m_worldPosition.x;
-	y += m_worldPosition.y;
-	z += m_worldPosition.z;
-
-	if (y >= 0 && y < Sector::HEIGHT) {
-		return &m_sectors.getSectors().at({ x, z }).getSegment(y);
+	auto neighborSegment = getNeighbor(neighborPos);
+	if (neighborSegment) {
+		return neighborSegment->getVoxel(x, y, z);
 	}
-
-	return nullptr;
+	return Voxel::Type::VOID;
 }
 
-const Vector3& Segment::getWorldPosition() const {
-	return m_worldPosition;
+void Segment::setNeighbor(std::shared_ptr<Segment> neighbor, const NeighborPosition& pos) {
+	m_neighbors[static_cast<std::size_t>(pos)] = neighbor;
 }
 
-void Segment::regenMesh() {
-	m_hasLoadedModel = true;
-	m_hasMeshGenerated = false;
-}
-
-void Segment::loadModel() {
-	cleanBuffers();
-	m_meshTypes.solid.loadMeshToModel();
-	m_meshTypes.liquid.loadMeshToModel();
-	m_meshTypes.flora.loadMeshToModel();
-	m_hasLoadedModel = true;
-}
-
-void Segment::cleanUp() {
-	m_meshTypes.solid.cleanUp();
-	m_meshTypes.liquid.cleanUp();
-	m_meshTypes.flora.cleanUp();
-}
-
-void Segment::cleanBuffers() {
-	if(m_meshTypes.solid.model.hasData())
-		m_meshTypes.solid.model.deleteBuffers();
-
-	if(m_meshTypes.liquid.model.hasData())
-		m_meshTypes.liquid.model.deleteBuffers();
-
-	if (m_meshTypes.flora.model.hasData())
-		m_meshTypes.flora.model.deleteBuffers();
-}
-
-void Segment::render(MasterRenderer& renderer) {
-	renderer.addSector(m_meshTypes);
-}
-
-void Segment::setBoxPosition(const glm::vec3& pos) {
-	m_box.position = pos;
-}
-
-const AABB& Segment::getBox() const {
-	return m_box;
+std::shared_ptr<Segment> Segment::getNeighbor(const NeighborPosition& pos) const {
+	return m_neighbors[static_cast<std::size_t>(pos)].lock();
 }
 
 bool Segment::isAllOpaque() const {
@@ -135,14 +92,6 @@ bool Segment::isAllOpaque() const {
 
 bool Segment::isEmpty() const {
 	return m_voidCount == WIDTH * WIDTH * WIDTH;
-}
-
-bool Segment::hasMeshGenerated() const {
-	return m_hasMeshGenerated;
-}
-
-bool Segment::hasModelLoaded() const {
-	return m_hasLoadedModel;
 }
 
 bool Segment::isInBounds(int x, int y, int z) const {

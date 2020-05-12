@@ -13,7 +13,7 @@ bool operator!=(const Vector3& lhs, const Vector3& rhs);
 
 namespace std {
 	template<>
-	struct hash<Vector3> {
+	struct std::hash<Vector3> {
 		size_t operator()(const Vector3& vec) const {
 			std::hash<int> hasher;
 			auto hashx = hasher(vec.x);

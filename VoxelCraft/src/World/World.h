@@ -4,11 +4,14 @@
 #include <mutex>
 #include <unordered_set>
 #include "../CppUtil/NonCopyable.h"
-#include "Segment/SectorManager.h"
+#include "Segment/SegmentManager.h"
 #include "../Math/vecXZ.h"
+#include "Voxel/VoxelElement.h"
 
 class Camera;
 class MapGenerator;
+class MasterRenderer;
+class Frustum;
 
 class World : public NonCopyable
 {
@@ -32,7 +35,7 @@ private:
 	const VecXZ getSectorPos(int x, int z) const;
 	const std::tuple<int, int, int> getVoxelPos(int x, int y, int z) const;
 private:
-	SectorManager m_sectors;
+	SegmentManager m_segments;
 	std::unordered_set<VecXZ> m_regenSectors;
 	std::unordered_set<Vector3> m_updateList;
 	VecXZ m_camPosition;

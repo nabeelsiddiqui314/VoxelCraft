@@ -11,7 +11,6 @@ class Sector
 public:
 	Sector();
 public:
-	void fillSegments(int x, int z, SectorManager& sectors);
 
 	void setVoxel(int x, int y, int z, Voxel::Type id);
 	Voxel::Element getVoxel(int x, int y, int z) const;
@@ -23,7 +22,6 @@ public:
 	const Segment& getSegment(std::uint8_t index) const;
 	Segment& getSegment(std::uint8_t index);
 
-	void makeBoxes(const VecXZ& pos);
 	void render(MasterRenderer& renderer, const Frustum& frustum);
 public:
 	static constexpr std::int16_t HEIGHT = 16;

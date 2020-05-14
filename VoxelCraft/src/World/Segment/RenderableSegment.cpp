@@ -12,11 +12,16 @@ RenderableSegment::RenderableSegment(std::shared_ptr<Segment> segment, const Vec
 
 void RenderableSegment::generateMesh() {
 	if (!m_hasMeshGenerated) {
-		cleanUp();
+		if (m_segment->getNeighbor(Segment::NeighborPosition::RIGHT) &&
+			m_segment->getNeighbor(Segment::NeighborPosition::LEFT)  &&
+			m_segment->getNeighbor(Segment::NeighborPosition::FRONT) &&
+			m_segment->getNeighbor(Segment::NeighborPosition::BACK)) {
+			cleanUp();
 
-		SegmentMeshGenerator::generateMesh(m_meshTypes, m_worldPos, *m_segment);
-		m_hasMeshGenerated = true;
-		m_hasLoadedModel = false;
+			SegmentMeshGenerator::generateMesh(m_meshTypes, m_worldPos, *m_segment);
+			m_hasMeshGenerated = true;
+			m_hasLoadedModel = false;
+		}
 	}
 }
 

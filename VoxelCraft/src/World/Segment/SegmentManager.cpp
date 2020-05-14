@@ -27,15 +27,15 @@ void SegmentManager::loadSegment(const Vector3& pos, std::shared_ptr<Segment> se
 	makeNeighbors( 0,  0, -1, Segment::NeighborPosition::BACK, Segment::NeighborPosition::FRONT);
 }
 
-void SegmentManager::unloadSegment(const std::function<bool(const Vector3& pos)>& cond) {
-	//for (auto itr = m_segments.begin(); itr != m_segments.end();) {
-	//	if (cond(itr->first)) {
-	//		m_segments[itr->first].cleanUp();
-	//		itr = m_segments.erase(itr);
-	//	}
-	//	else
-	//		itr++;
-	//}
+void SegmentManager::unloadSegmentIf(const RemovalTest& callback) {
+	for (auto itr = m_segments.begin(); itr != m_segments.end();) {
+		if (callback(itr->first)) {
+			itr = m_segments.erase(itr);
+		}
+		else {
+			itr++;
+		}
+	}
 }
 
 bool SegmentManager::doesSegmentExist(const Vector3& pos) const {

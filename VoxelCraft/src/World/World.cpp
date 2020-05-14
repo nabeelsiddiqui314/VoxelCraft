@@ -48,6 +48,12 @@ Voxel::Element World::getVoxel(int x, int y, int z) const {
 
 void World::update(const Camera& camera) {
 	m_camPosition = { (int)camera.getPosition().x / Segment::WIDTH, (int)camera.getPosition().z / Segment::WIDTH };
+	
+	std::lock_guard<std::recursive_mutex> lock(m_mutex);
+	m_segments.unloadSegmentIf([&](const Vector3& pos) {
+		return pos.x < m_camPosition.x - m_renderDistance || pos.x > m_camPosition.x + m_renderDistance ||
+			   pos.z < m_camPosition.z - m_renderDistance || pos.z > m_camPosition.z + m_renderDistance;
+	});
 }
 
 void World::renderSector(MasterRenderer& renderer, const Frustum& frustum) {

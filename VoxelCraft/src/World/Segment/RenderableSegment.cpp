@@ -10,6 +10,11 @@ RenderableSegment::RenderableSegment(std::shared_ptr<Segment> segment, const Vec
 	m_box.dimensions = {Segment::WIDTH, Segment::WIDTH, Segment::WIDTH };
 }
 
+RenderableSegment::~RenderableSegment() {
+	cleanUp();
+	deleteBuffers();
+}
+
 void RenderableSegment::generateMesh() {
 	if (!m_hasMeshGenerated) {
 		if (m_segment->getNeighbor(Segment::NeighborPosition::RIGHT) &&

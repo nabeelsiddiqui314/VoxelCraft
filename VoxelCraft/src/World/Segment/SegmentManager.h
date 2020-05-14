@@ -13,12 +13,14 @@ class Frustum;
 
 class SegmentManager
 {
+private:
+	typedef std::function<bool(const Vector3&)> RemovalTest;
 public:
 	SegmentManager() = default;
 	~SegmentManager();
 public:
 	void loadSegment(const Vector3& pos, std::shared_ptr<Segment> segment);
-	void unloadSegment(const std::function<bool(const Vector3& pos)>& cond);
+	void unloadSegmentIf(const RemovalTest& callback);
 
 	bool doesSegmentExist(const Vector3& pos) const;
 

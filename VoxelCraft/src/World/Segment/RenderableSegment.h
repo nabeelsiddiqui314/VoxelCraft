@@ -11,7 +11,7 @@ class Frustum;
 class RenderableSegment {
 public:
 	RenderableSegment(std::shared_ptr<Segment> segment, const Vector3& worldPos);
-	~RenderableSegment() = default;
+	~RenderableSegment();
 public:
 	void generateMesh();
 	void render(MasterRenderer& renderer, const Frustum& frustum);
